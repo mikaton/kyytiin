@@ -25,3 +25,21 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## TODO
+Perustuu dataan jota saatiin 8.3. CreateITsepässä. 
+
+### Parempi timepicker
+Timepicker paremmaksi ja selkeämmäksi ymmärtää
+Komponentti ei saa sallia aikoja, jotka ovat vanhempia kuin nykyinen aika
+
+### Piilota kyydit joiden "free_seats" arvo on o
+Itsestään selvyys, mutta tehtävä
+
+### Käyttäjälle ilmoitus kun kyytiin liittyminen onnistuu
+
+### Linkki käyttäjäprofiiliin ride komponentissa
+
+### Listaa käyttäjän profiilissa myös kyydit, joihin hän on ilmoittautunut 
+
+
