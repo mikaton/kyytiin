@@ -1,0 +1,36 @@
+<div class="wrapper" fxLayout="column">
+  <mat-card class="form-container mat-elevation-z8">
+    <mat-card-title class="ridecreate_title">Luo uusi kyyti</mat-card-title>
+    <form #rideForm="ngForm" (ngSubmit)="rideCreate(rideForm)" class="ridecreate" [ngFormOptions]="{updateOn: 'submit'}" fxLayout="column">
+      <mat-form-field>
+        <input matInput id="startingplace" name="startingplace" placeholder="Lähtöpaikka" type="Address" [(ngModel)]="startingplace" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput id="destination" name="destination" placeholder="Määränpää" type="Address" [(ngModel)]="destination" required>
+      </mat-form-field>
+      <!--<mat-form-field ngClass.xs="ridecreate_time">
+        <input matInput id="time_of_departure" name="time_of_departure" [(ngModel)]="time_of_departure" placeholder="Lähtöaika" [owlDateTimeTrigger]="dtPicker1"
+          [owlDateTime]="dtPicker1">
+        <owl-date-time [pickerMode]="'dialog'" [firstDayOfWeek]=1 #dtPicker1></owl-date-time>
+      </mat-form-field>
+      <mat-form-field ngClass.xs="ridecreate_time">
+        <input matInput id="time_of_arrival" name="time_of_arrival"  [(ngModel)]="time_of_arrival" placeholder="Perilläoloaika" [owlDateTimeTrigger]="dtPicker2"
+          [owlDateTime]="dtPicker2" > 
+        <owl-date-time [pickerMode]="'dialog'" [firstDayOfWeek]=1 #dtPicker2></owl-date-time>
+      </mat-form-field>-->
+      <mat-form-field>
+        <input matInput id="time_of_departure" placeholder="Lähtöaika" name="time_of_departure" [(ngModel)]="time_of_departure" type="datetime-local" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput id="time_of_arrival" placeholder="Perilläoloaika" name="time_of_arrival" [(ngModel)]="time_of_arrival" type="datetime-local" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput id="free_seats" placeholder="Vapaiden paikkojen määrä" name="free_seats" type="number" [(ngModel)]="free_seats" required>
+      </mat-form-field>
+      <mat-slide-toggle id="pets" name="pets" [(ngModel)]="pets" color="primary">Saako kyytiin ottaa lemmikkejä?</mat-slide-toggle>
+      <mat-slide-toggle id="smoking" name="smoking" [(ngModel)]="smoking" color="primary" > Tupakointi?
+      </mat-slide-toggle>
+      <button mat-raised-button color="primary">Luo Kyyti!</button>
+    </form>
+  </mat-card>
+</div>

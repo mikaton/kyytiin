@@ -1,0 +1,29 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Routes, Router } from '@angular/router';
+import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
+import { RidelistComponent } from './components/ridelist/ridelist.component';
+import { UserpageComponent } from './components/userpage/userpage.component';
+import { FrontpageComponent } from './components/frontpage/frontpage.component';
+import { AuthGuard } from '../services/auth.guard.service';
+import { RidecreateComponent } from './components/ridecreate/ridecreate.component';
+import { FaqComponent } from './components/faq/faq.component';
+import { RideComponent } from './components/ride/ride.component';
+
+const routes: Routes = [
+  { path: '', redirectTo: '/frontpage', pathMatch: 'full' },
+  { path: 'rides', component: RidelistComponent },
+  { path: 'rides/:ride_id', canActivate: [AuthGuard], component: RideComponent},
+  { path: 'frontpage', component: FrontpageComponent },
+  { path: 'faq', component: FaqComponent},
+  { path: 'user', canActivate: [AuthGuard], component: UserpageComponent},
+  { path: 'ridecreate', canActivate: [AuthGuard], component: RidecreateComponent}
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(routes)
+  ],
+  exports: [ RouterModule ]
+})
+export class AppRoutingModule { }

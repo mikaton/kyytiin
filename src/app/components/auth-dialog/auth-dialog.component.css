@@ -1,0 +1,61 @@
+/*
+xs	'screen and (max-width: 599px)'
+sm	'screen and (min-width: 600px) and (max-width: 959px)'
+md	'screen and (min-width: 960px) and (max-width: 1279px)'
+lg	'screen and (min-width: 1280px) and (max-width: 1919px)'
+xl	'screen and (min-width: 1920px) and (max-width: 5000px)'
+lt-sm	'screen and (max-width: 599px)'
+lt-md	'screen and (max-width: 959px)'
+lt-lg	'screen and (max-width: 1279px)'
+lt-xl	'screen and (max-width: 1919px)'
+gt-xs	'screen and (min-width: 600px)'
+gt-sm	'screen and (min-width: 960px)'
+gt-md	'screen and (min-width: 1280px)'
+gt-lg	'screen and (min-width: 1920px)'
+*/
+
+#wrapper {
+  max-width: 900px;
+  margin: 50px auto;
+}
+
+.regButtonsLtLg {
+  width: 50%;
+  height: 50px; 
+}
+
+.buttonsLtSm {
+  width: 100%;
+}
+.buttonsGtXs {
+  width: 40%;
+}
+
+.loginButtonGtLg {
+  height: 36px;
+  margin: auto;
+}
+.authbox_socialmedia_login {
+  padding-top: 30px;
+}
+
+.loginformLtSm {
+  width: 95%;
+  padding: 0 5px;
+}
+
+.btn-fb {
+  margin-bottom: 10px;
+  background-color: #3b5998;
+  color: #fff;
+}
+
+.btn-google {
+  margin-bottom: 10px;
+  background-color: #c23321;
+  color: #fff;
+}
+
+#btn-local {
+  color: #fff;
+}

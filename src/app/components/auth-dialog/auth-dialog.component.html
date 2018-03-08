@@ -1,0 +1,53 @@
+<div id="wrapper">
+  <mat-card class="mat-elevation-z8">
+    <mat-card-content *ngIf="!showRegisterForm" fxLayout="column">
+      <mat-card-title>Kirjaudu Sisään!</mat-card-title>
+        <form #loginForm="ngForm" (ngSubmit)="signInLocalUser(loginForm)" [ngFormOptions]="{updateOn: 'submit'}">
+          <div fxLayout="column">
+              <mat-form-field id="emailField" ngClass.lt-sm="loginformLtSm">
+                  <input matInput id="email" name="email" placeholder="Sähköpostiosoite" autocomplete="username" [(ngModel)]="email" required>
+                </mat-form-field> 
+                <mat-form-field id="passwordField" ngClass.lt-sm="loginformLtSm">
+                  <input matInput id="password" name="password" [(ngModel)]="password" type="password" placeholder="Salasana" autocomplete="current-password" required>
+                </mat-form-field>
+                <button mat-raised-button color="primary" id="loginButton" ngClass.lt-sm="buttonsLtSm" ngClass.gt-xs="loginButtonGtLg">Kirjaudu Sisään</button>
+          </div>
+        </form>
+      <div class="authbox_socialmedia_login" fxLayout="column" fxLayoutAlign.gt-xs="space-around center">
+        <button mat-raised-button class="btn-fb" (click)="signInWithFB()" ngClass.gt-xs="buttonsGtXs" ngClass.lg="buttonsLg">
+          <i class="fab fa-facebook fa-2x">&nbsp;&nbsp;</i>Tunnistaudu Facebook-tunnuksilla
+        </button>
+        <button mat-raised-button class="btn-google" (click)="signInWithGoogle()" ngClass.gt-xs="buttonsGtXs" ngClass.lg="buttonsLg">
+          <i class="fab fa-google fa-lg">&nbsp;&nbsp;</i>Tunnistaudu Google-tunnuksilla
+        </button>
+        <button id="btn-local" mat-raised-button color="primary" (click)="openRegisterForm()" ngClass.gt-xs="buttonsGtXs" ngClass.lg="buttonsLg" >
+          Tai rekisteröidy sähköpostiosoitteella
+        </button>
+      </div>
+    </mat-card-content>
+    <mat-card-content *ngIf="showRegisterForm" fxLayout="column">
+      <mat-card-title>Rekisteröidy!</mat-card-title>
+      <form #registerForm="ngForm" (ngSubmit)="registerLocal(registerForm)" [ngFormOptions]="{updateOn: 'submit'}">
+        <div fxLayout="column">
+          <mat-form-field>
+            <input matInput name="firstName" [(ngModel)]="firstName" placeholder="Etunimi" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput name="lastName" [(ngModel)]="lastName" placeholder="Sukunimi" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput name="phoneNumber" [(ngModel)]="phoneNumber" placeholder="Puhelinnumero" required>
+          </mat-form-field> 
+          <mat-form-field>
+            <input matInput placeholder="Sähköposti" name="email" [(ngModel)]="email" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput name="password" type="password" [(ngModel)]="password" placeholder="Salasana" required>
+          </mat-form-field>
+          <button mat-raised-button id="registerButton" ngClass.lt-sm="buttonsLtSm" color="primary">Rekisteröidy</button>
+        </div>
+      </form>
+      <button mat-raised-button (click)="openRegisterForm()" ngClass.lt-sm="buttonsLtSm">Takaisin</button>
+    </mat-card-content>
+  </mat-card>
+</div>

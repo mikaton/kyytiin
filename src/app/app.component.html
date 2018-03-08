@@ -1,0 +1,82 @@
+<link rel="manifest" href="../manifest.json">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<div class="wrapper">
+	<mat-toolbar class="sidenav_toolbar">
+		<button mat-button ngClass.gt-md="hidebutton" (click)="sidenavOpen(sidenav)">
+			<mat-icon color="primary">menu</mat-icon>
+		</button>
+		<h1 id="mainheading">Kyyti.in ALPHA</h1>
+		<span class="toolbar_fillempty"></span>
+		<!-- Työpöydän, >1280px leveille näytöille tarkoitettu navigoitipalkki -->
+		<div fxHide.lt-lg>
+			<mat-nav-list fxLayout="row">
+
+				<a routerLink="/rides" routerLinkActive="router-link-active">
+					<mat-list-item>KYYDIT</mat-list-item>
+				</a>
+				<a routerLink="/ridecreate" routerLinkActive="router-link-active">
+					<mat-list-item>LUO KYYTI</mat-list-item>
+				</a>
+				<mat-list-item>PALAUTE</mat-list-item>
+				<a routerLink="/faq" routerLinkActive="router-link-active">
+					<mat-list-item>FAQ</mat-list-item>
+				</a>
+				<a routerLink="/user" *ngIf="localStorageToken === true" routerLinkActive="router-link-active">
+					<mat-list-item>PROFIILI</mat-list-item>
+				</a>
+				<mat-list-item *ngIf="localStorageToken === false">
+					<button mat-raised-button color="primary">
+						<a routerLink="/frontpage">
+							Kirjaudu Sisään
+						</a>
+					</button>
+				</mat-list-item>
+				<mat-list-item *ngIf="localStorageToken === true">
+					<button mat-raised-button (click)="signOut()">
+						<mat-icon id="logout">
+							power_settings_new
+						</mat-icon>
+					</button>
+				</mat-list-item>
+			</mat-nav-list>
+		</div>
+
+	</mat-toolbar>
+	<!--mobiilisivupalkki-->
+	<mat-sidenav-container id="sidenav_container" fxHide.gt-md>
+		<mat-sidenav class="sidenav" ngClass.xs="sidenav_mobile" fxHide.gt-md #sidenav mode=side [fixedInViewport]="mobileQuery.matches"
+		 fixedTopGap="80" [opened]="false">
+			<mat-nav-list>
+				<a routerLink="/user" routerLinkActive="router-link-active">
+					<mat-list-item>PROFIILI</mat-list-item>
+				</a>
+				<a routerLink="/rides" routerLinkActive="router-link-active">
+					<mat-list-item>KYYDIT</mat-list-item>
+				</a>
+				<a routerLink="/ridecreate" routerLinkActive="router-link-active">
+					<mat-list-item>LUO KYYTI</mat-list-item>
+				</a>
+				<a routerLink="/faq" routerLinkActive="router-link-active">
+					<mat-list-item>BUGIT</mat-list-item>
+				</a>
+				<a routerLink="/faq" routerLinkActive="router-link-active">
+					<mat-list-item>FAQ</mat-list-item>
+				</a>
+				<mat-list-item *ngIf="localStorageToken === false">
+					<button mat-raised-button color="primary">
+						<a routerLink="/frontpage">
+							Kirjaudu Sisään
+						</a>
+					</button>
+				</mat-list-item>
+				<mat-list-item *ngIf="localStorageToken === true">
+					<button mat-raised-button color="primary" id="sidenav_signout" (click)="signOut()">
+						Kirjaudu ulos
+					</button>
+				</mat-list-item>
+			</mat-nav-list>
+		</mat-sidenav>
+	</mat-sidenav-container>
+</div>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,11 @@
+.wrapper {
+		max-width: 900px;
+		margin: 50px auto;
+	}
+.ride_card {
+	margin-bottom: 10px;
+}
+
+.searchbox {
+	height: 200px;
+}
