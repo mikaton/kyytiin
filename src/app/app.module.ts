@@ -44,6 +44,7 @@ import localeFi from '@angular/common/locales/fi';
 import { FaqComponent } from './components/faq/faq.component';
 import { RideComponent } from './components/ride/ride.component';
 import { RideCreateConfirmDialog } from './dialogs/ridecreate-confirm-dialog';
+import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 registerLocaleData(localeFi);
 
 const config = new AuthServiceConfig([
@@ -100,6 +101,8 @@ export function tokenGetter() {
     MatListModule,
     FlexLayoutModule,
     AppRoutingModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

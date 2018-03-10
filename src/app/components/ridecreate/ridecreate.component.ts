@@ -15,9 +15,10 @@ export class RidecreateComponent implements OnInit {
   constructor(private rideService: RideService,
     private dialog: MatDialog,
   ) { };
-
-  time_of_arrival: DateTimeFormat
-  time_of_departure: DateTimeFormat
+  public min_time = new Date(); 
+  public max_date = new Date(2022, 1, 1, 1 ,1 ,1 ,1,)
+  public time_of_departure = new Date();
+  public time_of_arrival = new Date();
   startingplace: string
   destination: string
   free_seats: number
@@ -51,6 +52,11 @@ export class RidecreateComponent implements OnInit {
   }
 
   rideCreate(rideForm: NgForm) {
+    const date = new Date();
+    rideForm.value.time_of_arrival = date.toISOString()
+    rideForm.value.time_of_departure = date.toISOString()
+    
+    console.log(rideForm.value)
     rideForm.value.customer_id = this.updateId();
     this.openConfirmDialog(rideForm.value).then((confirmed) => {
       if (this.test_confirmed) {
