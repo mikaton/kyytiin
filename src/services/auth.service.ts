@@ -16,44 +16,62 @@ export class LocalAuthService {
     constructor(private http: HttpClient, private router: Router) { }
 
     authenticate(user) {
-        if (user) {
-            this.http.post(this.apiUrlSocial, user)
-                .toPromise()
-                .then((res) => {
+        let response = new Promise((resolve, reject) => {
+            if (user) {
+                this.http.post(this.apiUrlSocial, user)
+                    .toPromise()
+                    .then(
+                        res => {
+                            this.setToken(res);
+                            this.setCurrentUserId(res);
+                            this.checkLocalStorageToken();
+                            this.router.navigate(['rides']);
+                            resolve(res);
+                        },
+                        err => {
+                            reject(err);
+                        }
+                    );   
+            }
+        });
+        return response;
+    }
+    signIn(user) {
+        let response = new Promise((resolve, reject) => {
+            this.http.post(this.apiUrlLocalLogin, user)
+            .toPromise()
+            .then(
+                res => {
                     this.setToken(res);
                     this.setCurrentUserId(res);
                     this.checkLocalStorageToken();
                     this.router.navigate(['rides']);
-                })
-                .catch((err) => {
-                    Promise.reject(err);
-                });
-        }
-    }
-    signIn(user) {
-        this.http.post(this.apiUrlLocalLogin, user)
-            .toPromise()
-            .then((res) => {
-                this.setToken(res);
-                this.setCurrentUserId(res);
-                this.checkLocalStorageToken();
-                this.router.navigate(['rides']);
-            })
-            .catch((err) => {
-                Promise.reject(err);
-            });
+                    resolve();
+                },
+                err => {
+                    reject(err);
+                }
+            );
+        });
+        return response;
     }
     registerLocal(user) {
-        this.http.post(this.apiUrlLocalRegister, user)
+        let response = new Promise((resolve, reject) => {
+            this.http.post(this.apiUrlLocalRegister, user)
             .toPromise()
-            .then((res) => {
-                this.setToken(res);
-                this.signOut();
-                this.router.navigate(['frontpage']);
-            })
-            .catch((err) => {
-                Promise.reject(err);
-            });
+            .then(
+                res => {
+                    this.setToken(res);
+                    this.signOut();
+                    this.router.navigate(['frontpage']);
+                    resolve(res);
+                },
+                err => {
+                    reject(err);
+                }
+            );
+        });
+        return response;
     }
     setCurrentUserId(res) {
         localStorage.setItem('_id', res._id);

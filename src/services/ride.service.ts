@@ -13,61 +13,94 @@ export class RideService {
   constructor(private http: HttpClient, private router: Router) { }
 
   getRide(ride_id): Promise<any> {
-    return this.http.get(`${this.apiUrl}/${ride_id}`)
+    let response = new Promise((resolve, reject) => {
+      this.http.get(`${this.apiUrl}/${ride_id}`)
       .toPromise()
-      .then((response) => {
-        return Promise.resolve(response);
-      })
-      .catch((err) => {
-        return Promise.reject(err);
-      })
+      .then(
+        data => {
+          resolve(data);
+        },
+        err => {
+          reject(err);
+        }
+      );
+    })
+    return response;
   }
   getRideToUserPage(customer_id): Promise<any> {
-    return this.http.get(`${this.apiUrlUser}/${customer_id}`)
+    let response = new Promise((resolve, reject) => {
+      this.http.get(`${this.apiUrlUser}/${customer_id}`)
       .toPromise()
-      .then((response) => {
-        return Promise.resolve(response);
-      })
-      .catch((err) => {
-        return Promise.reject(err);
-      })
+      .then(
+        data => {
+          resolve(data);
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
+    return response;
   }
-
   getRides(): Promise<any> {
-    return this.http.get(this.apiUrl)
+    let response = new Promise((resolve, reject) => {
+      this.http.get(this.apiUrl)
       .toPromise()
-      .then((response) => {
-        return Promise.resolve(response);
-      })
-      .catch((err) => {
-        return Promise.reject(err);
-      })
+      .then(
+        data => {
+          resolve(data);
+        }, err => {
+          reject(err);
+        }
+      );
+    });
+    return response;
   }
   postRides(ride) {
-    this.http.post(`${this.apiUrl}`, ride)
+    let response = new Promise((resolve, reject) => {
+      this.http.post(`${this.apiUrl}`, ride)
       .toPromise()
-      .then((res) => {
-        this.router.navigate(['rides']);
-        Promise.resolve(res);
-      })
-      .catch((err) => {
-        Promise.reject(err);
-      });
+      .then(
+        data => {
+          this.router.navigate(['rides']);
+          resolve();
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
   }
+
   joinRide(ride) {
-    this.http.post(`${this.apiUrlJoin}`, ride)
+    let response = new Promise((resolve, reject) => {
+      this.http.post(`${this.apiUrlJoin}`, ride)
       .toPromise()
-      .then((res) => {
-        this.router.navigate(['rides']);
-      })
-      .catch((err) => Promise.reject(err));
+      .then(
+        data => {
+          this.router.navigate(['rides']);
+          resolve();
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
+    return response;
   }
   patchRide(data) {
-    this.http.patch(`${this.apiUrl}/${data.ride_id}`, data)
+    let response = new Promise((resolve, reject) => {
+      this.http.patch(`${this.apiUrl}/${data.ride_id}`, data)
       .toPromise()
-      .then((res) => {
-        Promise.resolve(res);
-      })
-      .catch((err) => Promise.reject(err));
+      .then(
+        data => {
+          resolve(data);
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
+    return response;
   }
 }

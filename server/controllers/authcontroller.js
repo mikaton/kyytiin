@@ -5,6 +5,7 @@ const model = require('../models/index'),
 	User = model.Customer;
 
 function generateJwt(user) {
+	
 	return jwt.sign(user, config.jwt_secret);
 };
 
@@ -91,10 +92,11 @@ exports.socialRegister = (req, res, next) => {
 					social_photourl: social_photourl
 				};
 				user.updateAttributes(updateData).then((updatedUser) => {
+					let user = setUserInfo(updatedUser.dataValues);
 					return res.status(200).json({
 						message: 'User updated',
-						user: updatedUser,
-						token: generateJwt(updatedUser)
+						user: user,
+						token: generateJwt(user)
 					});
 				})
 					.catch((err) => {
@@ -128,6 +130,8 @@ exports.socialRegister = (req, res, next) => {
 			User.create(data)
 				.then((newUser) => {
 					const userInfo = setUserInfo(newUser);
+					console.log(newUser);
+					console.log(userInfo);
 					if (newUser) res.status(200).json({
 						message: 'User created',
 						token: generateJwt(userInfo)

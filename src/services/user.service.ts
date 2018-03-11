@@ -16,14 +16,19 @@ export class UserService {
               private authService: AuthService) { }
 
   getUser(user): Promise<object> {
-      return this.http.get(`${API_URL}/${user}`)
-        .toPromise()
-        .then(response => {
-          return Promise.resolve(response);
-        })
-        .catch((err) => {
-          return Promise.reject(err);
-        });
+    let response = new Promise((resolve, reject) => {
+      this.http.get(`${API_URL}/user/${user}`)
+      .toPromise()
+      .then(
+        data => {
+          resolve(data);
+        },
+        err => {
+          reject(err);
+        }
+      )
+    })
+    return response;
   }
 
   getSocialUser() {
