@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
-import { RidelistComponent } from '../app/components/ridelist/ridelist.component';
-import { AuthDialogComponent } from '../app/components/auth-dialog/auth-dialog.component';
+import { RidelistComponent } from '../components/ridelist/ridelist.component';
+import { AuthDialogComponent } from '../components/auth-dialog/auth-dialog.component';
 import { Subject } from 'rxjs/Subject';
-import { API_URL } from '../app/app.config';
+import { API_URL } from '../app.config';
 
 @Injectable()
 export class LocalAuthService {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
-import { API_URL } from '../app/app.config';
+import { API_URL } from '../app.config';
 import { Router } from '@angular/router';
 
 @Injectable()

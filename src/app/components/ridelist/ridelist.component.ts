@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { RideService } from '../../../services/ride.service';
+import { RideService } from '../../services/ride.service';
 import { error } from 'util';
 
 @Component({

@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 import { AuthService } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
-import { API_URL } from '../app/app.config'
+import { API_URL } from '../app.config'
 
 @Injectable()
 export class UserService {

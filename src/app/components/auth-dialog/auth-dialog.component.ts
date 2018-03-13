@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'angularx-social-login';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login/src/entities/user';
-import { LocalAuthService } from '../../../services/auth.service';
+import { LocalAuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs/Observable';
 import { NgForm, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import 'rxjs/add/observable/of';

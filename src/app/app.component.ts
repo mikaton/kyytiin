@@ -5,8 +5,8 @@ import { SocialUser } from 'angularx-social-login';
 import { AuthService } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { LocalAuthService } from '../services/auth.service';
-import { UserService } from '../services/user.service';
+import { LocalAuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
 
