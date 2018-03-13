@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { VERSION, MatDialog, MatDialogRef } from '@angular/material';
-import { RideService } from '../../../services/ride.service';
+import { RideService } from '../../services/ride.service';
 import { RideCreateConfirmDialog } from '../../dialogs/ridecreate-confirm-dialog';
 
 @Component({

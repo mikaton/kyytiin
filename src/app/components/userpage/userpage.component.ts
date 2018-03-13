@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../services/user.service';
-import { LocalAuthService } from '../../../services/auth.service';
+import { UserService } from '../../services/user.service';
+import { LocalAuthService } from '../../services/auth.service';
 import { DatePipe } from '@angular/common';
-import { RideService } from '../../../services/ride.service';
+import { RideService } from '../../services/ride.service';
 
 @Component({
   selector: 'app-userpage',

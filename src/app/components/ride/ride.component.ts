@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
-import { RideService } from '../../../services/ride.service';
+import { RideService } from '../../services/ride.service';
 import { ActivatedRoute } from '@angular/router';
 import {  MatDialog, MatDialogRef } from '@angular/material';
 
