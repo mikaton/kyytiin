@@ -23,8 +23,8 @@ exports.localRegister = (req, res, next) => {
 
 	let firstName = req.body.firstName,
 		lastName = req.body.lastName,
-		email = req.body.email,
-		password = req.body.password,
+		email = req.body.email.confEmail,
+		password = req.body.password.pwd,
 		phoneNumber = req.body.phoneNumber;
 
 	User.findOne({

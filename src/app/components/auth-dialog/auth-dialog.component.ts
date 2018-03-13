@@ -4,7 +4,16 @@ import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-logi
 import { SocialUser } from 'angularx-social-login/src/entities/user';
 import { LocalAuthService } from '../../../services/auth.service';
 import { Observable } from 'rxjs/Observable';
-import { NgForm, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
+import {
+  NgForm,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  FormControl,
+  Validators
+} from '@angular/forms';
+import { passwordMatcher } from '../../validators/password-validator';
+import { emailMatcher } from '../../validators/email-validator';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -18,20 +27,38 @@ import { NgClass } from '@angular/common';
 })
 export class AuthDialogComponent implements OnInit {
   loggedIn: boolean;
-  firstName: string;
-  lastName: string;
-  password: string;
-  passwordConfirm: string;
-  phoneNumber: number;
   showRegisterForm = false;
   user: SocialUser;
-  email: string;
+  registerForm: FormGroup;
+  loginForm: FormGroup;
 
-  constructor(private authService: AuthService, private localAuthService: LocalAuthService) { }
+  constructor(private authService: AuthService,
+    private localAuthService: LocalAuthService,
+    private fb: FormBuilder) {
 
+    this.registerForm = fb.group({
+      firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
+      lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(80)])],
+      email: this.fb.group({
+        confEmail: ['', Validators.compose([Validators.required, Validators.email])],
+          confirmedEmail: ['', Validators.compose([Validators.required, Validators.email])],
+      }, { validator: [emailMatcher] }
+      ),
+      password: this.fb.group({
+        pwd: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
+        confirmPwd: ['', Validators.compose([Validators.required, Validators.minLength(8)])]
+      }, { validator: passwordMatcher }),
+
+      phoneNumber: ['', Validators.compose([Validators.required, Validators.minLength(9)])],
+    });
+  
+  this.loginForm = fb.group({
+    email: ['', Validators.compose([Validators.required, Validators.email])],
+    password: ['', Validators.required]
+  });
+}
   ngOnInit() {
   }
-
   signInWithGoogle() {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((user) => {
@@ -48,12 +75,13 @@ export class AuthDialogComponent implements OnInit {
       });
   }
 
-  signInLocalUser(loginForm: NgForm) {
-    this.localAuthService.signIn(loginForm.value);
+  signInLocalUser(loginForm) {
+    this.localAuthService.signIn(loginForm);
   }
 
-  registerLocal(registerForm: NgForm) {
-    this.localAuthService.registerLocal(registerForm.value);
+  registerLocal(registerForm) {
+    console.log(registerForm);
+    this.localAuthService.registerLocal(registerForm);
   }
 
   async updateUser() {

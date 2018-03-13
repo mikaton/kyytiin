@@ -56,8 +56,10 @@ export class LocalAuthService {
         return response;
     }
     registerLocal(user) {
+        console.log(user);
         let response = new Promise((resolve, reject) => {
             this.http.post(this.apiUrlLocalRegister, user)
+
             .toPromise()
             .then(
                 res => {
