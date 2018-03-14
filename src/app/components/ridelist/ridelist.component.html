@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div  class="searchbox" fxFlex="33" fxLayout="row" fxLayoutAlign="space around center">
+  <div class="searchbox" fxFlex="33" fxLayout="row" fxLayoutAlign="space around center">
     <mat-card class="searchbox" class="ride_card mat-elevation-z8" fxLayout="column">
       <mat-card-content>
         <form fxLayout="column" #searchForm="ngForm" [ngFormOptions]="{updateOn: 'blur'}">
@@ -17,24 +17,25 @@
   </div>
   <div fxFlex="66" fxLayout="column">
     <div *ngFor="let ride of rides | rideSearch: startingplace:destination">
-      <a routerLink="/rides/{{ride.ride_id}}">
-        <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
-          <div fxLayout="column">
-            <mat-card-title fxFlex="50">
-              Lähtöpaikka: {{ride.startingplace}}
-            </mat-card-title>
-            <mat-card-title fxFlex="50">
-              Määränpää: {{ride.destination}}
-            </mat-card-title>
-          </div>
-          <mat-card-content>
-            Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
-          </mat-card-content>
-          <mat-card-content>
-            Vapaita paikkoja: {{ride.free_seats}}
-          </mat-card-content>
-        </mat-card>
-      </a>
+      <div *ngIf="ride.free_seats != 0">
+        <a routerLink="/rides/{{ride.ride_id}}">
+          <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
+            <div fxLayout="column">
+              <mat-card-title fxFlex="50">
+                Lähtöpaikka: {{ride.startingplace}}
+              </mat-card-title>
+              <mat-card-title fxFlex="50">
+                Määränpää: {{ride.destination}}
+              </mat-card-title>
+            </div>
+            <mat-card-content>
+              Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
+            </mat-card-content>
+            <mat-card-content>
+              Vapaita paikkoja: {{ride.free_seats}}
+            </mat-card-content>
+          </mat-card>
+        </a>
+      </div>
     </div>
   </div>
-</div>
