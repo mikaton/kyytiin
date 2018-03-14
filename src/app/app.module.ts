@@ -91,6 +91,7 @@ export function tokenGetter() {
     MatInputModule,
     MatSidenavModule,
     MatIconModule,
+    MatAutocompleteModule,
     LayoutModule,
     SocialLoginModule,
     HttpClientModule,
