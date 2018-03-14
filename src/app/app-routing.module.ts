@@ -9,6 +9,7 @@ import { AuthGuard } from './services/auth.guard.service';
 import { RidecreateComponent } from './components/ridecreate/ridecreate.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { RideComponent } from './components/ride/ride.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/frontpage', pathMatch: 'full' },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'frontpage', component: FrontpageComponent },
   { path: 'faq', component: FaqComponent},
   { path: 'user', canActivate: [AuthGuard], component: UserpageComponent},
-  { path: 'ridecreate', canActivate: [AuthGuard], component: RidecreateComponent}
+  { path: 'ridecreate', canActivate: [AuthGuard], component: RidecreateComponent},
+  { path: 'forgot-password', component: ForgotPasswordComponent}
 ];
 
 @NgModule({

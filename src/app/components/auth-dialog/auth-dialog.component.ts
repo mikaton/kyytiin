@@ -41,7 +41,7 @@ export class AuthDialogComponent implements OnInit {
       lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(80)])],
       email: this.fb.group({
         confEmail: ['', Validators.compose([Validators.required, Validators.email])],
-          confirmedEmail: ['', Validators.compose([Validators.required, Validators.email])],
+        confirmedEmail: ['', Validators.compose([Validators.required, Validators.email])],
       }, { validator: [emailMatcher] }
       ),
       password: this.fb.group({
@@ -51,12 +51,12 @@ export class AuthDialogComponent implements OnInit {
 
       phoneNumber: ['', Validators.compose([Validators.required, Validators.minLength(9)])],
     });
-  
-  this.loginForm = fb.group({
-    email: ['', Validators.compose([Validators.required, Validators.email])],
-    password: ['', Validators.required]
-  });
-}
+
+    this.loginForm = fb.group({
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      password: ['', Validators.required]
+    });
+  }
   ngOnInit() {
   }
   signInWithGoogle() {
