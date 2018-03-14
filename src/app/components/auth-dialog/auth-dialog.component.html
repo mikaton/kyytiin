@@ -1,19 +1,21 @@
 <div id="wrapper">
   <mat-card class="mat-elevation-z8">
     <mat-card-content *ngIf="!showRegisterForm" fxLayout="column">
-      <mat-card-title>Kirjaudu Sisään!</mat-card-title>
+      <mat-card-title >Kirjaudu Sisään!</mat-card-title>
       <form [formGroup]="loginForm" (ngSubmit)="signInLocalUser(loginForm.value)">
         <div fxLayout="column">
-          <mat-form-field id="emailField" ngClass.lt-sm="loginformLtSm">
-            <input matInput id="email" name="email" placeholder="Sähköpostiosoite" autocomplete="email" formControlName="email" required>
-          </mat-form-field>
-          <mat-form-field id="passwordField" ngClass.lt-sm="loginformLtSm">
-            <input matInput id="password" name="password" type="password" placeholder="Salasana" formControlName="password" autocomplete="current-password"
-              required>
-          </mat-form-field>
-          <button mat-raised-button color="primary" id="loginButton" ngClass.lt-sm="buttonsLtSm" ngClass.gt-xs="loginButtonGtLg">Kirjaudu Sisään</button>
+            <mat-form-field id="emailField" ngClass.lt-sm="loginformLtSm">
+              <input matInput id="email" name="email" placeholder="Sähköpostiosoite" autocomplete="email" formControlName="email" required>
+            </mat-form-field>
+            <mat-form-field id="passwordField" ngClass.lt-sm="loginformLtSm">
+              <input matInput id="password" name="password" type="password" placeholder="Salasana" formControlName="password" autocomplete="current-password"
+                required>
+            </mat-form-field>
 
-        </div>
+
+            <button mat-raised-button color="primary" id="loginButton" ngClass.lt-sm="buttonsLtSm" ngClass.gt-xs="loginButtonGtLg">Kirjaudu Sisään</button>
+
+          </div>
 
       </form>
       <div class="authbox_socialmedia_login" fxLayout="column" fxLayoutAlign.gt-sm="space-around center">
@@ -100,9 +102,9 @@
 
         </div>
       </form>
-      <button mat-raised-button id="registerButton" ngClass.lt-sm="buttonsLtSm"(click)="openRegisterForm()" ngClass.gt-sm="buttonsGtXs">
-        Takaisin kirjautumiseen 
+      <button mat-raised-button id="registerButton" ngClass.lt-sm="buttonsLtSm" (click)="openRegisterForm()" ngClass.gt-sm="buttonsGtXs">
+        Takaisin kirjautumiseen
       </button>
     </mat-card-content>
   </mat-card>
-</div>
+  </div>
