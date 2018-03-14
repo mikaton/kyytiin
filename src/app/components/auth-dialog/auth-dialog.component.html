@@ -4,19 +4,20 @@
       <mat-card-title >Kirjaudu Sisään!</mat-card-title>
       <form [formGroup]="loginForm" (ngSubmit)="signInLocalUser(loginForm.value)">
         <div fxLayout="column">
-            <mat-form-field id="emailField" ngClass.lt-sm="loginformLtSm">
-              <input matInput id="email" name="email" placeholder="Sähköpostiosoite" autocomplete="email" formControlName="email" required>
-            </mat-form-field>
-            <mat-form-field id="passwordField" ngClass.lt-sm="loginformLtSm">
-              <input matInput id="password" name="password" type="password" placeholder="Salasana" formControlName="password" autocomplete="current-password"
-                required>
-            </mat-form-field>
-
-
-            <button mat-raised-button color="primary" id="loginButton" ngClass.lt-sm="buttonsLtSm" ngClass.gt-xs="loginButtonGtLg">Kirjaudu Sisään</button>
-
-          </div>
-
+          <mat-form-field id="emailField" ngClass.lt-sm="loginformLtSm">
+            <input matInput id="email" name="email" placeholder="Sähköpostiosoite" autocomplete="email" formControlName="email" required>
+          </mat-form-field>
+          <mat-form-field id="passwordField" ngClass.lt-sm="loginformLtSm">
+            <input matInput id="password" name="password"  type="password" placeholder="Salasana" formControlName="password" autocomplete="current-password"
+              required>
+          </mat-form-field>
+          <a routerLink="/forgot-password">
+            Unohditko salasanasi?
+          </a>
+          <button mat-raised-button color="primary" id="loginButton" ngClass.lt-sm="buttonsLtSm" ngClass.gt-xs="loginButtonGtLg">Kirjaudu Sisään</button>
+          
+        </div>
+        
       </form>
       <div class="authbox_socialmedia_login" fxLayout="column" fxLayoutAlign.gt-sm="space-around center">
         <button mat-raised-button class="btn-fb" (click)="signInWithFB()" ngClass.gt-sm="buttonsGtXs">
@@ -28,9 +29,6 @@
         <button id="btn-local" mat-raised-button color="primary" (click)="openRegisterForm()" ngClass.gt-sm="buttonsGtXs">
           Tai rekisteröidy sähköpostiosoitteella
         </button>
-        <a routerLink="/forgot-password">
-          <button mat-button-raised id="forgot-btn">Unohditko salasanasi?</button>
-        </a>
       </div>
 
     </mat-card-content>

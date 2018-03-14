@@ -46,6 +46,7 @@ import { RideComponent } from './components/ride/ride.component';
 import { RideCreateConfirmDialog } from './dialogs/ridecreate-confirm-dialog';
 import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ForgotPasswordService } from './services/forgot-password.service';
 registerLocaleData(localeFi);
 
 const config = new AuthServiceConfig([
@@ -126,7 +127,8 @@ export function tokenGetter() {
     LocalAuthService,
     AuthGuard,
     UserService,
-    RideService
+    RideService,
+    ForgotPasswordService
   ],
   bootstrap: [AppComponent],
   entryComponents: [RideCreateConfirmDialog],

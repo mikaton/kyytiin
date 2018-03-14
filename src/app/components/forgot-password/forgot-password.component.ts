@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { emailMatcher, emailPattern } from '../../validators/email-validator';
+import { emailPattern } from '../../validators/email-validator';
+import { ForgotPasswordService } from '../../services/forgot-password.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -9,19 +10,28 @@ import { emailMatcher, emailPattern } from '../../validators/email-validator';
 })
 export class ForgotPasswordComponent implements OnInit {
   resetPasswordForm: FormGroup;
-  constructor(private fb: FormBuilder) {
+  userEmail: any;
+  resetEmailSent: boolean = false;
+  constructor(private fb: FormBuilder, private forgotPwService: ForgotPasswordService) {
     this.resetPasswordForm = fb.group({
-      email: this.fb.group({
-        email: ['', Validators.compose([Validators.required, Validators.pattern(emailPattern)])],
-      }, { validator: [emailMatcher] }
-      )
+      email: ['', Validators.compose([Validators.required, Validators.pattern(emailPattern)])],
     });
   }
 
   ngOnInit() {
   }
 
-  sendPasswordResetLink(email) {
-    
+  sendPasswordResetLink() {
+    this.userEmail = this.resetPasswordForm.value;
+
+    this.forgotPwService.sendResetLink(this.userEmail)
+    .then(
+      res => {
+        this.resetEmailSent = true;
+      },
+      err => {
+        throw err;
+      }
+    );
   }
 }
