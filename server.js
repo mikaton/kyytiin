@@ -5,7 +5,7 @@ const express = require('express'),
 	bodyParser = require('body-parser'),
 	bcrypt = require('bcrypt'),
 	router = require('./server/router'),
-	db = require('./server/models/index');
+	models = require('./server/models'),
 	Sequelize = require('sequelize'),
 	sequelize = new Sequelize('mysql://root@localhost:3306/kyyti'),
 	http = require('http'),
@@ -18,14 +18,10 @@ const express = require('express'),
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(compression());
-app.use(helmet());
 
-sequelize.authenticate()
-	.then(() => {
-		console.log("DB Connected");
-	});
-
+models.sequelize.authenticate().then(() => {
+	console.log('DB Connected');
+});
 
 router(app);
 

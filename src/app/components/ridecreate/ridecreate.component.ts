@@ -52,6 +52,7 @@ export class RidecreateComponent implements OnInit {
   public max_time = new Date(2022, 1, 1, 1, 1, 1, 1, )
   test_confirmed: boolean
 
+  
   ngOnInit() {
   }
 

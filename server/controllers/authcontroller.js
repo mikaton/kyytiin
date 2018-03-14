@@ -1,11 +1,36 @@
 const model = require('../models/index'),
 	bcrypt = require('bcrypt'),
+	path = require('path'),
+	crypto = require('crypto'),
 	jwt = require('jsonwebtoken'),
 	config = require('../config/main'),
-	User = model.Customer;
+	async = require('async'),
+	User = model.Customer,
+
+	// --- <Sähköpostin asetukset> ---
+	hbs = require('nodemailer-express-handlebars'),
+		email = process.env.MAILER_EMAIL_ID || config.mailer.user,
+		password = process.env.MAILER_PASSWORD || config.mailer.password,
+	nodemailer = require('nodemailer'),
+
+	smtpTransport = nodemailer.createTransport({
+		service: process.env.MAILER_SERVICE_PROVIDER || 'Gmail',
+		auth: {
+			user: email,
+			pass: password
+		}
+	}),
+
+	handlebarsOptions = {
+		viewEngine: 'handlebars',
+		viewPath: path.resolve('./server/templates/'),
+		extName: '.html'
+	};
+
+	smtpTransport.use('compile', hbs(handlebarsOptions));
+	// --- </Sähköpostin asetukset> //
 
 function generateJwt(user) {
-	
 	return jwt.sign(user, config.jwt_secret);
 };
 
@@ -169,3 +194,70 @@ exports.socialLogin = (req, res, next) => {
 		});
 };
 
+exports.forgotPassword = (req, res, next) => {
+	// waterfall ajaa funktiot esitellyssä järjestyksessä
+	// edellisen funktion tuotos "tiputetaan" seuraavalle funktiolle
+	async.waterfall([
+		function(done) {
+			User.find({
+				where: { email: req.body.email }
+			})
+			.then((user, err) => {
+				if(user) {
+					done(err, user);
+				} else {
+					done('User not found');
+				}
+			});
+		},
+		function(user, done) {
+			// Luodaan reset token
+			crypto.randomBytes(20, function(err, buffer) {
+				const token = buffer.toString('hex');
+				console.log('token: ' + token);
+				done(err, user, token);
+			});
+		},
+		function(user, token, done) {
+			// Etsitään käyttäjä ja lisätään token kantaan, sekä asetetaan expiry tunnin päähän
+			User.findOne({
+				where: { customer_id: user.customer_id }
+			})
+			.then((user) => {
+				const data = {
+					reset_token: token,
+					reset_token_expiry: Date.now() + 3600000
+				};
+	
+				user.updateAttributes(data).then((newUser, err) => {
+						done(err, token, newUser.dataValues);
+				});
+			});
+		},
+		function(token, user, done) {
+			// Sähköpostin tiedot. Template löytyy kansiosta templates sen nimellä
+			const data = {
+				to: user.email,
+				from: email,
+				template: 'forgot-password',
+				subject: 'Kyyti.in salasanan nollaus',
+				context: {
+					url: 'https://kyyti.in/change_password/' + token,
+					name: user.firstName
+				}
+			};
+			console.log(data);
+			// Lähetetään sähköposti
+			smtpTransport.sendMail(data, function(err) {
+				if(!err) {
+					return res.status(201).json({ success: true, message: 'Reset email sent'});
+				} else {
+					return done(err);
+				}
+			});
+		}
+	], function(err) {
+		// Jos waterfallissa tapahtui virhe
+		return res.status(500).json({ success: false, message: err});
+	})
+}

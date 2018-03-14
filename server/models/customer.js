@@ -39,15 +39,11 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    password: {
-      type: DataTypes.STRING,
-    },
-    phoneNumber: {
-      type: DataTypes.STRING
-    }, 
-    additional_information: {
-      type: DataTypes.STRING
-    },
+    password: { type: DataTypes.STRING },
+    phoneNumber: { type: DataTypes.STRING },
+    reset_token: { type: DataTypes.STRING },
+    reset_token_expiry: { type: DataTypes.DATE }, 
+    additional_information: { type: DataTypes.STRING },
   }, {
     timestamps: false,
     tableName: 'Customers',
