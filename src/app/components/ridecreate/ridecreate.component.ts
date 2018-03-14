@@ -25,6 +25,7 @@ export class RidecreateComponent implements OnInit {
   smoking: boolean
   pets: boolean
   test_confirmed: boolean
+  
   ngOnInit() {
   }
 
