@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS Customers (
   lastname VARCHAR(50) NOT NULL,
   email VARCHAR(50) UNIQUE NOT NULL,
   password VARCHAR(100),
-  phonenumber VARCHAR(15)
+  phonenumber VARCHAR(15),
+  confirmed BOOLEAN NOT NULL DEFAULT=false
 );
 
 CREATE TABLE IF NOT EXISTS Rides (
