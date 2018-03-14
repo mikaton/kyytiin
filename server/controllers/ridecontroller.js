@@ -59,7 +59,8 @@ exports.createRide = (req, res, next) => {
     free_seats: req.body.free_seats,
     smoking: req.body.smoking,
     pets: req.body.pets,
-    hidden: req.body.hidden
+    hidden: req.body.hidden,
+    additional_information: req.body.additional_information
   };
   console.log(data);
 

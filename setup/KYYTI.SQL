@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS Customers (
   email VARCHAR(50) UNIQUE NOT NULL,
   password VARCHAR(100),
   phonenumber VARCHAR(15),
+  additional_information VARCHAR(512),
   confirmed BOOLEAN NOT NULL DEFAULT=false
 );
 
@@ -36,6 +37,7 @@ CREATE TABLE IF NOT EXISTS Rides (
   free_seats TINYINT NOT NULL,
   smoking BOOLEAN NOT NULL, 
   pets BOOLEAN NOT NULL,
+  additional_information VARCHAR(512),
   hidden BOOLEAN NOT NULL,
   CONSTRAINT customer_ride_fk
     FOREIGN KEY(customer_id) REFERENCES Customers(customer_id)

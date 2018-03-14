@@ -44,7 +44,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     phoneNumber: {
       type: DataTypes.STRING
-    }
+    }, 
+    additional_information: {
+      type: DataTypes.STRING
+    },
   }, {
     timestamps: false,
     tableName: 'Customers',

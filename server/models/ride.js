@@ -52,7 +52,11 @@ module.exports = (sequelize, DataTypes) => {
     hidden: {
       type: DataTypes.BOOLEAN,
       allowNull: false
-    }
+    },
+    additional_information: {
+      type: DataTypes.STRING
+    },
+
   }, {
     timestamps: false,
     tableName: 'Rides',
