@@ -9,8 +9,8 @@ const model = require('../models/index'),
 
 	// --- <Sähköpostin asetukset> ---
 	hbs = require('nodemailer-express-handlebars'),
-		email = process.env.MAILER_EMAIL_ID || config.mailer.user,
-		password = process.env.MAILER_PASSWORD || config.mailer.password,
+	email = process.env.MAILER_EMAIL_ID || config.mailer.user,
+	password = process.env.MAILER_PASSWORD || config.mailer.password,
 	nodemailer = require('nodemailer'),
 
 	smtpTransport = nodemailer.createTransport({
@@ -27,8 +27,8 @@ const model = require('../models/index'),
 		extName: '.html'
 	};
 
-	smtpTransport.use('compile', hbs(handlebarsOptions));
-	// --- </Sähköpostin asetukset> //
+smtpTransport.use('compile', hbs(handlebarsOptions));
+// --- </Sähköpostin asetukset> //
 
 function generateJwt(user) {
 	return jwt.sign(user, config.jwt_secret);
@@ -41,11 +41,12 @@ function setUserInfo(request) {
 	}
 };
 
-exports.localRegister = (req, res, next) => {
-	const hashPassword = function (password) {
-		return bcrypt.hashSync(password, bcrypt.genSaltSync(5), null);
-	};
+function hashPassword(password) {
+	console.log(password);
+	return bcrypt.hashSync(password, 10, null);
+};
 
+exports.localRegister = (req, res, next) => {
 	let firstName = req.body.firstName,
 		lastName = req.body.lastName,
 		email = req.body.email.confEmail,
@@ -93,10 +94,10 @@ exports.socialRegister = (req, res, next) => {
 		social_provider = req.body.provider,
 		social_photourl = req.body.photoUrl,
 		firstName = req.body.firstName,
-		// RUMA HÄKKI! Tulee aiheuttamaan ongelmia jos nimessä on enemmän osia
-		gFirstName = req.body.name.split(' ')[0];
-		gLastName = req.body.name.split(' ')[1];
 		lastName = req.body.lastName,
+		// RUMA HÄKKI! Tulee aiheuttamaan ongelmia jos nimessä on enemmän osia
+		gFirstName = req.body.name.split(' ')[0],
+		gLastName = req.body.name.split(' ')[1],
 		email = req.body.email,
 		data = {};
 
@@ -130,7 +131,7 @@ exports.socialRegister = (req, res, next) => {
 			}
 		}
 		if (!user) {
-			if(social_provider === 'GOOGLE') {
+			if (social_provider === 'GOOGLE') {
 				data = {
 					social_id: social_id,
 					social_token: social_token,
@@ -198,43 +199,43 @@ exports.forgotPassword = (req, res, next) => {
 	// waterfall ajaa funktiot esitellyssä järjestyksessä
 	// edellisen funktion tuotos "tiputetaan" seuraavalle funktiolle
 	async.waterfall([
-		function(done) {
+		function (done) {
 			User.find({
 				where: { email: req.body.email }
 			})
-			.then((user, err) => {
-				if(user) {
-					done(err, user);
-				} else {
-					done('User not found');
-				}
-			});
+				.then((user, err) => {
+					if (user) {
+						done(err, user);
+					} else {
+						done('User not found');
+					}
+				});
 		},
-		function(user, done) {
+		function (user, done) {
 			// Luodaan reset token
-			crypto.randomBytes(20, function(err, buffer) {
+			crypto.randomBytes(20, function (err, buffer) {
 				const token = buffer.toString('hex');
 				console.log('token: ' + token);
 				done(err, user, token);
 			});
 		},
-		function(user, token, done) {
+		function (user, token, done) {
 			// Etsitään käyttäjä ja lisätään token kantaan, sekä asetetaan expiry tunnin päähän
 			User.findOne({
 				where: { customer_id: user.customer_id }
 			})
-			.then((user) => {
-				const data = {
-					reset_token: token,
-					reset_token_expiry: Date.now() + 3600000
-				};
-	
-				user.updateAttributes(data).then((newUser, err) => {
-						done(err, token, newUser.dataValues);
+				.then((user) => {
+					const data = {
+						reset_token: token,
+						reset_token_expiry: Date.now() + 3600000
+					};
+
+					user.updateAttributes(data).then((updatedUser, err) => {
+						done(err, token, updatedUser.dataValues);
+					});
 				});
-			});
 		},
-		function(token, user, done) {
+		function (token, user, done) {
 			// Sähköpostin tiedot. Template löytyy kansiosta templates sen nimellä
 			const data = {
 				to: user.email,
@@ -248,16 +249,63 @@ exports.forgotPassword = (req, res, next) => {
 			};
 			console.log(data);
 			// Lähetetään sähköposti
-			smtpTransport.sendMail(data, function(err) {
-				if(!err) {
-					return res.status(201).json({ success: true, message: 'Reset email sent'});
+			smtpTransport.sendMail(data, function (err) {
+				if (!err) {
+					return res.status(201).json({ success: true, message: 'Reset email sent' });
 				} else {
 					return done(err);
 				}
 			});
 		}
-	], function(err) {
+	], function (err) {
 		// Jos waterfallissa tapahtui virhe
-		return res.status(500).json({ success: false, message: err});
+		return res.status(500).json({ success: false, message: err });
 	})
-}
+};
+
+exports.changePassword = (req, res, next) => {
+	// Tarkistetaan että token on olemassa & voimassa
+	User.findOne({
+		where: { reset_token: req.body.token, reset_token_expiry: { $gt: Date.now() } }
+	})
+		.then((user) => {
+			if (user) {
+				const data = {
+					password: hashPassword(req.body.newPassword.password.pwd),
+					reset_token: undefined,
+					reset_token_expiry: undefined
+				};
+				user.updateAttributes(data).then((user) => {
+
+					const data = {
+						to: user.dataValues.email,
+						from: email,
+						template: 'password-change-confirm',
+						subject: 'Kyyti.in salasana vaihdettu',
+						context: {
+							name: user.dataValues.firstName
+						}
+					};
+					smtpTransport.sendMail(data, () => {
+						return res.status(200).json({
+							success: true,
+							message: 'Password change success'
+						});
+					});
+
+				});
+			} else {
+				return res.status(404).json({
+					success: false,
+					message: 'Invalid or expired token'
+				});
+			}
+		})
+		.catch((err) => {
+			return res.status(400).json({
+				success: false,
+				message: 'Something went wrong',
+				error: err
+			});
+		});
+};

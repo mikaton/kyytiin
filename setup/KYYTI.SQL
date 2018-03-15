@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS Customers (
   password VARCHAR(100),
   phonenumber VARCHAR(15),
   confirmed BOOLEAN NOT NULL DEFAULT false,
-  reset_token VARCHAR(50) DEFAULT " "
-  reset_token_expiry DATETIME DEFAULT NOW()
+  reset_token VARCHAR(50) DEFAULT " ",
+  reset_token_expiry DATETIME DEFAULT NOW(),
   additional_information VARCHAR(512),
 );
 

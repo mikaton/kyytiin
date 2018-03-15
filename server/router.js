@@ -19,6 +19,7 @@ module.exports = (app) => {
   router.post('/auth/social', AuthController.socialRegister);
   router.post('/auth/social', AuthController.socialLogin);
   router.post('/auth/forgot-password', AuthController.forgotPassword);
+  router.post('/auth/change-password', AuthController.changePassword);
 
   // Käyttäjä CRUD reitit
   router.get('/user/:id', jwtAuth, UserController.getUser);

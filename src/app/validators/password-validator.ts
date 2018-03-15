@@ -10,4 +10,4 @@ export const passwordMatcher = (control: AbstractControl): { [key: string]: bool
 	return password.value === confirmPassword.value ? null : { nomatch: true };
 };
 
-export const passwordPattern = '^[^<>=!]{6,32}$';
+export const passwordPattern = '^[^<>=!]{8,32}$';
