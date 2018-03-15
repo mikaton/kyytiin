@@ -64,8 +64,8 @@ export class LocalAuthService {
             .then(
                 res => {
                     this.setToken(res);
-                    this.signOut();
-                    this.router.navigate(['frontpage']);
+                    this.setCurrentUserId(res);
+                    this.router.navigate(['rides']);
                     resolve(res);
                 },
                 err => {

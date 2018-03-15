@@ -1,0 +1,15 @@
+.wrapper {
+	padding-top: 50px;
+	margin: auto;
+	width: 900px;
+}
+.feedbackwrapper {
+	margin: auto; 
+	display: flex;
+	height: 900px;
+}
+.feedback {
+	margin: auto;
+	width: 80%; 
+	height: 100%;
+}
