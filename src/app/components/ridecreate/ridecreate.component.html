@@ -10,6 +10,7 @@
                         {{town.name}}
                     </mat-option>
                 </mat-autocomplete>
+                <mat-error>Valitse paikka listalta!</mat-error>
             </mat-form-field>
             <mat-form-field>
                 <input matInput id="destination" name="destination" placeholder="Määränpää" type="Address" [formControl]="destination"
@@ -19,6 +20,7 @@
                             {{town.name}}
                         </mat-option>
                     </mat-autocomplete>
+                    <mat-error>Valitse paikka listalta!</mat-error>
             </mat-form-field>
             <mat-form-field ngClass.xs="ridecreate_time">
                 <input matInput id="time_of_departure" name="time_of_departure" formControlName="time_of_departure" placeholder="Lähtöaika"
@@ -38,7 +40,7 @@
             </mat-form-field>
             <mat-slide-toggle id="smoking" name="smoking" formControlName="smoking" color="primary"> Tupakointi? </mat-slide-toggle>
             <mat-slide-toggle id="pets" name="pets" formControlName="pets" color="primary">Saako kyytiin ottaa lemmikkejä?</mat-slide-toggle>
-            <button [disabled]="rideCreateForm.invalid" mat-raised-button color="primary">Luo Kyyti!</button>
+            <button [disabled]="rideCreateForm.invalid || destination.invalid || startingplace.invalid" mat-raised-button color="primary">Luo Kyyti!</button>
         </form>
     </mat-card>
 </div>

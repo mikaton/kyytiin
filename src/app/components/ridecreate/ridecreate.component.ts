@@ -14,6 +14,7 @@ import { Town, towns } from './town'
 import { Observable } from 'rxjs/Observable';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
+import { townMatcher } from '../../validators/town-validator';
 
 @Component({
   selector: 'app-ridecreate',
@@ -32,9 +33,12 @@ export class RidecreateComponent implements OnInit {
   constructor(private rideService: RideService,
     private dialog: MatDialog,
     private fb: FormBuilder) {
-
-    this.startingplace = new FormControl();
-    this.destination = new FormControl();
+    
+    //Formcontrollit formgroupin ulkopuolella jotta hakutoiminto onnistuisi
+    this.startingplace = new FormControl('', [townMatcher])
+    this.destination = new FormControl('', [townMatcher]);
+    
+    //Filtteröi alku- ja lähtöpaikat observableen jotka ladataan HTML:ssä dropdown taulukkoon "startingplace of FilteredStartingplaces"
     this.filteredStartingplaces = this.startingplace.valueChanges
       .pipe(
         startWith(''),
@@ -45,17 +49,19 @@ export class RidecreateComponent implements OnInit {
         startWith(''),
         map(town => town ? this.filterDestinations(town) : this.towns.slice())
       )
+
     this.createForm();
   };
 
   public min_time = new Date();
-  public max_time = new Date(2022, 1, 1, 1, 1, 1, 1, )
+  public max_time = new Date(2020, 1, 1, 1, 1, 1, 1, )
   test_confirmed: boolean
 
   
   ngOnInit() {
   }
 
+  //filterifunktiot ylhäällä oleville observableille
   filterStartingplaces(name: string) {
     return this.towns.filter(town =>
       town.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
@@ -66,13 +72,10 @@ export class RidecreateComponent implements OnInit {
       town.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
 
+  //tyhjentää formin 
   rebuildForm() {
     this.rideCreateForm.reset({
     })
-  }
-  log() {
-    console.log(this.rideCreateForm);
-    console.log(this.startingplace.value);
   }
   createForm() {
     this.rideCreateForm = this.fb.group({
