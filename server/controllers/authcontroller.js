@@ -94,8 +94,8 @@ exports.socialRegister = (req, res, next) => {
 		social_photourl = req.body.photoUrl,
 		firstName = req.body.firstName,
 		// RUMA HÄKKI! Tulee aiheuttamaan ongelmia jos nimessä on enemmän osia
-		gFirstName = req.body.name.split(' ')[0];
-		gLastName = req.body.name.split(' ')[1];
+		gFirstName = req.body.name.split(' ')[0],
+		gLastName = req.body.name.split(' ')[1],
 		lastName = req.body.lastName,
 		email = req.body.email,
 		data = {};
