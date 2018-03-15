@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, ErrorHandler } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
 import {
@@ -49,6 +49,8 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ForgotPasswordService } from './services/forgot-password.service';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
+import { GlobalErrorHandler } from './app.error-handler';
+import { ErrorHandlerService } from './services/error.service';
 registerLocaleData(localeFi);
 
 const config = new AuthServiceConfig([
@@ -132,7 +134,12 @@ export function tokenGetter() {
     AuthGuard,
     UserService,
     RideService,
-    ForgotPasswordService
+    ForgotPasswordService,
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
+    },
+    ErrorHandlerService
   ],
   bootstrap: [AppComponent],
   entryComponents: [RideCreateConfirmDialog],
