@@ -15,34 +15,65 @@ gt-lg	'screen and (min-width: 1920px)'
 */
 
 #wrapper {
-  max-width: 900px;
+  max-width: 700px;
   margin: 50px auto;
 }
+
+.loginFrom {
+  max-width: 300px;
+  margin: auto;
+}
 .regButtonsLtLg {
-  width: 50%;
-  height: 50px; 
+  width: 70%;
+  height: 70px; 
 }
 
 .buttonsLtSm {
   width: 100%;
 }
+
+.loginbuttonsLtSm {
+  width: 100%;
+  margin-left: 1000px;
+}
+
 .buttonsGtXs {
-  width: 40%;
+  width: 100%;
 }
 
 .loginButtonGtLg {
   height: 36px;
   margin: auto;
+  margin-left: 4px;
+}
+
+.forgotPasswordLinkGtXs {
+  margin-left: 3px;
+  margin-top: 10px;
 }
 .authbox_socialmedia_login {
   padding-top: 30px;
 }
+.authbox_socialmedia_loginGtSm {
+  width: 100%;
+}
 
 .loginformLtSm {
-  width: 95%;
+  width: 90%;
   padding: 0 5px;
 }
 
+.loginformGtSm {
+  width: 100%;
+  padding: 0 5px;
+}
+.loginformContainer1GtSm {
+width: 50%;
+}
+.loginformContainer2GtSm {
+  width: 100%;
+  padding-right: 20px;
+}
 .btn-fb {
   margin-bottom: 10px;
   background-color: #3b5998;
@@ -57,4 +88,9 @@ gt-lg	'screen and (min-width: 1920px)'
 
 #btn-local {
   color: #fff;
+}
+
+.big_loginButton {
+  width: 40%;
+  padding: 0 5px;
 }
