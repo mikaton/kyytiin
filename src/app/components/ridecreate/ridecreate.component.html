@@ -1,7 +1,8 @@
 <div class="wrapper" fxLayout="column">
     <mat-card class="form-container mat-elevation-z8">
         <mat-card-title class="ridecreate_title">Luo uusi kyyti</mat-card-title>
-        <form [formGroup]="rideCreateForm" (ngSubmit)="rideCreate(rideCreateForm.value, startingplace.value, destination.value)" class="ridecreate" fxLayout="column">
+        <form [formGroup]="rideCreateForm" (ngSubmit)="rideCreate(rideCreateForm.value, startingplace.value, destination.value)"
+            class="ridecreate" fxLayout="column">
             <mat-form-field>
                 <input matInput id="startingplace" name="startingplace" placeholder="Lähtöpaikka" type="Address" [formControl]="startingplace"
                     [matAutocomplete]="auto" required>
@@ -13,14 +14,14 @@
                 <mat-error>Valitse paikka listalta!</mat-error>
             </mat-form-field>
             <mat-form-field>
-                <input matInput id="destination" name="destination" placeholder="Määränpää" type="Address" [formControl]="destination"
-                    [matAutocomplete]="auto2" required>
-                    <mat-autocomplete #auto2="matAutocomplete">
-                        <mat-option *ngFor="let town of filteredDestinations | async" [value]="town.name">
-                            {{town.name}}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-error>Valitse paikka listalta!</mat-error>
+                <input matInput id="destination" name="destination" placeholder="Määränpää" type="Address" [formControl]="destination" [matAutocomplete]="auto2"
+                    required>
+                <mat-autocomplete #auto2="matAutocomplete">
+                    <mat-option *ngFor="let town of filteredDestinations | async" [value]="town.name">
+                        {{town.name}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error>Valitse paikka listalta!</mat-error>
             </mat-form-field>
             <mat-form-field ngClass.xs="ridecreate_time">
                 <input matInput id="time_of_departure" name="time_of_departure" formControlName="time_of_departure" placeholder="Lähtöaika"
@@ -32,14 +33,18 @@
                     [min]="min_time" [max]="max_time" [owlDateTimeTrigger]="dtPicker2" [owlDateTime]="dtPicker2">
                 <owl-date-time [pickerMode]="'dialog'" [firstDayOfWeek]=1 #dtPicker2></owl-date-time>
             </mat-form-field>
-
             <mat-form-field>
-                <input matInput id="free_seats" placeholder="Vapaiden paikkojen määrä" name="free_seats" type="number" formControlName="free_seats" required>
+                <input matInput id="free_seats" placeholder="Vapaiden paikkojen määrä" name="free_seats" type="number" formControlName="free_seats"
+                    required>
                 <mat-error *ngIf="rideCreateForm.controls['free_seats'].hasError('min')">Lisää edes yksi tyhjä paikka</mat-error>
                 <mat-error *ngIf="rideCreateForm.controls['free_seats'].hasError('max')">Liian monta vapaata paikkaa, tai sitten ajat linja-autolla</mat-error>
             </mat-form-field>
-            <mat-slide-toggle id="smoking" name="smoking" formControlName="smoking" color="primary"> Tupakointi? </mat-slide-toggle>
-            <mat-slide-toggle id="pets" name="pets" formControlName="pets" color="primary">Saako kyytiin ottaa lemmikkejä?</mat-slide-toggle>
+            <mat-slide-toggle id="smoking" name="smoking" formControlName="smoking" color="primary"> Saako kyydissäsi tupakoida? </mat-slide-toggle>
+            <mat-slide-toggle id="pets" name="pets" formControlName="pets" color="primary">Saako kyytiisi ottaa lemmikkejä?</mat-slide-toggle>
+            <mat-form-field>
+                <input matInput #additional_information id="additional_information" name="additional_information" formControlName="additional_information" placeholder="Lisätiedot">
+                <mat-hint>{{additional_information.value.length}} / 512</mat-hint>
+            </mat-form-field>
             <button [disabled]="rideCreateForm.invalid || destination.invalid || startingplace.invalid" mat-raised-button color="primary">Luo Kyyti!</button>
         </form>
     </mat-card>

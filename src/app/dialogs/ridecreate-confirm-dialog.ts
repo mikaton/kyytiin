@@ -25,12 +25,15 @@ import { Subject } from 'rxjs/Subject';
     Vapaita paikkoja: {{ride.free_seats}}
   </mat-card-content>
   <mat-card-content>
-    Tupakointi?: {{ride.smoking ? 'Kyllä' : 'Ei'}}
-  </mat-card-content>
-  <mat-card-content>
-    Lemmikkejä?: {{ride.pets ? 'Kyllä' : 'Ei'}}
-  </mat-card-content>
-    </mat-card> 
+  Saako kyydissä tupakoida?: {{ride?.smoking ? 'Kyllä' : 'Ei'}}
+</mat-card-content>
+<mat-card-content>
+  Voiko kyytiin ottaa lemmikkejä?: {{ride?.pets ? 'Kyllä' : 'Ei'}}
+</mat-card-content>
+<mat-card-content>
+  Lisätiedot: {{ride?.additional_information}}
+</mat-card-content>
+</mat-card> 
       </mat-dialog-content>
       <mat-dialog-actions> 
         <button mat-button (click)="confirm()">Lisää kyyti!</button>
@@ -47,6 +50,6 @@ export class RideCreateConfirmDialog {
   ) { }
 
   confirm() {
-    this.dialogRef.close({confirmed: 'totta'});
+    this.dialogRef.close({ confirmed: 'totta' });
   }
 }
