@@ -1,0 +1,28 @@
+<div class="wrapper">
+    <mat-card class="mat-elevation-z8" fxLayout="row" fxLayoutAlign="space-between">
+      <div fxLayout="column" fxLayoutGap="10px" fxLayout.lt-md="column" fxFlexAlign.lt-md="center">
+        <mat-card-title>
+          Omat tiedot:
+        </mat-card-title>
+        <div fxLayout="column">
+          <div>
+            <mat-card-content>Nimi: {{localUser.user.firstName}} {{localUser.user.lastName}}</mat-card-content>
+            <mat-card-content>Sähköposti: {{localUser.user.email}}</mat-card-content>
+            <mat-card-content>Puhelinnumero: {{localUser.user.phoneNumber}}</mat-card-content>
+          </div>
+          <div>
+            <mat-card-content class="profilepicture" fxLayoutAlign="end" fxHide.lt-sm>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+      <img *ngIf="localUser.user.social_photourl" fxHide.lt-sm class=userheaderimg src="{{localUser.user.social_photourl}}">
+    </mat-card>
+    <!-- TODO 
+    <mat-card fxLayout.lt-md="column" fxFlexAlign.lt-md="center" fxLayoutAlign.lt-md="space-around center">
+      <mat-card-title>
+        Autosi
+      </mat-card-title>
+      <mat-card-content>TODO: Auton/autojen tähän</mat-card-content>
+    </mat-card>
+  -->

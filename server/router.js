@@ -5,7 +5,7 @@ const express = require('express'),
       AuthController = require('./controllers/authcontroller'),
       UserController = require('./controllers/usercontroller'),
       RideController = require('./controllers/ridecontroller');
-
+      ReviewController = require('./controllers/reviewcontroller');
 module.exports = (app) => {
   const router = express.Router();
   app.use('/api', router);
@@ -34,4 +34,9 @@ module.exports = (app) => {
   router.get('/ride/user/:id', jwtAuth, RideController.getUserRides);
   router.patch('/ride/:id', jwtAuth, RideController.updateRide);
   router.delete('/ride/:id', jwtAuth, RideController.deleteRide);
+
+  // Arvostelu CRUD reitit
+  router.post('/review/:customer_id', jwtAuth, ReviewController.createReview);
+  router.delete('/review/:id', jwtAuth, ReviewController.deleteReview);
+  
 }

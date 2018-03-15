@@ -1,0 +1,9 @@
+.wrapper {
+	max-width: 900px;
+	margin: 50px auto;
+}
+
+.userheaderimg {
+	width: 128px;
+	height: 128px;
+}
