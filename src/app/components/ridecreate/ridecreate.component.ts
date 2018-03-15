@@ -84,7 +84,8 @@ export class RidecreateComponent implements OnInit {
       smoking: [false,],
       time_of_departure: [new Date(), Validators.required],
       time_of_arrival: [new Date(), Validators.required],
-    }); this.startingplace
+      additional_information: ['', Validators.maxLength(512)],
+    });
   }
 
   openConfirmDialog(ride): Promise<any> {
@@ -96,6 +97,7 @@ export class RidecreateComponent implements OnInit {
         time_of_arrival: ride.time_of_arrival,
         free_seats: ride.free_seats,
         smoking: ride.smoking,
+        additional_information: ride.additional_information,
         pets: ride.pets
       }
     })
