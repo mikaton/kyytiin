@@ -17,10 +17,6 @@ export class ErrorHandlerService {
         // Kustiin jotain koodissa
         else if(error instanceof TypeError) {
             console.error(date, 'Tietotyyppivirhe!', error.message);
-        }
-        // Heitettiin jokin yleinen virhe
-        else if(error instanceof Error) {
-            console.error(date, 'Geneerinen virhe!', error.message);
         } else {
             // Jotain meni pieleen ja ei tiedetä että mitä..
             console.error(date, 'Tuntematon virhe!', error);
