@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'user', canActivate: [AuthGuard], component: UserpageComponent},
   { path: 'ridecreate', canActivate: [AuthGuard], component: RidecreateComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
-  { path: 'change-password/:token', component: ChangePasswordComponent}
+  { path: 'change-password/:token', component: ChangePasswordComponent},
   { path: 'feedback', component: FeedbackComponent}
 ];
 
