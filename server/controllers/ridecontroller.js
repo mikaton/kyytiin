@@ -21,7 +21,9 @@ exports.getSingleRide = (req, res, next) => {
 exports.getAllRides = (req, res, next) => {
   Ride.findAll({
     where: {},
-    limit: 10,
+    order: [
+      ['time_of_departure', 'ASC']
+    ] 
   })
     .then((rides) => {
       res.send(rides);
