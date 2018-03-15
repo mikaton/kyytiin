@@ -10,6 +10,7 @@ import { RidecreateComponent } from './components/ridecreate/ridecreate.componen
 import { FaqComponent } from './components/faq/faq.component';
 import { RideComponent } from './components/ride/ride.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'user', canActivate: [AuthGuard], component: UserpageComponent},
   { path: 'ridecreate', canActivate: [AuthGuard], component: RidecreateComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
+  { path: 'change-password/:token', component: ChangePasswordComponent},
   { path: 'feedback', component: FeedbackComponent}
 ];
 
