@@ -12,7 +12,4 @@ export class FrontpageComponent implements OnInit {
   ngOnInit() {
   }
 
-  openAuthDialog(): void {
-
-  }
 }

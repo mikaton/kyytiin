@@ -33,8 +33,7 @@ export class ChangePasswordComponent implements OnInit {
     token = this.route.snapshot.params.token;
     console.log(token);
     this.forgotPasswordService.changePassword(newPassword, token)
-    .then(
-      res => this.passwordChanged = true
-    );
+    .then(res => this.passwordChanged = true)
+    .catch(err => console.error('changePassword() failed: ' + err.message));
   }
 }

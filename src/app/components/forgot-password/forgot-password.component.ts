@@ -25,13 +25,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.userEmail = this.resetPasswordForm.value;
 
     this.forgotPwService.sendResetLink(this.userEmail)
-    .then(
-      res => {
-        this.resetEmailSent = true;
-      },
-      err => {
-        throw err;
-      }
-    );
+    .then(res => this.resetEmailSent = true)
+    .catch(err => console.error('Failed to send password reset email: ' + err.message));
   }
 }

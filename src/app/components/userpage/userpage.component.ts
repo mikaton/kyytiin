@@ -16,23 +16,25 @@ export class UserpageComponent implements OnInit {
     private rideService: RideService) { }
     localUser: any;
     rides = [];
-  ngOnInit() {
+
+  async ngOnInit() {
     this.defaultUserValues();
-    this.updateUserdata();
-    this.getRides();
+    await Promise.all([this.updateUserdata(), this.getRides()]);
   }
 
   updateUserdata() {
     this.userService.getUser(localStorage.getItem('_id'))
     .then((result) => {
       this.localUser = result;
-    });
+    })
+    .catch(err => console.error('updateUserData() failed: ' + err.message));
   }
   getRides() {
     this.rideService.getRideToUserPage(localStorage.getItem('_id'))
       .then((rides => {
         this.rides = rides.data;
-      }));
+      }))
+      .catch(err => console.error('getRides() failed: ' + err.message));
   }
 
   // Poistaa selaimen konsolin virheilmoitukset alustamalla datan 
