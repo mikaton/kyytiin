@@ -42,7 +42,6 @@ function setUserInfo(request) {
 };
 
 function hashPassword(password) {
-	console.log(password);
 	return bcrypt.hashSync(password, 10, null);
 };
 
@@ -103,7 +102,8 @@ exports.socialRegister = (req, res, next) => {
 
 	User.findOne({
 		where: { email: email }
-	}).then((user) => {
+	})
+	.then((user) => {
 		// Jos löytyy käyttäjä samalla emaililla, tarkistetaan social_id
 		// jos social_id on sama, siirrytään kirjautumisreittiin
 		if (user) {
@@ -124,10 +124,7 @@ exports.socialRegister = (req, res, next) => {
 						user: user,
 						token: generateJwt(user)
 					});
-				})
-					.catch((err) => {
-						console.log(err);
-					});
+				});
 			}
 		}
 		if (!user) {
@@ -156,15 +153,15 @@ exports.socialRegister = (req, res, next) => {
 			User.create(data)
 				.then((newUser) => {
 					const userInfo = setUserInfo(newUser);
-					console.log(newUser);
-					console.log(userInfo);
 					if (newUser) res.status(200).json({
 						message: 'User created',
 						token: generateJwt(userInfo)
 					});
 				});
+				
 		}
-	});
+	})
+	.catch((err) => console.log('socialRegister failed: ' + err.message));
 };
 
 exports.localLogin = (req, res, next) => {
@@ -181,18 +178,18 @@ exports.socialLogin = (req, res, next) => {
 	User.findOne({
 		where: { email: email }
 	})
-		.then((user) => {
-			const userInfo = {
-				_id: user.customer_id,
-				email: user.email
-			}
-			console.log(userInfo);
-			res.status(200).json({
-				message: 'Successfully logged in',
-				token: generateJwt(userInfo),
-				_id: user.customer_id
-			});
+	.then((user) => {
+		const userInfo = {
+			_id: user.customer_id,
+			email: user.email
+		}
+		res.status(200).json({
+			message: 'Successfully logged in',
+			token: generateJwt(userInfo),
+			_id: user.customer_id
 		});
+	})
+	.catch((err) => console.log('socialLogin failed: ' + err.message));
 };
 
 exports.forgotPassword = (req, res, next) => {
@@ -215,7 +212,6 @@ exports.forgotPassword = (req, res, next) => {
 			// Luodaan reset token
 			crypto.randomBytes(20, function (err, buffer) {
 				const token = buffer.toString('hex');
-				console.log('token: ' + token);
 				done(err, user, token);
 			});
 		},
@@ -224,16 +220,15 @@ exports.forgotPassword = (req, res, next) => {
 			User.findOne({
 				where: { customer_id: user.customer_id }
 			})
-				.then((user) => {
-					const data = {
-						reset_token: token,
-						reset_token_expiry: Date.now() + 3600000
-					};
-
-					user.updateAttributes(data).then((updatedUser, err) => {
-						done(err, token, updatedUser.dataValues);
-					});
+			.then((user) => {
+				const data = {
+					reset_token: token,
+					reset_token_expiry: Date.now() + 3600000
+				};
+				user.updateAttributes(data).then((updatedUser, err) => {
+					done(err, token, updatedUser.dataValues);
 				});
+			});
 		},
 		function (token, user, done) {
 			// Sähköpostin tiedot. Template löytyy kansiosta templates sen nimellä
@@ -247,7 +242,6 @@ exports.forgotPassword = (req, res, next) => {
 					name: user.firstName
 				}
 			};
-			console.log(data);
 			// Lähetetään sähköposti
 			smtpTransport.sendMail(data, function (err) {
 				if (!err) {
@@ -259,7 +253,7 @@ exports.forgotPassword = (req, res, next) => {
 		}
 	], function (err) {
 		// Jos waterfallissa tapahtui virhe
-		return res.status(500).json({ success: false, message: err });
+		return res.status(500).json({ success: false, message: 'async.waterfall error', err: err });
 	})
 };
 
@@ -268,43 +262,41 @@ exports.changePassword = (req, res, next) => {
 	User.findOne({
 		where: { reset_token: req.body.token, reset_token_expiry: { $gt: Date.now() } }
 	})
-		.then((user) => {
-			if (user) {
+	.then((user) => {
+		if (user) {
+			const data = {
+				password: hashPassword(req.body.newPassword.password.pwd),
+				reset_token: undefined,
+				reset_token_expiry: undefined
+			};
+			user.updateAttributes(data).then((user) => {
 				const data = {
-					password: hashPassword(req.body.newPassword.password.pwd),
-					reset_token: undefined,
-					reset_token_expiry: undefined
+					to: user.dataValues.email,
+					from: email,
+					template: 'password-change-confirm',
+					subject: 'Kyyti.in salasana vaihdettu',
+					context: {
+						name: user.dataValues.firstName
+					}
 				};
-				user.updateAttributes(data).then((user) => {
-
-					const data = {
-						to: user.dataValues.email,
-						from: email,
-						template: 'password-change-confirm',
-						subject: 'Kyyti.in salasana vaihdettu',
-						context: {
-							name: user.dataValues.firstName
-						}
-					};
-					smtpTransport.sendMail(data, () => {
-						return res.status(200).json({
-							success: true,
-							message: 'Password change success'
-						});
+				smtpTransport.sendMail(data, () => {
+					return res.status(200).json({
+						success: true,
+						message: 'Password change success'
 					});
-
 				});
-			} else {
-				return res.status(404).json({
+			});
+		} else {
+				return res.status(400).json({
 					success: false,
 					message: 'Invalid or expired token'
 				});
 			}
 		})
 		.catch((err) => {
-			return res.status(400).json({
+			return res.status(500).json({
 				success: false,
-				message: 'Something went wrong',
+				message: 'changePassword failed:',
 				error: err
 			});
 		});

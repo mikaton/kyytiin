@@ -23,16 +23,14 @@ export class RideComponent implements OnInit {
   // Jos useampia metodeja ngOnInitissä, syntaksi seuraava:
   // await Promise.all([funktio1(), funktio2()...])
   async ngOnInit() {
-    try {
-      await this.getRide();
-    } catch(err) {
-      console.log('Error: ' + err);
-    }
+    await this.getRide();
   }
 
   getRide(): void {
     const ride_id = this.route.snapshot.paramMap.get('ride_id');
-    this.rideService.getRide(ride_id).then(ride => this.ride = ride.data)
+    this.rideService.getRide(ride_id)
+    .then(ride => this.ride = ride.data)
+    .catch(err => console.error('getRide() failed: ' + err.message));
   }
 
   goBack(): void {
@@ -58,7 +56,9 @@ export class RideComponent implements OnInit {
         ride_id: this.route.snapshot.paramMap.get('ride_id'),
         free_seats: this.ride.free_seats - 1
       }
-      this.rideService.patchRide(data).then((ride) => console.log('Ride updated:' + ride));
+      this.rideService.patchRide(data)
+      .then((ride) => console.log('Ride updated:' + ride))
+      .catch(err => console.error('Join ride failed: ' + err.message));
     });
 
   }

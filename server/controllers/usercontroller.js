@@ -4,7 +4,8 @@ const model = require('../models/index'),
 exports.getUser = (req, res, next) => {
   User.find({
     where: { customer_id: req.params.id }
-  }).then(user => {
+  })
+  .then(user => {
     if(!user) res.status(400).json({
       message: 'User not found'
     });
@@ -12,7 +13,8 @@ exports.getUser = (req, res, next) => {
       message: 'User found',
       user: user
     });
-  });
+  })
+  .catch((err) => console.log('getUser failed: ' + err.message));
 };
 
 exports.updateUser = (req, res, next) => {
@@ -27,7 +29,8 @@ exports.updateUser = (req, res, next) => {
       message: 'User updated',
       user: updatedUser
     });
-  });
+  })
+  .catch((err) => console.log('updatedUser failed: ' + err.message));
 };
 
 exports.deleteUser = (req, res, next) => {
@@ -42,7 +45,5 @@ exports.deleteUser = (req, res, next) => {
       message: 'User deleted'
     });
   })
-  .catch((err) => {
-    console.log(err);
-  });
+  .catch((err) => console.log('deleteUser failed: ' + err.message));
 };

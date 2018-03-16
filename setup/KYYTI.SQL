@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS Customers (
   confirmed BOOLEAN NOT NULL DEFAULT false,
   reset_token VARCHAR(50) DEFAULT " ",
   reset_token_expiry DATETIME DEFAULT NOW(), 
-  additional_information VARCHAR(512),
+  additional_information VARCHAR(512)
 );
 
 CREATE TABLE IF NOT EXISTS Rides (

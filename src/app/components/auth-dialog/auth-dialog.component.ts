@@ -64,6 +64,9 @@ export class AuthDialogComponent implements OnInit {
       .then((user) => {
         this.updateUser();
         this.localAuthService.authenticate(user);
+      })
+      .catch((err) => {
+        console.error('signInWithGoogle failed: ' + err.message);
       });
   }
 
@@ -72,16 +75,27 @@ export class AuthDialogComponent implements OnInit {
       .then((user) => {
         this.updateUser();
         this.localAuthService.authenticate(user);
+      })
+      .catch((err) => {
+        console.error('signInWithFB() failed: ' + err.message);
       });
   }
 
   signInLocalUser(loginForm) {
-    this.localAuthService.signIn(loginForm);
+    this.localAuthService.signIn(loginForm)
+    .catch((err) => {
+      console.error('signInLocalUser() failed: ' + err.message);
+    });
   }
 
   registerLocal(registerForm) {
-    console.log(registerForm);
-    this.localAuthService.registerLocal(registerForm);
+    this.localAuthService.registerLocal(registerForm)
+    .then((user) => {
+      console.log('Registered user: ' + user);
+    })
+    .catch((err) => {
+      console.error('registerLocal() failed: ' + err.message);
+    });
   }
 
   async updateUser() {

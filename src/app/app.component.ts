@@ -44,9 +44,14 @@ export class AppComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-    this.getUser();
-    this.checkLocalStorage();
+  async ngOnInit() {
+    try {
+      await this.getUser();
+      this.checkLocalStorage();
+    } catch(err) {
+      console.log('App.component ngOnInit failed: ' + err.stack);
+    }
+    
   }
 
   checkLocalStorage() {
@@ -71,7 +76,9 @@ export class AppComponent implements OnInit {
   getUser() {
     this.userService.getUser(localStorage.getItem('_id')).then((result) => {
       this.localUser = result;
-    });
+    }).catch((err) => {
+      console.error('getUser() failed, ' + err.message);
+    })
   }
   signOut() {
     this.authService.signOut();

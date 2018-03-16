@@ -109,7 +109,7 @@ export class RidecreateComponent implements OnInit {
           this.test_confirmed = false;
         }
       })
-      .catch((err) => Promise.reject(err));
+      .catch((err) => console.error('openConfirmDialog() failed: ' + err.message));
   }
 
   rideCreate(rideCreateForm, startingplace, destination) {
@@ -132,6 +132,7 @@ export class RidecreateComponent implements OnInit {
         this.rideService.postRides(rideCreateForm);
       }
     })
+    .catch(err => console.error('rideCreate() failed: ' + err.message));
   };
 
   updateId() {

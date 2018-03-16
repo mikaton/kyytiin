@@ -14,8 +14,8 @@ export class RidelistComponent implements OnInit {
   startingplace: string;
   destination: string;
   
-  ngOnInit() {
-    this.getRides();
+  async ngOnInit() {
+    await this.getRides();
   }
 
   getRides() {
@@ -23,6 +23,6 @@ export class RidelistComponent implements OnInit {
     .then((rides => {
       this.rides = rides;
     }))
-    .catch((err) => Promise.reject(err));
+    .catch((err) => console.error('getRides() failed: ' + err.message));
   }
 }
