@@ -29,6 +29,7 @@ const localLogin = new LocalStrategy(localOpts, (req, email, password, done) => 
 
 		})
 		.catch((err) => {
+			console.log('localLogin failed: ' + err.message);
 			return done(false, err);
 		});
 });
@@ -48,7 +49,7 @@ const jwtLogin = new JwtStrategy(jwtOpts, (payload, done) => {
 			else { done(null, false); }
 		})
 		.catch((err) => {
-			console.log(err);
+			console.log('jwtLogin failed: ' + err);
 			done(false, err);
 		});
 });

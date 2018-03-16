@@ -7,15 +7,13 @@ exports.getSingleRide = (req, res, next) => {
   Ride.findOne({
     where: { ride_id: req.params.id }
   })
-    .then((ride) => {
-      res.status(200).json({
-        message: 'Ride found',
-        data: ride
-      });
-    })
-    .catch((err) => {
-      console.log(err);
+  then((ride) => {
+    res.status(200).json({
+      message: 'Ride found',
+      data: ride
     });
+  })
+  .catch((err) => console.log('getSingleRide failed: ' + err.message));
 };
 
 exports.getAllRides = (req, res, next) => {
@@ -25,30 +23,25 @@ exports.getAllRides = (req, res, next) => {
       ['time_of_departure', 'ASC']
     ] 
   })
-    .then((rides) => {
-      res.send(rides);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  .then((rides) => {
+    res.send(rides);
+  })
+  .catch((err) => console.log('getAllRides failed: ' + err.message));
 };
 
 exports.getUserRides = (req, res, next) => {
   Ride.findAll({
     where: { customer_id: req.params.id },
   })
-    .then((ride) => {
-      res.status(200).json({
-        message: 'Rides found',
-        data: ride
-      });
-    })
-    .catch((err) => {
-      console.log(err);
+  .then((ride) => {
+    res.status(200).json({
+      message: 'Rides found',
+      data: ride
     });
+  })
+  .catch((err) => console.log('getUserRides failed: ' + err.message));
 };
 exports.createRide = (req, res, next) => {
-  console.log(req.body);
   const data = {
     customer_id: req.body.customer_id,
     startingplace: req.body.startingplace,
@@ -64,18 +57,15 @@ exports.createRide = (req, res, next) => {
     hidden: req.body.hidden,
     additional_information: req.body.additional_information
   };
-  console.log(data);
 
   Ride.create(data)
-    .then((ride) => {
-      res.status(200).json({
-        message: 'Ride created',
-        data: ride
-      });
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  .then((ride) => {
+    res.status(200).json({
+      message: 'Ride created',
+      data: ride
+    });
+  })
+  .catch((err) => console.log('createRide failed: ' + err.message));
 };
 
 exports.updateRide = (req, res, next) => {
@@ -84,42 +74,41 @@ exports.updateRide = (req, res, next) => {
   Ride.find({
     where: { ride_id: req.body.ride_id }
   })
-    .then((ride) => {
-      return ride.updateAttributes(updateData)
-    })
-    .then((updatedRide) => {
-      res.status(200).json({
-        message: 'Ride updated',
-        user: updatedRide
-      });
-    })
+  .then((ride) => {
+    return ride.updateAttributes(updateData)
+  })
+  .then((updatedRide) => {
+    res.status(200).json({
+      message: 'Ride updated',
+       user: updatedRide
+    });
+  })
+  .catch((err) => console.log('updateRide failed: ' + err.message));
 };
 
 exports.deleteRide = (req, res, next) => {
   Ride.find({
     where: { ride_id: req.params.id }
   })
-    .then((ride) => {
-      return ride.destroy();
-    })
-    .then(() => {
-      res.status(200).json({
-        message: 'Ride deleted successfully'
-      });
-    })
-    .catch((err) => {
-      console.log(err);
+  .then((ride) => {
+    return ride.destroy();
+  })
+  .then(() => {
+    res.status(200).json({
+      message: 'Ride deleted successfully'
     });
+  })
+  .catch((err) => console.log('deleteRide failed: ' + err.message));
 };
 
 exports.joinRide = (req, res, next) => {
   const data = req.body;
-  console.log(req.body);
   CustomersRides.create(data)
     .then((done) => {
       res.status(200).json({
+        success: true,
         message: 'Joined ride successfully'
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log('joinRide failed: ' + err.message));
 };
