@@ -50,6 +50,7 @@ import { ForgotPasswordService } from './services/forgot-password.service';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { UserdetailsComponent } from './components/userdetails/userdetails.component';
+import { ReviewService } from './services/review.service';
 registerLocaleData(localeFi);
 
 const config = new AuthServiceConfig([
@@ -134,7 +135,8 @@ export function tokenGetter() {
     AuthGuard,
     UserService,
     RideService,
-    ForgotPasswordService
+    ForgotPasswordService,
+    ReviewService
   ],
   bootstrap: [AppComponent],
   entryComponents: [RideCreateConfirmDialog],
