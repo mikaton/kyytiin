@@ -25,6 +25,7 @@ export class LocalAuthService {
                             this.setToken(res);
                             this.setCurrentUserId(res);
                             this.checkLocalStorageToken();
+                            location.reload();
                             this.router.navigate(['rides']);
                             resolve(res);
                         },
@@ -75,7 +76,11 @@ export class LocalAuthService {
         return response;
     }
     setCurrentUserId(res) {
+        if(!res._id) {
         localStorage.setItem('_id', res.user._id);
+        } else {
+            localStorage.setItem('_id', res._id);
+        }
     }
     private setToken(res) {
         localStorage.setItem('token', res.token);
