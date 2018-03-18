@@ -58,12 +58,12 @@ export class LocalAuthService {
     registerLocal(user) {
         let response = new Promise((resolve, reject) => {
             this.http.post(this.apiUrlLocalRegister, user)
-
             .toPromise()
             .then(
                 res => {
                     this.setToken(res);
                     this.setCurrentUserId(res);
+                    location.reload();
                     this.router.navigate(['rides']);
                     resolve(res);
                 },
@@ -75,7 +75,7 @@ export class LocalAuthService {
         return response;
     }
     setCurrentUserId(res) {
-        localStorage.setItem('_id', res._id);
+        localStorage.setItem('_id', res.user._id);
     }
     private setToken(res) {
         localStorage.setItem('token', res.token);

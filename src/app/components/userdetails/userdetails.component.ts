@@ -5,7 +5,13 @@ import { DatePipe } from '@angular/common';
 import { RideService } from '../../services/ride.service';
 import { ActivatedRoute } from '@angular/router';
 import { ReviewService } from '../../services/review.service';
-
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  FormControl,
+  Validators
+} from '@angular/forms';
 @Component({
   selector: 'app-userdetails',
   templateUrl: './userdetails.component.html',

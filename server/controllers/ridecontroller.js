@@ -7,7 +7,7 @@ exports.getSingleRide = (req, res, next) => {
   Ride.findOne({
     where: { ride_id: req.params.id }
   })
-  then((ride) => {
+  .then((ride) => {
     res.status(200).json({
       message: 'Ride found',
       data: ride
