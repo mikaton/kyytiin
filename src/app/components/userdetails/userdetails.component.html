@@ -18,12 +18,20 @@
         </div>
         <img *ngIf="localUser.user.social_photourl" fxHide.lt-sm class=userheaderimg src="{{localUser.user.social_photourl}}">
     </mat-card>
-    <mat-card *ngIf="canReview">
+    <mat-card>
         Arvioi käyttäjä:
         <form [formGroup]="reviewForm" (ngSubmit)="sendReview(reviewForm.value)">
+            <div class="stars">
+                <star-rating-comp fxLayoutAlign="start center" [hoverEnabled]="true" [speed]="'immediately'" [size]="'large'" [starType]="'svg'" formControlName="stars"></star-rating-comp>
+            </div>
             <mat-form-field>
-                <input matInput name="stars" placeholder="Sukunimi" formControlName="stars" required>
+                <input matInput #review_text id="review_text" name="review_text" formControlName="review_text"
+                    placeholder="Lisätiedot">
+                <mat-hint>{{review_text.value.length}} / 512</mat-hint>
             </mat-form-field>
+            <div>
+            <button [disabled]="reviewForm.invalid" mat-raised-button color="primary">Anna arvio!</button>
+            </div>
         </form>
     </mat-card>
     <!-- TODO 

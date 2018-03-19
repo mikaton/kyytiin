@@ -7,3 +7,9 @@
 	width: 128px;
 	height: 128px;
 }
+
+.stars {
+	padding-top: 10px;
+	position: relative;
+	left: -10px;
+}

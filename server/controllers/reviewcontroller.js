@@ -42,15 +42,15 @@ exports.createReview = (req, res, next) => {
 		stars: req.body.stars,
 	};
 	console.log(data);
-
 	Review.create(data)
 		.then((ride) => {
 			res.status(200).json({
 				message: 'Review created',
-				data: review
+				data: data
 			});
 		})
 		.catch((err) => {
+			console.log('miksi')
 			console.log(err)
 		})
 };

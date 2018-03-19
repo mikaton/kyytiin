@@ -20,10 +20,26 @@ export class ReviewService {
         },
         err => {
           reject(err);
+        })
+    })
+    return response;
+  }
+  sendReview(reviewForm) {
+    console.log(reviewForm)
+    let response = new Promise((resolve, reject) => {
+      this.http.post(`${API_URL}/review/${reviewForm.customer_id}`, reviewForm)
+      .toPromise()
+      .then(
+        data => {
+          resolve(data);
+        },
+        err => {
+          reject(err);
         }
       )
     })
     return response;
   }
 }
+
 

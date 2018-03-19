@@ -53,6 +53,8 @@ import { GlobalErrorHandler } from './app.error-handler';
 import { ErrorHandlerService } from './services/error.service';
 import { UserdetailsComponent } from './components/userdetails/userdetails.component';
 import { ReviewService } from './services/review.service';
+import { StarRatingModule } from 'angular-star-rating';
+
 registerLocaleData(localeFi);
 
 const config = new AuthServiceConfig([
@@ -116,6 +118,7 @@ export function tokenGetter() {
     AppRoutingModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    StarRatingModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
