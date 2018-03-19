@@ -24,11 +24,13 @@ export class UserdetailsComponent implements OnInit {
     private userService: UserService,
     private localAuthService: LocalAuthService,
     private rideService: RideService,
-    private reviewService: ReviewService) {}
-    localUser: any;
-    rides = [];
-    customer_id: any;
-    canReview: boolean;
+    private reviewService: ReviewService,
+    private fb: FormBuilder) { }
+  localUser: any;
+  rides = [];
+  customer_id: any;
+  canReview: boolean;
+  reviewForm: FormGroup;
 
   ngOnInit() {
     this.canReview = false;
@@ -36,18 +38,27 @@ export class UserdetailsComponent implements OnInit {
     this.defaultUserValues();
     this.getUserData();
     this.allowReview()
+    this.createForm()
+  }
+  createForm() {
+    if (this.canReview) {
+      this.reviewForm = this.fb.group({
+        stars: ['', Validators.compose([Validators.required, Validators.min(1), Validators.max(5)])],
+        review_text: ['', Validators.maxLength(512)],
+      });
+    }
   }
 
   getUserData() {
     this.userService.getUser(this.customer_id)
       .then(localUser => this.localUser = localUser)
   }
-  
+
   allowReview() {
     this.reviewService.allowReview(this.customer_id, localStorage.getItem('_id'))
       .then(response => this.canReview = true)
       .catch((err) => Promise.reject(err));
-    }
+  }
 
   // Poistaa selaimen konsolin virheilmoitukset alustamalla datan 
   // huono fixi, pitää ottaa selvää serviceworkkereista ja välimuistista. 

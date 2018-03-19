@@ -1,0 +1,25 @@
+{
+    "short_name": "Kyytiin",
+    "name": "Kyytiin",
+	"background_color": "#fff",
+
+    "icons": [{
+            "src": "favicon.ico",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "favicon.ico",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "favicon.ico",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "/index.html",
+    "display": "standalone",
+    "orientation": "portrait"
+}

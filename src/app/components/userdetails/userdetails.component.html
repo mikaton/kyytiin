@@ -1,25 +1,30 @@
 <div class="wrapper">
     <mat-card class="mat-elevation-z8" fxLayout="row" fxLayoutAlign="space-between">
-      <div fxLayout="column" fxLayoutGap="10px" fxLayout.lt-md="column" fxFlexAlign.lt-md="center">
-        <mat-card-title>
-          Käyttäjän tiedot:
-        </mat-card-title>
-        <div fxLayout="column">
-          <div>
-            <mat-card-content>Nimi: {{localUser.user.firstName}} {{localUser.user.lastName}}</mat-card-content>
-            <mat-card-content>Sähköposti: {{localUser.user.email}}</mat-card-content>
-            <mat-card-content>Puhelinnumero: {{localUser.user.phoneNumber}}</mat-card-content>
-          </div>
-          <div>
-            <mat-card-content class="profilepicture" fxLayoutAlign="end" fxHide.lt-sm>
-            </mat-card-content>
-          </div>
+        <div fxLayout="column" fxLayoutGap="10px" fxLayout.lt-md="column" fxFlexAlign.lt-md="center">
+            <mat-card-title>
+                Käyttäjän tiedot:
+            </mat-card-title>
+            <div fxLayout="column">
+                <div>
+                    <mat-card-content>Nimi: {{localUser.user.firstName}} {{localUser.user.lastName}}</mat-card-content>
+                    <mat-card-content>Sähköposti: {{localUser.user.email}}</mat-card-content>
+                    <mat-card-content>Puhelinnumero: {{localUser.user.phoneNumber}}</mat-card-content>
+                </div>
+                <div>
+                    <mat-card-content class="profilepicture" fxLayoutAlign="end" fxHide.lt-sm>
+                    </mat-card-content>
+                </div>
+            </div>
         </div>
-      </div>
-      <img *ngIf="localUser.user.social_photourl" fxHide.lt-sm class=userheaderimg src="{{localUser.user.social_photourl}}">
+        <img *ngIf="localUser.user.social_photourl" fxHide.lt-sm class=userheaderimg src="{{localUser.user.social_photourl}}">
     </mat-card>
     <mat-card *ngIf="canReview">
-      Arvioi käyttäjä: 
+        Arvioi käyttäjä:
+        <form [formGroup]="reviewForm" (ngSubmit)="sendReview(reviewForm.value)">
+            <mat-form-field>
+                <input matInput name="stars" placeholder="Sukunimi" formControlName="stars" required>
+            </mat-form-field>
+        </form>
     </mat-card>
     <!-- TODO 
     <mat-card fxLayout.lt-md="column" fxFlexAlign.lt-md="center" fxLayoutAlign.lt-md="space-around center">
