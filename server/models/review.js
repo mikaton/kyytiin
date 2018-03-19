@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
 		review_text: {
 			type: DataTypes.STRING
 		},
+		review_created: {
+			type: DataTypes.DATE,
+			defaultValue: DataTypes.NOW,
+		},
 	},
 		{
 			timestamps: false,

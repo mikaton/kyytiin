@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS Reviews (
   customer_id VARCHAR(100) NOT NULL,
   stars TINYINT NOT NULL,
   review_text VARCHAR(600),
+  ALTER TABLE Reviews ADD review_created DATETIME default CURRENT_TIMESTAMP,
   FOREIGN KEY(customer_id) REFERENCES Customers(customer_id)
     ON UPDATE RESTRICT ON DELETE RESTRICT
 );

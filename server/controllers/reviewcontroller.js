@@ -24,7 +24,10 @@ exports.canReview = (req, res, next) => {
 
 exports.getReview = (req, res, next) => {
 	Review.findAll({
-		where: { customer_id: req.params.id }
+		where: { customer_id: req.params.id },
+		order: [
+			['review_created', 'DESC']
+		  ] 
 	}).then(review => {
 		if (!review) res.status(400).json({
 			message: 'Review not found'
