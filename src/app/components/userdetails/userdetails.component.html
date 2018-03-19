@@ -22,18 +22,34 @@
         Arvioi käyttäjä:
         <form [formGroup]="reviewForm" (ngSubmit)="sendReview(reviewForm.value)">
             <div class="stars">
-                <star-rating-comp fxLayoutAlign="start center" [hoverEnabled]="true" [speed]="'immediately'" [size]="'large'" [starType]="'svg'" formControlName="stars"></star-rating-comp>
+                <star-rating-comp fxLayoutAlign="start center" [hoverEnabled]="true" [speed]="'immediately'" [size]="'large'" [starType]="'svg'"
+                    formControlName="stars"></star-rating-comp>
             </div>
             <mat-form-field>
-                <input matInput #review_text id="review_text" name="review_text" formControlName="review_text"
-                    placeholder="Lisätiedot">
+                <input matInput #review_text id="review_text" name="review_text" formControlName="review_text" placeholder="Lisätiedot">
                 <mat-hint>{{review_text.value.length}} / 512</mat-hint>
             </mat-form-field>
             <div>
-            <button [disabled]="reviewForm.invalid" mat-raised-button color="primary">Anna arvio!</button>
+                <button [disabled]="reviewForm.invalid" mat-raised-button color="primary">Anna arvio!</button>
             </div>
         </form>
     </mat-card>
+    <mat-card>
+        <mat-card-title>Tähdet:</mat-card-title>
+        <div>
+            <form [formGroup]="showStars">
+                <div class="stars">
+                    <star-rating-comp fxLayoutAlign="start center" [size]="'large'" [readOnly]="true" [rating]="averageStars" [starType]="'svg'" formControlName="stars"></star-rating-comp>
+                </div>
+            </form>
+            <h3>Sanalliset arviot</h3>
+            <div *ngFor="let review of reviews">
+                <mat-card-content>{{review.review_text}}</mat-card-content>
+            </div>
+        </div>
+
+    </mat-card>
+
     <!-- TODO 
     <mat-card fxLayout.lt-md="column" fxFlexAlign.lt-md="center" fxLayoutAlign.lt-md="space-around center">
       <mat-card-title>

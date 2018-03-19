@@ -13,14 +13,14 @@ export class ReviewService {
     console.log(user, user2);
     let response = new Promise((resolve, reject) => {
       this.http.get(`${API_URL}/review/canReview/${user}/${user2}`)
-      .toPromise()
-      .then(
-        data => {
-          resolve(data);
-        },
-        err => {
-          reject(err);
-        })
+        .toPromise()
+        .then(
+          data => {
+            resolve(data);
+          },
+          err => {
+            reject(err);
+          })
     })
     return response;
   }
@@ -28,18 +28,29 @@ export class ReviewService {
     console.log(reviewForm)
     let response = new Promise((resolve, reject) => {
       this.http.post(`${API_URL}/review/${reviewForm.customer_id}`, reviewForm)
-      .toPromise()
-      .then(
-        data => {
-          resolve(data);
-        },
-        err => {
-          reject(err);
-        }
-      )
+        .toPromise()
+        .then(
+          data => {
+            resolve(data);
+          },
+          err => {
+            reject(err);
+          })
+    })
+    return response;
+  }
+  getReviews(customer_id): Promise<any> {
+    let response = new Promise((resolve, reject) => {
+      this.http.get(`${API_URL}/review/getReview/${customer_id}`)
+        .toPromise()
+        .then(
+          data => {
+            resolve(data);
+          },
+          err => {
+            reject(err);
+          })
     })
     return response;
   }
 }
-
-

@@ -27,27 +27,30 @@ export class UserdetailsComponent implements OnInit {
     private reviewService: ReviewService,
     private fb: FormBuilder) { }
   localUser: any;
-  rides = [];
+  reviews = [];
   customer_id: any;
   canReview: boolean;
   reviewForm: FormGroup;
+  showStars: FormGroup;
+  averageStars: any; 
 
   ngOnInit() {
     this.canReview = false;
     this.customer_id = this.route.snapshot.paramMap.get('customer_id');
     this.defaultUserValues();
     this.getUserData();
-    this.allowReview()
-    this.createForm()
+    this.getReviews(this.customer_id);
+    this.allowReview();
+    this.createForm();
+
   }
   createForm() {
     //if (this.canReview) {
-      this.reviewForm = this.fb.group({
-        stars: ['', Validators.compose([Validators.required, Validators.min(1), Validators.max(5)])],
-        review_text: ['', Validators.maxLength(512)],
-        customer_id: [this.customer_id],
-      });
-    //}
+    this.reviewForm = this.fb.group({
+      stars: ['', Validators.compose([Validators.required, Validators.min(1), Validators.max(5)])],
+      review_text: ['', Validators.maxLength(512)],
+      customer_id: [this.customer_id],
+    });
   }
 
   getUserData() {
@@ -59,13 +62,36 @@ export class UserdetailsComponent implements OnInit {
     this.reviewService.allowReview(this.customer_id, localStorage.getItem('_id'))
       .then(response => this.canReview = true)
       .catch(err => console.error('allowReview() failed: ' + err.message));
-    }
+  }
+
   sendReview(reviewForm) {
     console.log(reviewForm);
     this.reviewService.sendReview(reviewForm)
       .then(response => console.log('ok'))
       .catch(err => console.error('sendReview() failed: ' + err.message));
+  }
+
+  getReviews(customer_id) {
+    this.reviewService.getReviews(customer_id)
+      .then((reviews => {
+        this.reviews = reviews.review;
+        this.calculateAverageStars(reviews);
+      }))
+      .catch(err => console.error('getReviews() failed: ' + err.message));
+  }
+
+  calculateAverageStars(reviews) {
+    let length = reviews.review.length; 
+    let sum = 0;
+    let avg; 
+    for(let i = 0; i < length; i++) {
+      sum = sum + reviews.review[i].stars;
     }
+    avg = sum/length;
+    this.averageStars = avg;
+    this.averageStars.toString
+  }
+
   // Poistaa selaimen konsolin virheilmoitukset alustamalla datan 
   // huono fixi, pitää ottaa selvää serviceworkkereista ja välimuistista. 
   defaultUserValues() {
