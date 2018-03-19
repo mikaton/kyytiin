@@ -91,7 +91,9 @@ export class UserdetailsComponent implements OnInit {
     this.averageStars = avg;
     this.averageStars.toString
   }
-
+  refresh() {
+    location.reload();
+  }
   // Poistaa selaimen konsolin virheilmoitukset alustamalla datan 
   // huono fixi, pitää ottaa selvää serviceworkkereista ja välimuistista. 
   defaultUserValues() {

@@ -30,7 +30,7 @@
                 <mat-hint>{{review_text.value.length}} / 512</mat-hint>
             </mat-form-field>
             <div>
-                <button [disabled]="reviewForm.invalid" mat-raised-button color="primary">Anna arvio!</button>
+                <button [disabled]="reviewForm.invalid" mat-raised-button color="primary" (click)="refresh()">Anna arvio!</button>
             </div>
         </form>
     </mat-card>
