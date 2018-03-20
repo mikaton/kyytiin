@@ -14,8 +14,9 @@ export class UserpageComponent implements OnInit {
   constructor(private userService: UserService,
     private localAuthService: LocalAuthService,
     private rideService: RideService) { }
-    localUser: any;
-    rides = [];
+  localUser: any;
+  rides = [];
+  joinedRides = [];
 
   async ngOnInit() {
     this.defaultUserValues();
@@ -24,15 +25,21 @@ export class UserpageComponent implements OnInit {
 
   updateUserdata() {
     this.userService.getUser(localStorage.getItem('_id'))
-    .then((result) => {
-      this.localUser = result;
-    })
-    .catch(err => console.error('updateUserData() failed: ' + err.message));
+      .then((result) => {
+        this.localUser = result;
+      })
+      .catch(err => console.error('updateUserData() failed: ' + err.message));
   }
+
   getRides() {
     this.rideService.getRideToUserPage(localStorage.getItem('_id'))
       .then((rides => {
         this.rides = rides.data;
+      }))
+      .catch(err => console.error('getRides() failed: ' + err.message));
+    this.rideService.getJoinedRideToUserPage(localStorage.getItem('_id'))
+      .then((rides => {
+        this.joinedRides = rides.data;
       }))
       .catch(err => console.error('getRides() failed: ' + err.message));
   }

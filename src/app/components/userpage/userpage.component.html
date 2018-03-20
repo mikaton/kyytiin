@@ -19,13 +19,41 @@
     <img *ngIf="localUser.user.social_photourl" fxHide.lt-sm class=userheaderimg src="{{localUser.user.social_photourl}}">
   </mat-card>
 
-  <!-- KYYDIT --> 
-  <div fxLayout="column">
+  <!-- KYYDIT -->
+  <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between">
+    <div fxLayout="column" fxFlex="49">
+      <mat-card class="mat-elevation-z8" fxLayout="column">
+        <mat-card-title>
+          Luomasi kyydit:
+        </mat-card-title>
+        <div *ngFor="let ride of rides" fxLayout="column">
+          <a routerLink="/rides/{{ride.ride_id}}">
+            <mat-card class="ride_card" fxLayout="column" fxLayoutAlign="space around center">
+              <div fxLayout="column">
+                <mat-card-title fxFlex="50">
+                  Lähtöpaikka: {{ride.startingplace}}
+                </mat-card-title>
+                <mat-card-title fxFlex="50">
+                  Määränpää: {{ride.destination}}
+                </mat-card-title>
+              </div>
+              <mat-card-content>
+                Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
+              </mat-card-content>
+              <mat-card-content>
+                Vapaita paikkoja: {{ride.free_seats}}
+              </mat-card-content>
+            </mat-card>
+          </a>
+        </div>
+      </mat-card>
+    </div>
+  <div fxLayout="column"  fxFlex="49">
     <mat-card class="mat-elevation-z8" fxLayout="column">
       <mat-card-title>
-        Kyytisi:
+        Liitytyt kyydit:
       </mat-card-title>
-      <div *ngFor="let ride of rides" fxLayout="column">
+      <div *ngFor="let ride of joinedRides" fxLayout="column">
         <a routerLink="/rides/{{ride.ride_id}}">
           <mat-card class="ride_card" fxLayout="column" fxLayoutAlign="space around center">
             <div fxLayout="column">
@@ -48,7 +76,9 @@
     </mat-card>
   </div>
 </div>
-  <!-- TODO 
+</div>
+
+<!-- TODO 
   <mat-card fxLayout.lt-md="column" fxFlexAlign.lt-md="center" fxLayoutAlign.lt-md="space-around center">
     <mat-card-title>
       Autosi

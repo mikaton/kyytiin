@@ -42,6 +42,22 @@ export class RideService {
     });
     return response;
   }
+
+  getJoinedRideToUserPage(customer_id): Promise<any> {
+    let response = new Promise((resolve, reject) => {
+      this.http.get(`${this.apiUrlUser}/joined/${customer_id}`)
+      .toPromise()
+      .then(
+        data => {
+          resolve(data);
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
+    return response;
+  }
   getRides(): Promise<any> {
     let response = new Promise((resolve, reject) => {
       this.http.get(this.apiUrl)
