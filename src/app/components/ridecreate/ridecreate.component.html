@@ -42,7 +42,7 @@
             <mat-slide-toggle id="smoking" name="smoking" formControlName="smoking" color="primary"> Saako kyydissäsi tupakoida? </mat-slide-toggle>
             <mat-slide-toggle id="pets" name="pets" formControlName="pets" color="primary">Saako kyytiisi ottaa lemmikkejä?</mat-slide-toggle>
             <mat-form-field>
-                <input matInput #additional_information id="additional_information" name="additional_information" formControlName="additional_information" placeholder="Lisätiedot">
+                <input matInput #additional_information id="additional_information" name="additional_information" formControlName="additional_information" placeholder="Lisätiedot; esim reitti, perilläoloaika jne.">
                 <mat-hint>{{additional_information.value.length}} / 512</mat-hint>
             </mat-form-field>
             <button [disabled]="rideCreateForm.invalid || destination.invalid || startingplace.invalid" mat-raised-button color="primary">Luo Kyyti!</button>

@@ -16,6 +16,7 @@ export class ReviewService {
         .toPromise()
         .then(
           data => {
+            console.log(data);
             resolve(data);
           },
           err => {
