@@ -98,6 +98,8 @@
             </mat-form-field>
           </div>
           <mat-error *ngIf="registerForm.controls['password'].hasError('nomatch')">Salasanat eivät täsmää.</mat-error>
+          <mat-checkbox matInput name="checkbox" formControlName="checkbox">Rekisteröitymällä hyväksyt <a routerLink="/faq" routerLinkActive="router-link-active">käyttöehdot</a>
+          </mat-checkbox>
 
           <!--NAPPULAT -->
           <button [disabled]="registerForm.invalid" mat-raised-button id="registerButton" ngClass.lt-sm="buttonsLtSm" color="primary">Rekisteröidy</button>

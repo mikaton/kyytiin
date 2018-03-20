@@ -21,7 +21,7 @@
                     <mat-list-item>PALAUTE</mat-list-item>
                 </a>
                 <a routerLink="/faq" routerLinkActive="router-link-active">
-                    <mat-list-item>FAQ</mat-list-item>
+                    <mat-list-item>INFO</mat-list-item>
                 </a>
                 <a routerLink="/user" *ngIf="localStorageToken === true" routerLinkActive="router-link-active">
                     <mat-list-item>PROFIILI</mat-list-item>
@@ -58,7 +58,7 @@
                     <mat-list-item>PALAUTE</mat-list-item>
                 </a>
                 <a routerLink="/faq" routerLinkActive="router-link-active" (click)="sidenav.close()">
-                    <mat-list-item>FAQ</mat-list-item>
+                    <mat-list-item>INFO</mat-list-item>
                 </a>
                 <mat-list-item *ngIf="localStorageToken === false" (click)="sidenav.close()">
                     <button mat-raised-button color="primary">

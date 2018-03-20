@@ -14,6 +14,7 @@ import {
   MatSlideToggleModule,
   MatSliderModule,
   MatAutocompleteModule,
+  MatCheckboxModule,
 } from '@angular/material';
 import { MatListModule } from '@angular/material/list';
 import { MatNavList } from '@angular/material';
@@ -118,6 +119,7 @@ export function tokenGetter() {
     AppRoutingModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    MatCheckboxModule,
     StarRatingModule.forRoot(),
     JwtModule.forRoot({
       config: {

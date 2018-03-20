@@ -39,6 +39,7 @@ export class AuthDialogComponent implements OnInit {
     this.registerForm = fb.group({
       firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
       lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(80)])],
+      checkbox:['', Validators.requiredTrue],
       email: this.fb.group({
         confEmail: ['', Validators.compose([Validators.required, Validators.email])],
         confirmedEmail: ['', Validators.compose([Validators.required, Validators.email])],
