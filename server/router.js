@@ -38,6 +38,6 @@ module.exports = (app) => {
   // Arvostelu CRUD reitit
   router.post('/review/:customer_id', jwtAuth, ReviewController.createReview);
   router.delete('/review/:id', jwtAuth, ReviewController.deleteReview);
-  router.get('/review/canReview/:creator_customer_id/:joiner_customer_id', jwtAuth, ReviewController.canReview);
+  router.get('/review/canReview/:creator_customer_id/:joiner_customer_id', ReviewController.canReview);
   router.get('/review/getReview/:id', jwtAuth, ReviewController.getReview);
 }

@@ -56,6 +56,7 @@ export class UserdetailsComponent implements OnInit {
   getUserData() {
     this.userService.getUser(this.customer_id)
       .then(localUser => this.localUser = localUser)
+      .catch(err => console.error('userdetails.getUserData() failed: ' + err.message));
   }
 
   allowReview() {

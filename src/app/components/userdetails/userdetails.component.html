@@ -18,7 +18,7 @@
         </div>
         <img *ngIf="localUser.user.social_photourl" fxHide.lt-sm class=userheaderimg src="{{localUser.user.social_photourl}}">
     </mat-card>
-    <mat-card>
+    <mat-card *ngIf="canReview">
         Arvioi käyttäjä:
         <form [formGroup]="reviewForm" (ngSubmit)="sendReview(reviewForm.value)">
             <div class="stars">
@@ -37,11 +37,9 @@
     <mat-card>
         <mat-card-title>Tähdet:</mat-card-title>
         <div>
-            <form [formGroup]="showStars">
-                <div class="stars">
-                    <star-rating-comp fxLayoutAlign="start center" [size]="'large'" [readOnly]="true" [rating]="averageStars" [starType]="'svg'" formControlName="stars"></star-rating-comp>
-                </div>
-            </form>
+            <div class="stars">
+                <star-rating-comp fxLayoutAlign="start center" [size]="'large'" [readOnly]="true" [rating]="averageStars" [starType]="'svg'"></star-rating-comp>
+            </div>
             <h3>Sanalliset arviot</h3>
             <div *ngFor="let review of reviews">
                 <mat-card-content>{{review.review_text}}</mat-card-content>
