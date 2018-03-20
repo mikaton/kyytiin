@@ -3,8 +3,8 @@
 
 @include mat-core();
 
-$kyytiin-primary: mat-palette($mat-teal, 500);
-$kyytiin-accent: mat-palette($mat-teal, 100);
+$kyytiin-primary: mat-palette($mat-light-green, 700);
+$kyytiin-accent: mat-palette($mat-light-green, 500);
 $kyytiin-warn: mat-palette($mat-red);
 
 $kyytiin-theme: mat-light-theme($kyytiin-primary, $kyytiin-accent, $kyytiin-warn);
