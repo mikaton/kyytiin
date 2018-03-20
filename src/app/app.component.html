@@ -1,11 +1,11 @@
 <link rel="manifest" href="../manifest.json">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 <div class="wrapper">
-    <mat-toolbar class="sidenav_toolbar">
+    <mat-toolbar color="primary" class="sidenav_toolbar">
         <button mat-button ngClass.gt-md="hidebutton" (click)="sidenavOpen(sidenav)">
-			<mat-icon color="primary">menu</mat-icon>
+			<mat-icon>menu</mat-icon>
 		</button>
-        <h1 id="mainheading">Kyyti.in ALPHA</h1>
+        <img id="logo_toolbar" src="../assets/images/kyytiin-icon-black_white.png" alt="kyyti.in logo">
         <span class="toolbar_fillempty"></span>
         <!-- Työpöydän, >1280px leveille näytöille tarkoitettu navigoitipalkki -->
         <div fxHide.lt-lg>
@@ -27,18 +27,15 @@
                     <mat-list-item>PROFIILI</mat-list-item>
                 </a>
                 <mat-list-item *ngIf="localStorageToken === false">
-                    <button mat-raised-button color="primary">
-						<a routerLink="/frontpage">
-							Kirjaudu Sisään
-						</a>
-					</button>
+					<a routerLink="/frontpage">
+						Kirjaudu Sisään
+					</a>
                 </mat-list-item>
                 <mat-list-item *ngIf="localStorageToken === true">
-                    <button mat-raised-button (click)="signOut()">
-						<mat-icon id="logout">
-							power_settings_new
-						</mat-icon>
-					</button>
+                    <div (click)="signOut()">
+                        Kirjaudu Ulos         
+                        <i class="fa fa-sign-out-alt"></i> 
+                    </div>
                 </mat-list-item>
             </mat-nav-list>
         </div>

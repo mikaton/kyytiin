@@ -23,6 +23,9 @@ gt-lg	'screen and (min-width: 1920px)'
   max-width: 300px;
   margin: auto;
 }
+#loginButton {
+  margin-bottom: 10px;
+}
 .regButtonsLtLg {
   width: 70%;
   height: 70px; 

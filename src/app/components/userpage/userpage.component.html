@@ -1,5 +1,5 @@
-<div class="wrapper">
-  <mat-card class="mat-elevation-z8" fxLayout="row" fxLayoutAlign="space-between">
+<div class="wrapper" fxLayout="column">
+  <mat-card class="mat-elevation-z8 profileInfo" fxLayout="row" fxLayoutAlign="space-between">
     <div fxLayout="column" fxLayoutGap="10px" fxLayout.lt-md="column" fxFlexAlign.lt-md="center">
       <mat-card-title>
         Omat tiedot:
@@ -21,9 +21,9 @@
 
   <!-- KYYDIT --> 
   <div fxLayout="column">
-    <mat-card fxLayout="column" fxFlexAlign.lt-md="center" fxLayoutAlign.lt-md="space-around center">
+    <mat-card class="mat-elevation-z8" fxLayout="column">
       <mat-card-title>
-        Kyytisi
+        Kyytisi:
       </mat-card-title>
       <div *ngFor="let ride of rides" fxLayout="column">
         <a routerLink="/rides/{{ride.ride_id}}">
@@ -47,6 +47,7 @@
       </div>
     </mat-card>
   </div>
+</div>
   <!-- TODO 
   <mat-card fxLayout.lt-md="column" fxFlexAlign.lt-md="center" fxLayoutAlign.lt-md="space-around center">
     <mat-card-title>
