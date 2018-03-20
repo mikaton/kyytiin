@@ -32,12 +32,13 @@ module.exports = (app) => {
   router.get('/ride/:id', jwtAuth, RideController.getSingleRide);
   router.get('/ride', RideController.getAllRides);
   router.get('/ride/user/:id', jwtAuth, RideController.getUserRides);
+  router.get('/ride/user/joined/:id', RideController.getUserJoinedRides);
   router.patch('/ride/:id', jwtAuth, RideController.updateRide);
   router.delete('/ride/:id', jwtAuth, RideController.deleteRide);
 
   // Arvostelu CRUD reitit
   router.post('/review/:customer_id', jwtAuth, ReviewController.createReview);
   router.delete('/review/:id', jwtAuth, ReviewController.deleteReview);
-  router.get('/review/canReview/:creator_customer_id/:joiner_customer_id', ReviewController.canReview);
+  router.get('/review/canReview/:creator_customer_id/:joiner_customer_id',jwtAuth, ReviewController.canReview);
   router.get('/review/getReview/:id', jwtAuth, ReviewController.getReview);
 }

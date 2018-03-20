@@ -41,6 +41,21 @@ exports.getUserRides = (req, res, next) => {
   })
   .catch((err) => console.log('getUserRides failed: ' + err.message));
 };
+
+exports.getUserJoinedRides = (req, res, next) => {
+  Ride.sequelize.query('SELECT r.startingplace AS startingplace, r.destination AS destination, r.time_of_departure AS time_of_departure, r.time_of_arrival AS time_of_arrival, r.free_seats AS free_seats, r.smoking AS smoking, r.pets AS pets FROM CustomersRides_ride CRr INNER JOIN Rides r on CRr.ride_id = r.ride_id WHERE CRr.customer_id = :joiner_customer_id',
+  {
+			replacements: { joiner_customer_id: req.params.id },
+			type: Ride.sequelize.QueryTypes.SELECT
+		})
+		.then(ride => {
+    res.status(200).json({
+      message: 'Rides found',
+      data: ride
+    });
+  })
+  .catch((err) => console.log('getUserJoinedRides failed: ' + err.message));
+};
 exports.createRide = (req, res, next) => {
   const data = {
     customer_id: req.body.customer_id,
