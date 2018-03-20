@@ -5,3 +5,7 @@ body {
 a {
     text-decoration: none;
 }
+
+.fa-check {
+	color: #689F38;
+}

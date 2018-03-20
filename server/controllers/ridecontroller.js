@@ -1,7 +1,33 @@
 const model = require('../models/index'),
   config = require('../config/main'),
+  path = require('path'),
   Ride = model.Ride,
-  CustomersRides = model.CustomersRides_ride;
+  async = require('async'),
+  CustomersRides = model.CustomersRides_ride,
+  User = model.Customer;
+
+  	// --- <Sähköpostin asetukset> ---
+	hbs = require('nodemailer-express-handlebars'),
+	email = process.env.MAILER_EMAIL_ID || config.mailer.user,
+	password = process.env.MAILER_PASSWORD || config.mailer.password,
+	nodemailer = require('nodemailer'),
+
+	smtpTransport = nodemailer.createTransport({
+		service: process.env.MAILER_SERVICE_PROVIDER || 'Gmail',
+		auth: {
+			user: email,
+			pass: password
+		}
+	}),
+
+	handlebarsOptions = {
+		viewEngine: 'handlebars',
+		viewPath: path.resolve('./server/templates/'),
+		extName: '.html'
+	};
+
+	smtpTransport.use('compile', hbs(handlebarsOptions));
+	// --- </Sähköpostin asetukset> //
 
 exports.getSingleRide = (req, res, next) => {
   Ride.findOne({
@@ -114,6 +140,18 @@ exports.deleteRide = (req, res, next) => {
     });
   })
   .catch((err) => console.log('deleteRide failed: ' + err.message));
+};
+
+exports.sendConfirmRideJoinEmail = (req, res, next) => {
+
+};
+
+exports.confirmRideJoin = (req, res, next) => {
+
+};
+
+exports.denyRideJoin = (req, res, next) => {
+
 };
 
 exports.joinRide = (req, res, next) => {

@@ -35,6 +35,7 @@ module.exports = (app) => {
   router.get('/ride/user/joined/:id', RideController.getUserJoinedRides);
   router.patch('/ride/:id', jwtAuth, RideController.updateRide);
   router.delete('/ride/:id', jwtAuth, RideController.deleteRide);
+  router.post('/ride/:creator_id/:joiner_id/:ride_id', RideController.sendConfirmRideJoinEmail);
 
   // Arvostelu CRUD reitit
   router.post('/review/:customer_id', jwtAuth, ReviewController.createReview);
