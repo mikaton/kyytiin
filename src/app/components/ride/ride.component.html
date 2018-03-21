@@ -33,12 +33,13 @@
     <button mat-raised-button (click)="goBack()">Takaisin</button>
   </mat-card>
   <ng-template #alertTemplate>
-    <mat-card>
-      <h1 mat-dialog-title>Haluatko varmasti liittyä kyytiin?</h1>
+      <h1 mat-dialog-title>Lähetä pyyntö liittyä kyytiin?</h1>
+      <div class="spinner_icon" *ngIf="!confirmEmailSent && confirmEmailButtonClicked"><i class="fas fa-spinner fa-pulse"></i></div>
+      <div class="check_icon" *ngIf="confirmEmailSent && confirmEmailButtonClicked"><i class="fas fa-check"></i>&nbsp;&nbsp;Liittymispyyntö lähetetty!</div>
       <mat-dialog-actions>
-        <button mat-raised-button color="primary" (click)="joinRide()">Liity Kyytiin</button>
-        <button mat-button type="button" (click)="dialogRef.close()">Peruuta</button>
+        <button *ngIf="!confirmEmailSent && !confirmEmailButtonClicked" mat-raised-button color="primary" (click)="joinRide()">Kyllä</button>
+        <button *ngIf="!confirmEmailSent && !confirmEmailButtonClicked" mat-button type="button" (click)="dialogRef.close()">Peruuta</button>
+        <button *ngIf="confirmEmailSent && confirmEmailButtonClicked" mat-raised-button color="primary" (click)="dialogRef.close()">Sulje</button>
       </mat-dialog-actions>
-    </mat-card>
   </ng-template>
 </div>

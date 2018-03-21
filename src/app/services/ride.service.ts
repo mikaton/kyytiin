@@ -94,7 +94,7 @@ export class RideService {
       .toPromise()
       .then(
         data => {
-          this.router.navigate(['rides']);
+          
           resolve();
         },
         err => {

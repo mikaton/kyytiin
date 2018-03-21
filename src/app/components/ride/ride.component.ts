@@ -12,6 +12,9 @@ import {  MatDialog, MatDialogRef } from '@angular/material';
 export class RideComponent implements OnInit {
   ride: any;
   dialogRef: any;
+  confirmEmailSent: boolean = false;
+  confirmEmailButtonClicked: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private rideService: RideService,
@@ -46,20 +49,7 @@ export class RideComponent implements OnInit {
 }
 
   joinRide() {
-    this.dialogRef.close();
-    const ride = {
-      ride_id: this.route.snapshot.paramMap.get('ride_id'),
-      customer_id: localStorage.getItem('_id')
-    }
-    this.rideService.joinRide(ride).then(() => {
-      const data = { 
-        ride_id: this.route.snapshot.paramMap.get('ride_id'),
-        free_seats: this.ride.free_seats - 1
-      }
-      this.rideService.patchRide(data)
-      .then((ride) => console.log('Ride updated:' + ride))
-      .catch(err => console.error('Join ride failed: ' + err.message));
-    });
-
+    this.confirmEmailButtonClicked = true;
+    
   }
 }
