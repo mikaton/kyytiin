@@ -36,7 +36,7 @@ export class AuthDialogComponent implements OnInit {
 
   constructor(private authService: AuthService,
     private localAuthService: LocalAuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
     ) {
 
     this.registerForm = fb.group({
