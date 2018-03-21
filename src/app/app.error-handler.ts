@@ -11,7 +11,6 @@ export class GlobalErrorHandler implements ErrorHandler {
     handleError(error) {
         // Loggaa tällä hetkellä vain konsoliin kustomoidun virheviestin
         this.errorService.logError(error);
-        this.errorService.showErrorDialog(error);
     }
 }
 

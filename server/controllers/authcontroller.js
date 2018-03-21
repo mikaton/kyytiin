@@ -59,7 +59,7 @@ exports.localRegister = (req, res, next) => {
 			console.log(user);
 			if (user) {
 				res.status(400).json({
-					message: 'User already exists'
+					message: 'Sähköposti on jo rekisteröity kättäjälle.'
 				});
 			}
 			else {
@@ -76,7 +76,7 @@ exports.localRegister = (req, res, next) => {
 					.then((newUser) => {
 						const userInfo = setUserInfo(newUser);
 						if (newUser) res.status(201).json({
-							message: 'User created',
+							message: 'Käyttäjä luotu',
 							user: userInfo,
 							token: generateJwt(userInfo)
 						});
@@ -121,7 +121,7 @@ exports.socialRegister = (req, res, next) => {
 				user.updateAttributes(updateData).then((updatedUser) => {
 					let user = setUserInfo(updatedUser.dataValues);
 					return res.status(200).json({
-						message: 'User updated',
+						message: 'Käyttäjä päivitetty',
 						user: user,
 						token: generateJwt(user)
 					});
@@ -155,7 +155,7 @@ exports.socialRegister = (req, res, next) => {
 				.then((newUser) => {
 					const userInfo = setUserInfo(newUser);
 					if (newUser) res.status(201).json({
-						message: 'User created',
+						message: 'Käyttäjä luotu',
 						token: generateJwt(userInfo)
 					});
 				});
@@ -205,7 +205,7 @@ exports.forgotPassword = (req, res, next) => {
 					if (user) {
 						done(err, user);
 					} else {
-						done('User not found');
+						done('Käyttäjää ei löydetty');
 					}
 				});
 		},
@@ -246,7 +246,7 @@ exports.forgotPassword = (req, res, next) => {
 			// Lähetetään sähköposti
 			smtpTransport.sendMail(data, function (err) {
 				if (!err) {
-					return res.status(201).json({ success: true, message: 'Reset email sent' });
+					return res.status(201).json({ success: true, message: 'Reset sähköposti lähetetty' });
 				} else {
 					return done(err);
 				}
@@ -283,21 +283,21 @@ exports.changePassword = (req, res, next) => {
 				smtpTransport.sendMail(data, () => {
 					return res.status(200).json({
 						success: true,
-						message: 'Password change success'
+						message: 'Salasanan vaihto onnistui'
 					});
 				});
 			});
 		} else {
 				return res.status(400).json({
 					success: false,
-					message: 'Invalid or expired token'
+					message: 'Invalidi tai vanha tokeni'
 				});
 			}
 		})
 		.catch((err) => {
 			return res.status(500).json({
 				success: false,
-				message: 'changePassword failed:',
+				message: 'Salasanan vaihto epäonnistui:',
 				error: err
 			});
 		});

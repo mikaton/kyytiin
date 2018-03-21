@@ -29,7 +29,4 @@ export class ErrorHandlerService {
         }
 
     }
-    showErrorDialog(err) {
-        this.ErrorDialogRef = this.dialog.open(ErrorDialog);
-    }
 }

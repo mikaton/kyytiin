@@ -20,6 +20,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { SocialLoginModule } from 'angularx-social-login/src/sociallogin.module';
 import { NgClass } from '@angular/common';
+import { ErrorDialog } from '../../dialogs/error-dialog';
+import { VERSION, MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-auth-dialog',
@@ -33,10 +35,12 @@ export class AuthDialogComponent implements OnInit {
   user: SocialUser;
   registerForm: FormGroup;
   loginForm: FormGroup;
+  errorDialogRef: MatDialogRef<ErrorDialog>
 
   constructor(private authService: AuthService,
     private localAuthService: LocalAuthService,
     private fb: FormBuilder,
+    private dialog: MatDialog,
     ) {
 
     this.registerForm = fb.group({
@@ -111,7 +115,13 @@ export class AuthDialogComponent implements OnInit {
       console.log('Registered user: ' + user);
     })
     .catch((err) => {
-      console.error('registerLocal() failed: ' + err.message);
+      this.errorDialogRef = this.dialog.open(ErrorDialog, {
+        data: {
+          errorMessage: 'Jotain meni pieleen',
+          serverError: err.error.message
+        }
+      });
+        console.error('registerLocal() failed: ' + err.message);
     });
   }
 
