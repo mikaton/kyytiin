@@ -91,3 +91,10 @@
 #mainheading {
     color: #009688;
 }
+
+.alphaNotice {
+    position: relative;
+    word-wrap: break-word;
+    white-space: pre-line;
+    line-height: 16px;
+}

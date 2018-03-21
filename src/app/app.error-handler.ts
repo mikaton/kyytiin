@@ -13,3 +13,6 @@ export class GlobalErrorHandler implements ErrorHandler {
         this.errorService.logError(error);
     }
 }
+
+// Service virheiden käsittelylle
+// TODO loggaa palvelimelle tekstitiedostoon/vastaavaan

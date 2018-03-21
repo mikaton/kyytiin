@@ -56,6 +56,7 @@ exports.localRegister = (req, res, next) => {
 		where: { email: email }
 	})
 		.then((user) => {
+			console.log(user);
 			if (user) {
 				res.status(400).json({
 					message: 'User already exists'
@@ -74,7 +75,7 @@ exports.localRegister = (req, res, next) => {
 				User.create(data)
 					.then((newUser) => {
 						const userInfo = setUserInfo(newUser);
-						if (newUser) res.status(200).json({
+						if (newUser) res.status(201).json({
 							message: 'User created',
 							user: userInfo,
 							token: generateJwt(userInfo)
@@ -153,7 +154,7 @@ exports.socialRegister = (req, res, next) => {
 			User.create(data)
 				.then((newUser) => {
 					const userInfo = setUserInfo(newUser);
-					if (newUser) res.status(200).json({
+					if (newUser) res.status(201).json({
 						message: 'User created',
 						token: generateJwt(userInfo)
 					});

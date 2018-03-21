@@ -58,6 +58,7 @@ gt-lg	'screen and (min-width: 1920px)'
   padding-top: 30px;
 }
 .authbox_socialmedia_loginGtSm {
+  height: 160px;
   width: 100%;
 }
 
@@ -103,4 +104,16 @@ width: 50%;
   vertical-align: middle;
   position: relative;
   top: 15px;
+}
+
+.inputFailed {
+  color: #f44336;
+  font-size: 9px;
+  position: relative;
+  top: -20px;
+  margin-left: 3px;
+}
+
+[hidden] {
+  display: none !important;
 }

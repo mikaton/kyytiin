@@ -28,6 +28,7 @@ import { NgClass } from '@angular/common';
 })
 export class AuthDialogComponent implements OnInit {
   loggedIn: boolean;
+  passwordFailed: boolean;
   showRegisterForm = false;
   user: SocialUser;
   registerForm: FormGroup;
@@ -60,6 +61,7 @@ export class AuthDialogComponent implements OnInit {
     });
   }
   ngOnInit() {
+    this.passwordFailed = false;
   }
   get firstName() { return this.registerForm.get('firstName')};
   get lastName()  { return this.registerForm.get('lastName')};
@@ -95,6 +97,10 @@ export class AuthDialogComponent implements OnInit {
   signInLocalUser(loginForm) {
     this.localAuthService.signIn(loginForm)
     .catch((err) => {
+      this.passwordFailed = true;
+      this.loginForm.patchValue({
+        password: null
+      })
       console.error('signInLocalUser() failed: ' + err.message);
     });
   }

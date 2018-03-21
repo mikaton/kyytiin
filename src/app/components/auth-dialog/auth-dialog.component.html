@@ -4,23 +4,26 @@
       <mat-card-content *ngIf="!showRegisterForm" fxLayout="column">
         <mat-card-title>Kirjaudu Sisään!</mat-card-title>
         <div fxLayout="column" fxLayout.gt-sm="row">
-          <form [formGroup]="loginForm" (ngSubmit)="signInLocalUser(loginForm.value)">
-            <div fxLayout.lt-md="column" ngClass.gt-sm="loginformContainer1GtSm">
-              <div ngClass.gt-sm="lo  ginformContainer2GtSm">
-                <mat-form-field ngClass.gt-sm="loginformGtSm" ngClass.lt-sm="loginformLtSm">
-                  <input matInput id="email" name="email" placeholder="Sähköpostiosoite" autocomplete="email" formControlName="email" required>
-                </mat-form-field>
-                <mat-form-field ngClass.gt-sm="loginformGtSm" ngClass.lt-sm="loginformLtSm">
-                  <input matInput id="password" name="password" type="password" placeholder="Salasana" formControlName="password" autocomplete="current-password"
-                    required>
-                </mat-form-field>
-                <button mat-raised-button color="primary" id="loginButton" ngClass.lt-sm="buttonsLtSm" ngClass.gt-xs="loginButtonGtLg">Kirjaudu Sisään</button>
-                <a ngClass.gt-xs="forgotPasswordLinkGtXs" routerLink="/forgot-password">
-                  Unohditko salasanasi?
-                </a>
+          <div fxFlex="60">
+            <form [formGroup]="loginForm" (ngSubmit)="signInLocalUser(loginForm.value)">
+              <div fxLayout.lt-md="column" ngClass.gt-sm="loginformContainer1GtSm">
+                <div ngClass.gt-sm="loginformContainer2GtSm">
+                  <mat-form-field ngClass.gt-sm="loginformGtSm" ngClass.lt-sm="loginformLtSm">
+                    <input matInput id="email" name="email" placeholder="Sähköpostiosoite" autocomplete="email" formControlName="email" required>
+                  </mat-form-field>
+                  <mat-form-field ngClass.gt-sm="loginformGtSm" ngClass.lt-sm="loginformLtSm">
+                    <input matInput id="password" name="password" type="password" [placeholder]="passwordFailed ? 'Tarkasta salasanasi':'Salasana'"
+                      formControlName="password" autocomplete="current-password" required>
+                  </mat-form-field>
+                  <span class="inputFailed" [hidden]="!passwordFailed">Tarkasta salasanasi</span>
+                  <button mat-raised-button color="primary" id="loginButton" ngClass.lt-sm="buttonsLtSm" ngClass.gt-xs="loginButtonGtLg">Kirjaudu Sisään</button>
+                  <a ngClass.gt-xs="forgotPasswordLinkGtXs" routerLink="/forgot-password">
+                    Unohditko salasanasi?
+                  </a>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
           <div ngClass.lt-md="authbox_socialmedia_login" ngClass.gt-sm="authbox_socialmedia_loginGtSm" fxLayout="column" fxLayoutAlign.gt-sm="space-around center">
             <button mat-raised-button class="btn-fb" (click)="signInWithFB()" ngClass.gt-sm="buttonsGtXs">
               <i class="fab fa-facebook fa-2x">&nbsp;&nbsp;</i>Tunnistaudu Facebook-tunnuksilla
@@ -47,7 +50,7 @@
             </mat-form-field>
             <div fxLayout="column">
               <div *ngIf="firstName.valid && (firstName.dirty || firstName.touched)">
-                  <i class="fas fa-check fa-vc"></i>
+                <i class="fas fa-check fa-vc"></i>
               </div>
               <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
                 <mat-error *ngIf="firstName.hasError('required')">Etunimi on vaadittu</mat-error>
@@ -61,9 +64,9 @@
               <input matInput name="lastName" placeholder="Sukunimi" formControlName="lastName" autocomplete="family-name" required>
             </mat-form-field>
             <div fxLayout="column">
-                <div *ngIf="lastName.valid && (lastName.dirty || lastName.touched)">
-                    <i class="fas fa-check fa-vc"></i>
-                </div>  
+              <div *ngIf="lastName.valid && (lastName.dirty || lastName.touched)">
+                <i class="fas fa-check fa-vc"></i>
+              </div>
               <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
                 <mat-error *ngIf="lastName.hasError('required')">Sukunimi on vaadittu</mat-error>
                 <mat-error *ngIf="!lastName.hasError('minLength')">Sukunimesi on liian lyhyt </mat-error>
@@ -76,9 +79,9 @@
               <input matInput name="phoneNumber" placeholder="Puhelinnumero" formControlName="phoneNumber" autocomplete="tel-local" required>
             </mat-form-field>
             <div fxLayout="column">
-                <div *ngIf="phoneNumber.valid && (phoneNumber.dirty || phoneNumber.touched)">
-                    <i class="fas fa-check fa-vc"></i>
-                </div>  
+              <div *ngIf="phoneNumber.valid && (phoneNumber.dirty || phoneNumber.touched)">
+                <i class="fas fa-check fa-vc"></i>
+              </div>
               <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">
                 <mat-error *ngIf="phoneNumber.hasError('pattern')">Puhelinnumero on virheellinen</mat-error>
                 <mat-error *ngIf="phoneNumber.hasError('pattern')">8-10 merkkiä, pelkkiä numeroita.</mat-error>
@@ -93,7 +96,7 @@
               <input matInput placeholder="Sähköposti" name="confEmail" formControlName="confEmail" name="email" autocomplete="email" required>
             </mat-form-field>
             <div *ngIf="email.valid && (email.dirty || email.touched)">
-                <i class="fas fa-check fa-vc"></i>
+              <i class="fas fa-check fa-vc"></i>
             </div>
             <div *ngIf="email.invalid && (email.dirty || email.touched)">
               <mat-error *ngIf="confEmail.hasError('email')">Sähköpostiosoite ei ole validi.</mat-error>
@@ -106,7 +109,7 @@
                 required>
             </mat-form-field>
             <div *ngIf="email.valid && (email.dirty || email.touched)">
-                <i class="fas fa-check fa-vc"></i>
+              <i class="fas fa-check fa-vc"></i>
             </div>
             <div *ngIf="email.invalid && (email.dirty || email.touched)">
               <mat-error *ngIf="email.hasError('nomatch')">Sähköpostiosoitteet eivät täsmää.</mat-error>
@@ -120,7 +123,7 @@
               <input matInput name="pwd" type="password" placeholder="Salasana" formControlName="pwd" autocomplete="new-password" required>
             </mat-form-field>
             <div *ngIf="password.valid && (password.dirty || password.touched)">
-                <i class="fas fa-check fa-vc"></i>
+              <i class="fas fa-check fa-vc"></i>
             </div>
             <div *ngIf="password.invalid && (password.dirty || password.touched)">
               <mat-error *ngIf="!password.hasError('minLength')">Salasanassa tulee olla vähintään kahdeksan (8) merkkiä.</mat-error>
@@ -133,7 +136,7 @@
                 required>
             </mat-form-field>
             <div *ngIf="password.valid && (password.dirty || password.touched)">
-                <i class="fas fa-check fa-vc"></i>
+              <i class="fas fa-check fa-vc"></i>
             </div>
             <mat-error *ngIf="password.hasError('nomatch')">Salasanat eivät täsmää.</mat-error>
           </div>

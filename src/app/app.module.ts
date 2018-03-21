@@ -45,6 +45,7 @@ import localeFi from '@angular/common/locales/fi';
 import { FaqComponent } from './components/faq/faq.component';
 import { RideComponent } from './components/ride/ride.component';
 import { RideCreateConfirmDialog } from './dialogs/ridecreate-confirm-dialog';
+import { ErrorDialog } from './dialogs/error-dialog';
 import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ForgotPasswordService } from './services/forgot-password.service';
@@ -92,7 +93,8 @@ export function tokenGetter() {
     ForgotPasswordComponent,
     ChangePasswordComponent,
     FeedbackComponent,
-    UserdetailsComponent
+    UserdetailsComponent,
+    ErrorDialog, 
   ],
   imports: [
     BrowserModule,
@@ -151,6 +153,6 @@ export function tokenGetter() {
     ErrorHandlerService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [RideCreateConfirmDialog],
+  entryComponents: [RideCreateConfirmDialog, ErrorDialog],
 })
 export class AppModule { }
