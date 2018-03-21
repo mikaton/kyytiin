@@ -154,8 +154,10 @@ exports.socialRegister = (req, res, next) => {
 			User.create(data)
 				.then((newUser) => {
 					const userInfo = setUserInfo(newUser);
+					console.log(newUser.customer_id);
 					if (newUser) res.status(201).json({
 						message: 'Käyttäjä luotu',
+						_id: newUser.customer_id,
 						token: generateJwt(userInfo)
 					});
 				});
