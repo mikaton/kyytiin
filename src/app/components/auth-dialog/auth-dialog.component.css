@@ -97,3 +97,10 @@ width: 50%;
   width: 40%;
   padding: 0 5px;
 }
+
+.fa-vc {
+  line-height:inherit!important;
+  vertical-align: middle;
+  position: relative;
+  top: 15px;
+}
