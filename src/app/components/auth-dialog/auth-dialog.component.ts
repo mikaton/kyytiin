@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { passwordMatcher } from '../../validators/password-validator';
 import { emailMatcher } from '../../validators/email-validator';
+import { emailPattern } from '../../validators/email-validator'
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -34,32 +35,41 @@ export class AuthDialogComponent implements OnInit {
 
   constructor(private authService: AuthService,
     private localAuthService: LocalAuthService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder
+    ) {
 
     this.registerForm = fb.group({
-      firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(50)])],
-      lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(80)])],
+      firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(80)]],
       checkbox:['', Validators.requiredTrue],
+      phoneNumber: ['', [Validators.pattern("^[0-9]{8,10}")]],
       email: this.fb.group({
-        confEmail: ['', Validators.compose([Validators.required, Validators.email])],
-        confirmedEmail: ['', Validators.compose([Validators.required, Validators.email])],
-      }, { validator: [emailMatcher] }
-      ),
+        confEmail: ['', [Validators.required, Validators.email]],
+        confirmedEmail: ['', [Validators.required, Validators.email]],
+      }, { validator: [emailMatcher]}
+      ), 
       password: this.fb.group({
-        pwd: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-        confirmPwd: ['', Validators.compose([Validators.required, Validators.minLength(8)])]
+        pwd: ['', [Validators.required, Validators.minLength(8)]],
+        confirmPwd: ['', [Validators.required, Validators.minLength(8)]]
       }, { validator: passwordMatcher }),
-
-      phoneNumber: ['', Validators.compose([Validators.required, Validators.minLength(9)])],
     });
 
     this.loginForm = fb.group({
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      email: ['',[Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
   ngOnInit() {
   }
+  get firstName() { return this.registerForm.get('firstName')};
+  get lastName()  { return this.registerForm.get('lastName')};
+  get email()     { return this.registerForm.get('email')};
+  get confEmail() { return this.registerForm.get('email.confEmail')}
+  get confirmedEmail() { return this.registerForm.get('email.confirmedEmail')}
+  get phoneNumber() { return this.registerForm.get('phoneNumber')};
+  get password()  { return this.registerForm.get('password')};
+  get checkbox()  { return this.registerForm.get('checkbox')};
+
   signInWithGoogle() {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((user) => {
