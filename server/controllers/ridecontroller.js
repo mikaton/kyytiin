@@ -143,7 +143,59 @@ exports.deleteRide = (req, res, next) => {
 };
 
 exports.sendConfirmRideJoinEmail = (req, res, next) => {
-
+  // Etsitään matkan luoja
+  User.find({
+    where: { customer_id: req.params.creator_id }
+  })
+  .then((creator) => {
+    // Luoja löytyi, etsitään liittyjä
+    User.find({
+      where: { customer_id: req.params.joiner_id }
+    })
+    .then((joiner) => {
+      // Liittyjä löytyi, etsitään matka
+      Ride.find({
+        where: { ride_id: req.params.ride_id }
+      })
+      .then((ride) => {
+        // Matka löytyi. Laitetaan kaikki tieto data-olioon
+        const data = {
+          creator: creator.dataValues,
+          joiner: joiner.dataValues,
+          ride: ride.dataValues
+        };
+        // Luodaan sähköposti
+        const emailData = {
+          to: data.creator.email,
+          from: email,
+          template: 'join-ride-confirm',
+          subject: 'Kyyti.in - Matkallesi halutaan liittyä',
+          context: {
+            creatorName: data.creator.firstName,
+            joinerName: data.joiner.firstName,
+            confirmUrl: `https://kyyti.in/ride/${data.ride.ride_id}/confirm`,
+            denyUrl: `https://kyyti.in/ride/${data.ride.ride_id}/deny`
+          }
+        };
+        // Lähetetään sähköposti
+        smtpTransport.sendMail(emailData, (err) => {
+          if(!err) {
+            return res.status(201).json({
+              success: true,
+              message: 'Request to join sent'
+            });
+          } else {
+            return res.status(500).json({
+              success: false,
+              message: 'Request to join failed',
+              error: err
+            });
+          }
+        });
+      });
+    })
+  })
+  .catch((err) => console.log('sendConfirmRideJoinEmail failed: ' + err.stack));
 };
 
 exports.confirmRideJoin = (req, res, next) => {
