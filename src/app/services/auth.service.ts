@@ -24,7 +24,6 @@ JwtHelperService
                     .then(
                         res => {
                             this.setToken(res);
-                            this.setCurrentUserId(res);
                             this.checkLocalStorageToken();
                             location.reload();
                             this.router.navigate(['rides']);
@@ -45,7 +44,6 @@ JwtHelperService
             .then(
                 res => {
                     this.setToken(res);
-                    this.setCurrentUserId(res);
                     this.checkLocalStorageToken();
                     this.router.navigate(['rides']);
                     resolve();
@@ -64,7 +62,6 @@ JwtHelperService
             .then(
                 res => {
                     this.setToken(res);
-                    this.setCurrentUserId(res);
                     location.reload();
                     this.router.navigate(['rides']);
                     resolve(res);
@@ -76,13 +73,6 @@ JwtHelperService
         });
         return response;
     }
-    setCurrentUserId(res) {
-        if(!res._id) {
-        localStorage.setItem('_id', res.user._id);
-        } else {
-            localStorage.setItem('_id', res._id);
-        }
-    }
     private setToken(res) {
         localStorage.setItem('token', res.token);
     }
@@ -92,7 +82,6 @@ JwtHelperService
         return (_id._id);
     }
     signOut() {
-        localStorage.removeItem('_id');
         localStorage.removeItem('token');
         this.checkLocalStorageToken();
         this.router.navigate(['frontpage']);
