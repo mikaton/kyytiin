@@ -14,6 +14,7 @@ export class RideComponent implements OnInit {
   dialogRef: any;
   confirmEmailSent: boolean = false;
   confirmEmailButtonClicked: boolean = false;
+  isCreator: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,15 +27,23 @@ export class RideComponent implements OnInit {
   // Jos useampia metodeja ngOnInitissä, syntaksi seuraava:
   // await Promise.all([funktio1(), funktio2()...])
   async ngOnInit() {
-    await this.getRide();
+      await Promise.all([this.getRide(), this.isCreator = false])
   }
 
   getRide(): void {
     const ride_id = this.route.snapshot.paramMap.get('ride_id');
     this.rideService.getRide(ride_id)
     .then(ride => this.ride = ride.data[0])
+    .then(ride => {
+      if (this.ride.customer_id == localStorage.getItem('_id')) {
+        this.isCreator = true;
+      } else {
+        this.isCreator = false;
+      }
+    })
     .catch(err => console.error('getRide() failed: ' + err.message));
   }
+  
 
   goBack(): void {
     this.location.back();

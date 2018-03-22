@@ -9,6 +9,26 @@
           <mat-card-content>Nimi: {{localUser.user.firstName}} {{localUser.user.lastName}}</mat-card-content>
           <mat-card-content>Sähköposti: {{localUser.user.email}}</mat-card-content>
           <mat-card-content>Puhelinnumero: {{localUser.user.phoneNumber}}</mat-card-content>
+          <form [formGroup]="customerEditForm" (ngSubmit)="updateUser(customerEditForm.value)">
+
+
+            <div fxLayout="row">
+              <mat-form-field>
+                <input matInput id="phoneNumber" name="phoneNumber" [placeholder]="localUser.user.phoneNumber ? 'Muuta puhelinnumeroasi':'Aseta puhelinnumerosi'"
+                  formControlName="phoneNumber" autocomplete="tel-local" required>
+                <mat-error *ngIf="phoneNumber.hasError('pattern')">Puhelinnumero on virheellinen</mat-error>
+                <mat-error *ngIf="phoneNumber.hasError('pattern')">8-10 merkkiä, pelkkiä numeroita.</mat-error>
+              </mat-form-field>
+              <div fxLayout="column">
+                <div *ngIf="phoneNumber.valid && (phoneNumber.dirty || phoneNumber.touched)">
+                  <i class="fas fa-check fa-vc"></i>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button class="updateDataBtn" [disabled]="customerEditForm.invalid" mat-raised-button color="primary">Päivitä tiedot</button>
+            </div>
+          </form>
         </div>
         <div>
           <mat-card-content class="profilepicture" fxLayoutAlign="end" fxHide.lt-sm>
@@ -48,34 +68,34 @@
         </div>
       </mat-card>
     </div>
-  <div fxLayout="column"  fxFlex="49">
-    <mat-card class="mat-elevation-z8" fxLayout="column">
-      <mat-card-title>
-        Liitytyt kyydit:
-      </mat-card-title>
-      <div *ngFor="let ride of joinedRides" fxLayout="column">
-        <a routerLink="/rides/{{ride.ride_id}}">
-          <mat-card class="ride_card" fxLayout="column" fxLayoutAlign="space around center">
-            <div fxLayout="column">
-              <mat-card-title fxFlex="50">
-                Lähtöpaikka: {{ride.startingplace}}
-              </mat-card-title>
-              <mat-card-title fxFlex="50">
-                Määränpää: {{ride.destination}}
-              </mat-card-title>
-            </div>
-            <mat-card-content>
-              Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
-            </mat-card-content>
-            <mat-card-content>
-              Vapaita paikkoja: {{ride.free_seats}}
-            </mat-card-content>
-          </mat-card>
-        </a>
-      </div>
-    </mat-card>
+    <div fxLayout="column" fxFlex="49">
+      <mat-card class="mat-elevation-z8" fxLayout="column">
+        <mat-card-title>
+          Liitytyt kyydit:
+        </mat-card-title>
+        <div *ngFor="let ride of joinedRides" fxLayout="column">
+          <a routerLink="/rides/{{ride.ride_id}}">
+            <mat-card class="ride_card" fxLayout="column" fxLayoutAlign="space around center">
+              <div fxLayout="column">
+                <mat-card-title fxFlex="50">
+                  Lähtöpaikka: {{ride.startingplace}}
+                </mat-card-title>
+                <mat-card-title fxFlex="50">
+                  Määränpää: {{ride.destination}}
+                </mat-card-title>
+              </div>
+              <mat-card-content>
+                Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
+              </mat-card-content>
+              <mat-card-content>
+                Vapaita paikkoja: {{ride.free_seats}}
+              </mat-card-content>
+            </mat-card>
+          </a>
+        </div>
+      </mat-card>
+    </div>
   </div>
-</div>
 </div>
 
 <!-- TODO 
