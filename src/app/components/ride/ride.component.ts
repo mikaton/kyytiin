@@ -32,7 +32,7 @@ export class RideComponent implements OnInit {
   getRide(): void {
     const ride_id = this.route.snapshot.paramMap.get('ride_id');
     this.rideService.getRide(ride_id)
-    .then(ride => this.ride = ride.data)
+    .then(ride => this.ride = ride.data[0])
     .catch(err => console.error('getRide() failed: ' + err.message));
   }
 

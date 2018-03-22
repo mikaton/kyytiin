@@ -9,7 +9,7 @@
       </mat-card-title>
     </div>
     <mat-card-content>
-        <a routerLink="/user/{{ride.customer_id}}">Kyydin tarjoaja</a>
+        Kyydin tarjoaja: <a routerLink="/user/{{ride.customer_id}}">{{ride.firstName}} {{ride.lastName}}</a>
     </mat-card-content>
     <mat-card-content>
       Lähtöpäivä: {{ride?.time_of_departure | date:'mediumDate'}} aika: {{ride?.time_of_departure | date:'shortTime'}}
