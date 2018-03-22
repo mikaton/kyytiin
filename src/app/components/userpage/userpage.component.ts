@@ -38,12 +38,16 @@ export class UserpageComponent implements OnInit {
     });
   }
   get phoneNumber() { return this.customerEditForm.get('phoneNumber')};
-  
-  updateUser(customerEditForm) {
-    console.log(customerEditForm);
+
+  patchUser(customerEditForm) {
+    this.localAuthService.decodeToken();
+    this.userService.patchUserData(customerEditForm)
+      .then((result) =>  this.updateUserdata()) 
+      .catch(err => console.error('patchUser() failed: ' + err.message));
   }
+
   updateUserdata() {
-    this.userService.getUser(localStorage.getItem('_id'))
+    this.userService.getUser(this.localAuthService.decodeToken())
       .then((result) => {
         this.localUser = result;
       })
@@ -51,12 +55,12 @@ export class UserpageComponent implements OnInit {
   }
 
   getRides() {
-    this.rideService.getRideToUserPage(localStorage.getItem('_id'))
+    this.rideService.getRideToUserPage(this.localAuthService.decodeToken())
       .then((rides => {
         this.rides = rides.data;
       }))
       .catch(err => console.error('getRides() failed: ' + err.message));
-    this.rideService.getJoinedRideToUserPage(localStorage.getItem('_id'))
+    this.rideService.getJoinedRideToUserPage(this.localAuthService.decodeToken())
       .then((rides => {
         this.joinedRides = rides.data;
       }))

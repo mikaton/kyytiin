@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
     }
   }
   getUser() {
-    this.userService.getUser(localStorage.getItem('_id')).then((result) => {
+    this.userService.getUser(this.localAuthService.decodeToken()).then((result) => {
       this.localUser = result;
     }).catch((err) => {
       console.error('getUser() failed, ' + err.message);

@@ -3,6 +3,8 @@ import { Location } from '@angular/common';
 import { RideService } from '../../services/ride.service';
 import { ActivatedRoute } from '@angular/router';
 import {  MatDialog, MatDialogRef } from '@angular/material';
+import { LocalAuthService } from '../../services/auth.service';
+import { AuthService } from 'angularx-social-login';
 
 @Component({
   selector: 'app-ride',
@@ -20,7 +22,8 @@ export class RideComponent implements OnInit {
     private route: ActivatedRoute,
     private rideService: RideService,
     private location: Location,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private localAuthService: LocalAuthService
   ) { }
 
   // Ladataan matkat asynkronisesti
@@ -35,7 +38,7 @@ export class RideComponent implements OnInit {
     this.rideService.getRide(ride_id)
     .then(ride => this.ride = ride.data[0])
     .then(ride => {
-      if (this.ride.customer_id == localStorage.getItem('_id')) {
+      if (this.ride.customer_id == this.localAuthService.decodeToken()) {
         this.isCreator = true;
       } else {
         this.isCreator = false;

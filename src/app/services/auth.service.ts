@@ -7,14 +7,15 @@ import { RidelistComponent } from '../components/ridelist/ridelist.component';
 import { AuthDialogComponent } from '../components/auth-dialog/auth-dialog.component';
 import { Subject } from 'rxjs/Subject';
 import { API_URL } from '../app.config';
+import { JwtHelperService  } from '@auth0/angular-jwt';
 
 @Injectable()
 export class LocalAuthService {
     apiUrlSocial = `${API_URL}/auth/social`;
     apiUrlLocalLogin = `${API_URL}/auth/local/login`;
     apiUrlLocalRegister = `${API_URL}/auth/local/register`;
-    constructor(private http: HttpClient, private router: Router) { }
-
+    constructor(private http: HttpClient, private router: Router, private jwt: JwtHelperService) { }
+JwtHelperService
     authenticate(user) {
         let response = new Promise((resolve, reject) => {
             if (user) {
@@ -84,6 +85,11 @@ export class LocalAuthService {
     }
     private setToken(res) {
         localStorage.setItem('token', res.token);
+    }
+
+    decodeToken() {
+        const _id = this.jwt.decodeToken(localStorage.getItem('token'));
+        return (_id._id);
     }
     signOut() {
         localStorage.removeItem('_id');

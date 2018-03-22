@@ -6,30 +6,47 @@ import { AuthService } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { API_URL } from '../app.config'
+import { LocalAuthService } from '../services/auth.service';
 
 @Injectable()
 export class UserService {
   user: SocialUser;
   apiUrl = `${API_URL}`;
-
-  constructor(private http: HttpClient,
-              private authService: AuthService) { }
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private localAuthService: LocalAuthService) { }
 
   getUser(user): Promise<object> {
     let response = new Promise((resolve, reject) => {
       this.http.get(`${API_URL}/user/${user}`)
-      .toPromise()
-      .then(
-        data => {
-          resolve(data);
-        },
-        err => {
-          reject(err);
-        }
-      )
+        .toPromise()
+        .then(
+          data => {
+            resolve(data);
+          },
+          err => {
+            reject(err);
+          }
+        )
     })
     return response;
   }
+  patchUserData(data) {
+    let response = new Promise((resolve, reject) => {
+      this.http.patch(`${API_URL}/user/${this.localAuthService.decodeToken()}`, data)
+        .toPromise()
+        .then(
+          data => {
+            resolve(data);
+          },
+          err => {
+            reject(data);
+          })
+    });
+    return response;
+  }
+
 
   getSocialUser() {
     this.authService.authState.subscribe((user) => {

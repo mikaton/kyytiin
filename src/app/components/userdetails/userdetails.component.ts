@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { RideService } from '../../services/ride.service';
 import { ActivatedRoute } from '@angular/router';
 import { ReviewService } from '../../services/review.service';
+
 import {
   FormBuilder,
   FormGroup,
@@ -60,7 +61,7 @@ export class UserdetailsComponent implements OnInit {
   }
 
   allowReview() {
-    this.reviewService.allowReview(this.customer_id, localStorage.getItem('_id'))
+    this.reviewService.allowReview(this.customer_id, this.localAuthService.decodeToken())
       .then(response => this.canReview = true)
       .catch(err => console.error('allowReview() failed: ' + err.message));
   }
