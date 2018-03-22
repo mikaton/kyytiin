@@ -1,41 +1,43 @@
 <div class="wrapper">
-  <div class="searchbox" fxFlex="33" fxLayout="row" fxLayoutAlign="space around center">
-    <mat-card class="searchbox" class="ride_card mat-elevation-z8" fxLayout="column">
-      <mat-card-content>
-        <form fxLayout="column" #searchForm="ngForm" [ngFormOptions]="{updateOn: 'blur'}">
-          <h2 class="mat-h2">Hae kyytiä</h2>
-          <mat-form-field>
-            <input matInput [(ngModel)]="startingplace" placeholder="Lähtöpaikka" [ngModelOptions]="{standalone: true}">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput [(ngModel)]="destination" placeholder="Määränpää" [ngModelOptions]="{standalone: true}">
-          </mat-form-field>
-        </form>
-      </mat-card-content>
-    </mat-card>
-
-  </div>
-  <div fxFlex="66" fxLayout="column">
-    <div *ngFor="let ride of rides | rideSearch: startingplace:destination">
-      <div *ngIf="ride.free_seats != 0">
-        <a routerLink="/rides/{{ride.ride_id}}">
-          <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
-            <div fxLayout="column">
-              <mat-card-title fxFlex="50">
-                Lähtöpaikka: {{ride.startingplace}}
-              </mat-card-title>
-              <mat-card-title fxFlex="50">
-                Määränpää: {{ride.destination}}
-              </mat-card-title>
-            </div>
-            <mat-card-content>
-              Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
-            </mat-card-content>
-            <mat-card-content>
-              Vapaita paikkoja: {{ride.free_seats}}
-            </mat-card-content>
-          </mat-card>
-        </a>
+  <div fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign.gt-sm="space-between">
+    <div class="searchbox" fxFlex="32">
+      <mat-card class="searchbox" class="ride_card mat-elevation-z8" fxLayout="column">
+        <mat-card-content>
+          <form fxLayout="column" #searchForm="ngForm" [ngFormOptions]="{updateOn: 'blur'}">
+            <h2 class="mat-h2">Hae kyytiä</h2>
+            <mat-form-field>
+              <input matInput [(ngModel)]="startingplace" placeholder="Lähtöpaikka" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput [(ngModel)]="destination" placeholder="Määränpää" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex="65" fxLayout="column">
+      <div *ngFor="let ride of rides | rideSearch: startingplace:destination">
+        <div *ngIf="ride.free_seats != 0">
+          <a routerLink="/rides/{{ride.ride_id}}">
+            <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
+              <div fxLayout="column">
+                <mat-card-title fxFlex="50">
+                  Lähtöpaikka: {{ride.startingplace}}
+                </mat-card-title>
+                <mat-card-title fxFlex="50">
+                  Määränpää: {{ride.destination}}
+                </mat-card-title>
+              </div>
+              <mat-card-content>
+                Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
+              </mat-card-content>
+              <mat-card-content>
+                Vapaita paikkoja: {{ride.free_seats}}
+              </mat-card-content>
+            </mat-card>
+          </a>
+        </div>
       </div>
     </div>
   </div>
+</div>
