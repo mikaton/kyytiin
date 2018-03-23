@@ -34,7 +34,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { UserpageComponent } from './components/userpage/userpage.component';
 import { RidelistComponent } from './components/ridelist/ridelist.component';
 import { AppRoutingModule } from './/app-routing.module';
-import { AuthGuard } from './services/auth.guard.service';
+import { AuthGuard } from './guards/auth.guard.service';
 import { UserService } from './services/user.service';
 import { RideService } from './services/ride.service';
 import { RidecreateComponent } from './components/ridecreate/ridecreate.component';
