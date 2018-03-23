@@ -14,7 +14,7 @@ export class RideJoinConfirmComponent implements OnInit {
   }
 
   confirmJoin() {
-
+    
   }
 
   denyJoin() {

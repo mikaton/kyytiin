@@ -5,7 +5,8 @@ import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.compon
 import { RidelistComponent } from './components/ridelist/ridelist.component';
 import { UserpageComponent } from './components/userpage/userpage.component';
 import { FrontpageComponent } from './components/frontpage/frontpage.component';
-import { AuthGuard } from './services/auth.guard.service';
+import { AuthGuard } from './guards/auth.guard.service';
+import { IdGuard } from './guards/id.guard.service';
 import { RidecreateComponent } from './components/ridecreate/ridecreate.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { RideComponent } from './components/ride/ride.component';
@@ -19,7 +20,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/frontpage', pathMatch: 'full' },
   { path: 'rides', component: RidelistComponent },
   { path: 'rides/:ride_id', canActivate: [AuthGuard], component: RideComponent},
-  { path: 'rides/confirm/:ride_id/:joiner_id', canActivate: [AuthGuard], component: RideJoinConfirmComponent},
+  { path: 'rides/confirm/:owner_id/:ride_id/:joiner_id', canActivate: [IdGuard], component: RideJoinConfirmComponent },
   { path: 'frontpage', component: FrontpageComponent },
   { path: 'faq', component: FaqComponent},
   { path: 'user', canActivate: [AuthGuard], component: UserpageComponent},

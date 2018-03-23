@@ -30,7 +30,7 @@ const model = require('../models/index'),
 	// --- </Sähköpostin asetukset> //
 
 exports.getSingleRide = (req, res, next) => {
-  Ride.sequelize.query('SELECT r.customer_id AS customer_id, r.additional_information AS additional_information, r.startingplace AS startingplace, r.destination AS destination, r.time_of_departure AS time_of_departure, r.time_of_arrival AS time_of_arrival, r.free_seats AS free_seats, r.smoking AS smoking, r.pets AS pets, c.firstName AS firstName, c.lastName as lastName FROM Rides r INNER JOIN Customers c on r.customer_id = c.customer_id WHERE r.ride_id = :ride_id',
+  Ride.sequelize.query('SELECT r.ride_id AS ride_id, r.customer_id AS customer_id, r.additional_information AS additional_information, r.startingplace AS startingplace, r.destination AS destination, r.time_of_departure AS time_of_departure, r.time_of_arrival AS time_of_arrival, r.free_seats AS free_seats, r.smoking AS smoking, r.pets AS pets, c.firstName AS firstName, c.lastName as lastName FROM Rides r INNER JOIN Customers c on r.customer_id = c.customer_id WHERE r.ride_id = :ride_id',
   {
 			replacements: { ride_id: req.params.id },
 			type: Ride.sequelize.QueryTypes.SELECT
@@ -163,20 +163,19 @@ exports.sendConfirmRideJoinEmail = (req, res, next) => {
         where: { ride_id: req.params.ride_id }
       })
       .then((ride) => {
-        console.log(ride);
         // Matka löytyi. Laitetaan kaikki tieto data-olioon
         const data = {
           creator: {
-            id: creator.dataValues.customer_id,
+            customer_id: creator.dataValues.customer_id,
             name: creator.dataValues.firstName,
             email: creator.dataValues.email
           },
           joiner: {
-            id: joiner.dataValues.customer_id,
+            customer_id: joiner.dataValues.customer_id,
             name: joiner.dataValues.firstName
           },
           ride: {
-            id: ride.dataValues.ride_id,
+            ride_id: ride.dataValues.ride_id,
             startingplace: ride.dataValues.startingplace,
             destination: ride.dataValues.destination,
             time_of_departure: ride.dataValues.time_of_departure
@@ -192,7 +191,7 @@ exports.sendConfirmRideJoinEmail = (req, res, next) => {
           context: {
             creatorName: data.creator.name,
             joinerName: data.joiner.name,
-            url: `https://kyyti.in/rides/confirm/${data.ride.ride_id}/${data.joiner.customer_id}`
+            url: `https://kyyti.in/rides/confirm/${data.creator.customer_id}/${data.ride.ride_id}/${data.joiner.customer_id}`
           }
         };
 
@@ -212,7 +211,8 @@ exports.sendConfirmRideJoinEmail = (req, res, next) => {
             });
           }
         });
-      });
+      })
+      .catch((err) => console.log(err));
     })
   })
   .catch((err) => console.log('sendConfirmRideJoinEmail failed: ' + err.stack));
