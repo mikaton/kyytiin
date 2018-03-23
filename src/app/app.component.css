@@ -98,3 +98,13 @@
     white-space: pre-line;
     line-height: 16px;
 }
+
+.logoMobile {
+    height: 0px;
+    float: left;
+}
+#logo_mobile_img {
+    height: 50px;
+    position: relative; 
+    top: 57px;
+}
