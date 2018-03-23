@@ -34,7 +34,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { UserpageComponent } from './components/userpage/userpage.component';
 import { RidelistComponent } from './components/ridelist/ridelist.component';
 import { AppRoutingModule } from './/app-routing.module';
-import { AuthGuard } from './services/auth.guard.service';
+import { AuthGuard } from './guards/auth.guard.service';
 import { UserService } from './services/user.service';
 import { RideService } from './services/ride.service';
 import { RidecreateComponent } from './components/ridecreate/ridecreate.component';
@@ -56,6 +56,7 @@ import { ErrorHandlerService } from './services/error.service';
 import { UserdetailsComponent } from './components/userdetails/userdetails.component';
 import { ReviewService } from './services/review.service';
 import { StarRatingModule } from 'angular-star-rating';
+import { RideJoinConfirmComponent } from './components/ridejoinconfirm/ridejoinconfirm.component';
 
 registerLocaleData(localeFi);
 
@@ -94,7 +95,8 @@ export function tokenGetter() {
     ChangePasswordComponent,
     FeedbackComponent,
     UserdetailsComponent,
-    ErrorDialog, 
+    ErrorDialog,
+    RideJoinConfirmComponent, 
   ],
   imports: [
     BrowserModule,

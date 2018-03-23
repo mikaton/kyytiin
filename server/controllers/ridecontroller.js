@@ -151,22 +151,38 @@ exports.sendConfirmRideJoinEmail = (req, res, next) => {
     where: { customer_id: req.params.creator_id }
   })
   .then((creator) => {
+    console.log(creator);
     // Luoja löytyi, etsitään liittyjä
     User.find({
-      where: { customer_id: req.params.joiner_id }
+      where: { customer_id: req.user.customer_id }
     })
     .then((joiner) => {
+      console.log(joiner);
       // Liittyjä löytyi, etsitään matka
       Ride.find({
         where: { ride_id: req.params.ride_id }
       })
       .then((ride) => {
+        console.log(ride);
         // Matka löytyi. Laitetaan kaikki tieto data-olioon
         const data = {
-          creator: creator.dataValues,
-          joiner: joiner.dataValues,
-          ride: ride.dataValues
+          creator: {
+            id: creator.dataValues.customer_id,
+            name: creator.dataValues.firstName,
+            email: creator.dataValues.email
+          },
+          joiner: {
+            id: joiner.dataValues.customer_id,
+            name: joiner.dataValues.firstName
+          },
+          ride: {
+            id: ride.dataValues.ride_id,
+            startingplace: ride.dataValues.startingplace,
+            destination: ride.dataValues.destination,
+            time_of_departure: ride.dataValues.time_of_departure
+          }
         };
+
         // Luodaan sähköposti
         const emailData = {
           to: data.creator.email,
@@ -174,18 +190,19 @@ exports.sendConfirmRideJoinEmail = (req, res, next) => {
           template: 'join-ride-confirm',
           subject: 'Kyyti.in - Matkallesi halutaan liittyä',
           context: {
-            creatorName: data.creator.firstName,
-            joinerName: data.joiner.firstName,
-            confirmUrl: `https://kyyti.in/ride/${data.ride.ride_id}/confirm`,
-            denyUrl: `https://kyyti.in/ride/${data.ride.ride_id}/deny`
+            creatorName: data.creator.name,
+            joinerName: data.joiner.name,
+            url: `https://kyyti.in/rides/confirm/${data.ride.ride_id}/${data.joiner.customer_id}`
           }
         };
+
         // Lähetetään sähköposti
         smtpTransport.sendMail(emailData, (err) => {
           if(!err) {
-            return res.status(201).json({
+            return res.status(200).json({
               success: true,
-              message: 'Request to join sent'
+              message: 'Request to join sent',
+              data: data
             });
           } else {
             return res.status(500).json({
@@ -201,12 +218,14 @@ exports.sendConfirmRideJoinEmail = (req, res, next) => {
   .catch((err) => console.log('sendConfirmRideJoinEmail failed: ' + err.stack));
 };
 
-exports.confirmRideJoin = (req, res, next) => {
 
-};
 
 exports.denyRideJoin = (req, res, next) => {
 
+};
+
+exports.confirmRideJoin = (req, res, next) => {
+  
 };
 
 exports.joinRide = (req, res, next) => {

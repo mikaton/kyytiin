@@ -25,8 +25,6 @@ JwtHelperService
                         res => {
                             this.setToken(res);
                             this.checkLocalStorageToken();
-                            location.reload();
-                            this.router.navigate(['rides']);
                             resolve(res);
                         },
                         err => {
@@ -45,7 +43,6 @@ JwtHelperService
                 res => {
                     this.setToken(res);
                     this.checkLocalStorageToken();
-                    this.router.navigate(['rides']);
                     resolve();
                 },
                 err => {
@@ -63,7 +60,6 @@ JwtHelperService
                 res => {
                     this.setToken(res);
                     location.reload();
-                    this.router.navigate(['rides']);
                     resolve(res);
                 },
                 err => {
@@ -84,7 +80,6 @@ JwtHelperService
     signOut() {
         localStorage.removeItem('token');
         this.checkLocalStorageToken();
-        this.router.navigate(['frontpage']);
     }
 
     // app.componentin log in statuksen näyttäminen

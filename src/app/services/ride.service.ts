@@ -88,14 +88,37 @@ export class RideService {
     });
   }
 
-  joinRide(ride) {
+  sendJoinRequest(ride, creator, joiner) {
     let response = new Promise((resolve, reject) => {
+      const data = {
+        ride_id: ride,
+        creator_id: creator,
+        joiner_id: joiner
+      };
+
+      this.http.post(`${this.apiUrl}/${data.ride_id}/${data.creator_id}/${data.joiner_id}`, data)
+      .toPromise()
+      .then(
+        res => resolve(res),
+        err => reject(err)
+      );
+    });
+    return response;
+  }
+
+  joinRide(ride_id, creator_id, joiner_id): Promise<any> {
+    let response = new Promise((resolve, reject) => {
+      let ride = {
+        ride_id: ride_id,
+        creator_id: creator_id,
+        joiner_id: joiner_id
+      };
+
       this.http.post(`${this.apiUrlJoin}`, ride)
       .toPromise()
       .then(
         data => {
-          
-          resolve();
+          resolve(data);
         },
         err => {
           reject(err);
