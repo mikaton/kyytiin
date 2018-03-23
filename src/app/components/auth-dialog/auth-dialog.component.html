@@ -24,6 +24,7 @@
               </div>
             </form>
           </div>
+          <!--SOSIALISTIBLOKKI --> 
           <div ngClass.lt-md="authbox_socialmedia_login" ngClass.gt-sm="authbox_socialmedia_loginGtSm" fxLayout="column" fxLayoutAlign.gt-sm="space-around center">
             <button mat-raised-button class="btn-fb" (click)="signInWithFB()" ngClass.gt-sm="buttonsGtXs">
               <i class="fab fa-facebook fa-2x">&nbsp;&nbsp;</i>Tunnistaudu Facebook-tunnuksilla
@@ -34,7 +35,9 @@
             <button id="btn-local" mat-raised-button color="primary" (click)="openRegisterForm()" ngClass.gt-sm="buttonsGtXs">
               Tai rekisteröidy sähköpostiosoitteella
             </button>
+            <a class="touLink" routerLink="/faq" routerLinkActive="router-link-active">Kirjautumalla Facebookilla tai Googlella hyväksyt käyttöehdot</a>
           </div>
+          <!--SOSIALISTIBLOKKI PÄÄTTYY -->
         </div>
       </mat-card-content>
     </div>
