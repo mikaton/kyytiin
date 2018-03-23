@@ -240,7 +240,7 @@ exports.forgotPassword = (req, res, next) => {
 				template: 'forgot-password',
 				subject: 'Kyyti.in salasanan nollaus',
 				context: {
-					url: 'https://kyyti.in/change_password/' + token,
+					url: 'https://kyyti.in/change-password/' + token,
 					name: user.firstName
 				}
 			};

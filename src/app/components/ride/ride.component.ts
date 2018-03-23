@@ -42,14 +42,24 @@ export class RideComponent implements OnInit {
 
   openAlertDialog(alerDialog) {
     this.dialogRef = this.dialog.open(alerDialog, {
+
     });
 
     this.dialogRef.afterClosed().subscribe(result => {
+
     });
 }
 
-  joinRide() {
+  joinRide(ride_id: string, creator_id: string, joiner_id: string) {
     this.confirmEmailButtonClicked = true;
+
+    ride_id = this.ride.ride_id;
+    creator_id = this.ride.customer_id;
+    joiner_id = localStorage.getItem('_id');
+
+    this.rideService.sendJoinRequest(ride_id, creator_id, joiner_id)
+    .then((res) => this.confirmEmailSent = true)
+    .catch((err) => console.log('joinRide() failed: ' + err.message));
     
   }
 }

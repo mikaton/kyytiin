@@ -22,6 +22,7 @@ import { SocialLoginModule } from 'angularx-social-login/src/sociallogin.module'
 import { NgClass } from '@angular/common';
 import { ErrorDialog } from '../../dialogs/error-dialog';
 import { VERSION, MatDialog, MatDialogRef } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth-dialog',
@@ -31,6 +32,7 @@ import { VERSION, MatDialog, MatDialogRef } from '@angular/material';
 export class AuthDialogComponent implements OnInit {
   loggedIn: boolean;
   passwordFailed: boolean;
+  returnUrl: string;
   showRegisterForm = false;
   user: SocialUser;
   registerForm: FormGroup;
@@ -41,6 +43,8 @@ export class AuthDialogComponent implements OnInit {
     private localAuthService: LocalAuthService,
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router
     ) {
 
     this.registerForm = fb.group({
@@ -66,6 +70,7 @@ export class AuthDialogComponent implements OnInit {
   }
   ngOnInit() {
     this.passwordFailed = false;
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
   get firstName() { return this.registerForm.get('firstName')};
   get lastName()  { return this.registerForm.get('lastName')};
@@ -80,7 +85,8 @@ export class AuthDialogComponent implements OnInit {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((user) => {
         this.updateUser();
-        this.localAuthService.authenticate(user);
+        this.localAuthService.authenticate(user).then(() => this.router.navigateByUrl(this.returnUrl));
+        
       })
       .catch((err) => {
         console.error('signInWithGoogle failed: ' + err.message);
@@ -91,7 +97,7 @@ export class AuthDialogComponent implements OnInit {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID)
       .then((user) => {
         this.updateUser();
-        this.localAuthService.authenticate(user);
+        this.localAuthService.authenticate(user).then(() => this.router.navigateByUrl(this.returnUrl));
       })
       .catch((err) => {
         console.error('signInWithFB() failed: ' + err.message);
@@ -100,6 +106,7 @@ export class AuthDialogComponent implements OnInit {
 
   signInLocalUser(loginForm) {
     this.localAuthService.signIn(loginForm)
+    .then((res) => this.router.navigateByUrl(this.returnUrl))
     .catch((err) => {
       this.passwordFailed = true;
       this.loginForm.patchValue({
@@ -113,6 +120,7 @@ export class AuthDialogComponent implements OnInit {
     this.localAuthService.registerLocal(registerForm)
     .then((user) => {
       console.log('Registered user: ' + user);
+      this.router.navigateByUrl(this.returnUrl);
     })
     .catch((err) => {
       this.errorDialogRef = this.dialog.open(ErrorDialog, {
@@ -134,6 +142,7 @@ export class AuthDialogComponent implements OnInit {
 
   signOut(): void {
     this.localAuthService.signOut();
+    this.router.navigate(['/frontpage']);
     this.authService.signOut();
   }
 

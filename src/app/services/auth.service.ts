@@ -25,8 +25,6 @@ export class LocalAuthService {
                             this.setToken(res);
                             this.setCurrentUserId(res);
                             this.checkLocalStorageToken();
-                            location.reload();
-                            this.router.navigate(['rides']);
                             resolve(res);
                         },
                         err => {
@@ -46,7 +44,6 @@ export class LocalAuthService {
                     this.setToken(res);
                     this.setCurrentUserId(res);
                     this.checkLocalStorageToken();
-                    this.router.navigate(['rides']);
                     resolve();
                 },
                 err => {
@@ -65,7 +62,6 @@ export class LocalAuthService {
                     this.setToken(res);
                     this.setCurrentUserId(res);
                     location.reload();
-                    this.router.navigate(['rides']);
                     resolve(res);
                 },
                 err => {
@@ -89,7 +85,6 @@ export class LocalAuthService {
         localStorage.removeItem('_id');
         localStorage.removeItem('token');
         this.checkLocalStorageToken();
-        this.router.navigate(['frontpage']);
     }
 
     // app.componentin log in statuksen näyttäminen
