@@ -19,6 +19,9 @@ gt-lg	'screen and (min-width: 1920px)'
   margin: 50px auto;
 }
 
+.touLink {
+  margin-top: 10px;
+}
 .loginFrom {
   max-width: 300px;
   margin: auto;

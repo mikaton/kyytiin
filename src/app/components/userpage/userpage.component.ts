@@ -29,7 +29,7 @@ export class UserpageComponent implements OnInit {
   customerEditForm: FormGroup;
 
   async ngOnInit() {
-    await Promise.all([this.updateUserdata(), this.getRides(), this.createForm()
+    await Promise.all([this.defaultUserValues(), this.updateUserdata(), this.getRides(), this.createForm()
     ]);
   }
   createForm() {
@@ -74,7 +74,9 @@ export class UserpageComponent implements OnInit {
       'user': {
         'firstName': '',
         'lastName': '',
-        'email': ''
+        'email': '',
+        'phoneNumber': '',
+        'customer_id':'',
       }
     }
   }

@@ -7,7 +7,7 @@ import { RidelistComponent } from '../components/ridelist/ridelist.component';
 import { AuthDialogComponent } from '../components/auth-dialog/auth-dialog.component';
 import { Subject } from 'rxjs/Subject';
 import { API_URL } from '../app.config';
-import { JwtHelperService  } from '@auth0/angular-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class LocalAuthService {
@@ -15,7 +15,7 @@ export class LocalAuthService {
     apiUrlLocalLogin = `${API_URL}/auth/local/login`;
     apiUrlLocalRegister = `${API_URL}/auth/local/register`;
     constructor(private http: HttpClient, private router: Router, private jwt: JwtHelperService) { }
-JwtHelperService
+
     authenticate(user) {
         let response = new Promise((resolve, reject) => {
             if (user) {
@@ -24,13 +24,13 @@ JwtHelperService
                     .then(
                         res => {
                             this.setToken(res);
-                            this.checkLocalStorageToken();
+                            location.reload();
                             resolve(res);
                         },
                         err => {
                             reject(err);
                         }
-                    );   
+                    );
             }
         });
         return response;
@@ -38,56 +38,61 @@ JwtHelperService
     signIn(user) {
         let response = new Promise((resolve, reject) => {
             this.http.post(this.apiUrlLocalLogin, user)
-            .toPromise()
-            .then(
-                res => {
-                    this.setToken(res);
-                    this.checkLocalStorageToken();
-                    resolve();
-                },
-                err => {
-                    reject(err);
-                }
-            );
+                .toPromise()
+                .then(
+                    res => {
+                        this.setToken(res);
+                        resolve();
+                    },
+                    err => {
+                        reject(err);
+                    }
+                );
         });
         return response;
     }
     registerLocal(user) {
         let response = new Promise((resolve, reject) => {
             this.http.post(this.apiUrlLocalRegister, user)
-            .toPromise()
-            .then(
-                res => {
-                    this.setToken(res);
-                    location.reload();
-                    resolve(res);
-                },
-                err => {
-                    reject(err);
-                }
-            );
+                .toPromise()
+                .then(
+                    res => {
+                        this.setToken(res);
+                        location.reload();
+                        resolve(res);
+                    },
+                    err => {
+                        reject(err);
+                    }
+                );
         });
         return response;
     }
     private setToken(res) {
+        console.log(res);
         localStorage.setItem('token', res.token);
     }
 
     decodeToken() {
-        const _id = this.jwt.decodeToken(localStorage.getItem('token'));
-        return (_id._id);
+        const token = localStorage.getItem('token')
+        if (token != null) {
+            const decodedToken = this.jwt.decodeToken(token);
+            return (decodedToken._id);
+        } else {
+            return null;
+        }
     }
     signOut() {
         localStorage.removeItem('token');
-        this.checkLocalStorageToken();
+        window.location.reload();
     }
-
-    // app.componentin log in statuksen näyttäminen
+    
+    //Vaihtaa checkLocalStorage (vitun paska muuttujan nimi) arvon app.componentissa, 
+    //implikoi käyttäjälle (ja meille) kirjautumisen tilan
     private checkLocalStorage = new Subject<any>();
     checkLocalStorage$ = this.checkLocalStorage.asObservable();
 
     checkLocalStorageToken() {
         this.checkLocalStorage.next();
       }
-    
 }

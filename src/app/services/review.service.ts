@@ -10,13 +10,11 @@ export class ReviewService {
   constructor(private http: HttpClient) { }
 
   allowReview(user, user2) {
-    console.log(user, user2);
     let response = new Promise((resolve, reject) => {
       this.http.get(`${API_URL}/review/canReview/${user}/${user2}`)
         .toPromise()
         .then(
           data => {
-            console.log(data);
             resolve(data);
           },
           err => {
@@ -26,7 +24,6 @@ export class ReviewService {
     return response;
   }
   sendReview(reviewForm) {
-    console.log(reviewForm)
     let response = new Promise((resolve, reject) => {
       this.http.post(`${API_URL}/review/${reviewForm.customer_id}`, reviewForm)
         .toPromise()

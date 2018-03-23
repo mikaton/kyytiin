@@ -18,7 +18,8 @@ exports.getUser = (req, res, next) => {
 };
 
 exports.updateUser = (req, res, next) => {
-  const updateData = req.body.updateData;
+  console.log(req.body);
+  const updateData = req.body;
   User.find({
     where: {customer_id: req.params.id}
   }).then(user => {
@@ -30,7 +31,7 @@ exports.updateUser = (req, res, next) => {
       user: updatedUser
     });
   })
-  .catch((err) => console.log('updatedUser failed: ' + err.message));
+  .catch((err) => console.log('updatedUser failed: ' + err));
 };
 
 exports.deleteUser = (req, res, next) => {

@@ -57,6 +57,7 @@ import { UserdetailsComponent } from './components/userdetails/userdetails.compo
 import { ReviewService } from './services/review.service';
 import { StarRatingModule } from 'angular-star-rating';
 import { RideJoinConfirmComponent } from './components/ridejoinconfirm/ridejoinconfirm.component';
+import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
 
 registerLocaleData(localeFi);
 
@@ -124,6 +125,7 @@ export function tokenGetter() {
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     MatCheckboxModule,
+    NgxTwitterTimelineModule,
     StarRatingModule.forRoot(),
     JwtModule.forRoot({
       config: {
