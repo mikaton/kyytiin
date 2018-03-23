@@ -2,9 +2,11 @@
   <mat-card class="mat-elevation-z8">
     <div>
       <mat-card-content *ngIf="!showRegisterForm" fxLayout="column">
+        <!--LOGINBLOKKI -->
         <mat-card-title>Kirjaudu Sisään!</mat-card-title>
         <div fxLayout="column" fxLayout.gt-sm="row">
           <div fxFlex="60">
+            <!--LOKAALI SISÄÄNKIRJAUS ALKAA -->
             <form [formGroup]="loginForm" (ngSubmit)="signInLocalUser(loginForm.value)">
               <div fxLayout.lt-md="column" ngClass.gt-sm="loginformContainer1GtSm">
                 <div ngClass.gt-sm="loginformContainer2GtSm">
@@ -23,6 +25,7 @@
                 </div>
               </div>
             </form>
+            <!--LOKAALI SISÄÄNKIRJAUS PÄÄTTY -->
           </div>
           <!--SOSIALISTIBLOKKI --> 
           <div ngClass.lt-md="authbox_socialmedia_login" ngClass.gt-sm="authbox_socialmedia_loginGtSm" fxLayout="column" fxLayoutAlign.gt-sm="space-around center">
@@ -39,6 +42,7 @@
           </div>
           <!--SOSIALISTIBLOKKI PÄÄTTYY -->
         </div>
+        <!--LOGINBLOKKI PÄÄTTYY -->
       </mat-card-content>
     </div>
 
