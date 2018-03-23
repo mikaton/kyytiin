@@ -31,6 +31,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AuthDialogComponent implements OnInit {
   loggedIn: boolean;
+  loggedInLocal: boolean;
   passwordFailed: boolean;
   returnUrl: string;
   showRegisterForm = false;
@@ -71,6 +72,14 @@ export class AuthDialogComponent implements OnInit {
   ngOnInit() {
     this.passwordFailed = false;
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
+
+  checkLoggedInStatus() {
+    if(this.localAuthService.decodeToken) {
+      this.loggedInLocal = true;
+    } else {
+      this.loggedInLocal = false;
+    }
   }
   get firstName() { return this.registerForm.get('firstName')};
   get lastName()  { return this.registerForm.get('lastName')};

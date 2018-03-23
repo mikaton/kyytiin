@@ -15,7 +15,7 @@ export class LocalAuthService {
     apiUrlLocalLogin = `${API_URL}/auth/local/login`;
     apiUrlLocalRegister = `${API_URL}/auth/local/register`;
     constructor(private http: HttpClient, private router: Router, private jwt: JwtHelperService) { }
-JwtHelperService
+
     authenticate(user) {
         let response = new Promise((resolve, reject) => {
             if (user) {

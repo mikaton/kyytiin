@@ -1,5 +1,8 @@
 <div id="wrapper">
-  <mat-card class="mat-elevation-z8">
+  <mat-card class="mat-elevation-z8" *ngIf="loggedInLocal">
+    <mat-card-content>Tervetuloa! </mat-card-content>
+  </mat-card>
+  <mat-card class="mat-elevation-z8" *ngIf="!loggedInLocal">
     <div>
       <mat-card-content *ngIf="!showRegisterForm" fxLayout="column">
         <!--LOGINBLOKKI -->
@@ -42,12 +45,12 @@
           </div>
           <!--SOSIALISTIBLOKKI PÄÄTTYY -->
         </div>
-        <!--LOGINBLOKKI PÄÄTTYY -->
+        <!--LOGINBLOKKI PÄÄTTYY --> 
       </mat-card-content>
     </div>
 
     <mat-card-content *ngIf="showRegisterForm" fxLayout="column">
-      <mat-card-title>Rekisteröidy!</mat-card-title>
+      <mat-card-title>Rekisteröidy!</mat-card-title> 
       <!-- UUSI REAKTIIVINEN FORMI -->
       <form [formGroup]="registerForm" (ngSubmit)="registerLocal(registerForm.value)">
         <div fxLayout="column">
