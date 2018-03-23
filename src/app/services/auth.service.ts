@@ -78,8 +78,8 @@ JwtHelperService
     }
 
     decodeToken() {
-        const _id = this.jwt.decodeToken(localStorage.getItem('token'));
-        return (_id._id);
+        const decodedToken = this.jwt.decodeToken(localStorage.getItem('token'));
+        return (decodedToken._id);
     }
     signOut() {
         localStorage.removeItem('token');
