@@ -59,7 +59,7 @@ exports.localRegister = (req, res, next) => {
 			console.log(user);
 			if (user) {
 				res.status(400).json({
-					message: 'Sähköposti on jo rekisteröity kättäjälle.'
+					message: 'Sähköposti on jo rekisteröity käyttäjälle.'
 				});
 			}
 			else {

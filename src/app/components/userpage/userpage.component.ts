@@ -3,7 +3,13 @@ import { UserService } from '../../services/user.service';
 import { LocalAuthService } from '../../services/auth.service';
 import { DatePipe } from '@angular/common';
 import { RideService } from '../../services/ride.service';
-
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  FormControl,
+  Validators
+} from '@angular/forms';
 @Component({
   selector: 'app-userpage',
   templateUrl: './userpage.component.html',
@@ -11,20 +17,37 @@ import { RideService } from '../../services/ride.service';
 })
 export class UserpageComponent implements OnInit {
 
-  constructor(private userService: UserService,
+  constructor(
+    private userService: UserService,
     private localAuthService: LocalAuthService,
-    private rideService: RideService) { }
+    private rideService: RideService,
+    private fb: FormBuilder) { }
+
   localUser: any;
   rides = [];
   joinedRides = [];
+  customerEditForm: FormGroup;
 
   async ngOnInit() {
-    this.defaultUserValues();
-    await Promise.all([this.updateUserdata(), this.getRides()]);
+    await Promise.all([this.updateUserdata(), this.getRides(), this.createForm()
+    ]);
+  }
+  createForm() {
+    this.customerEditForm = this.fb.group({
+      phoneNumber: ['', [Validators.pattern("^[0-9]{8,10}")]],
+    });
+  }
+  get phoneNumber() { return this.customerEditForm.get('phoneNumber')};
+
+  patchUser(customerEditForm) {
+    this.localAuthService.decodeToken();
+    this.userService.patchUserData(customerEditForm)
+      .then((result) =>  this.updateUserdata()) 
+      .catch(err => console.error('patchUser() failed: ' + err.message));
   }
 
   updateUserdata() {
-    this.userService.getUser(localStorage.getItem('_id'))
+    this.userService.getUser(this.localAuthService.decodeToken())
       .then((result) => {
         this.localUser = result;
       })
@@ -32,12 +55,12 @@ export class UserpageComponent implements OnInit {
   }
 
   getRides() {
-    this.rideService.getRideToUserPage(localStorage.getItem('_id'))
+    this.rideService.getRideToUserPage(this.localAuthService.decodeToken())
       .then((rides => {
         this.rides = rides.data;
       }))
       .catch(err => console.error('getRides() failed: ' + err.message));
-    this.rideService.getJoinedRideToUserPage(localStorage.getItem('_id'))
+    this.rideService.getJoinedRideToUserPage(this.localAuthService.decodeToken())
       .then((rides => {
         this.joinedRides = rides.data;
       }))

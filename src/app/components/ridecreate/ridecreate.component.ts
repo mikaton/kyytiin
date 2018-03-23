@@ -15,6 +15,7 @@ import { Observable } from 'rxjs/Observable';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 import { townMatcher } from '../../validators/town-validator';
+import { LocalAuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-ridecreate',
@@ -32,7 +33,8 @@ export class RidecreateComponent implements OnInit {
 
   constructor(private rideService: RideService,
     private dialog: MatDialog,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private localAuthService: LocalAuthService) {
     
     //Formcontrollit formgroupin ulkopuolella jotta hakutoiminto onnistuisi
     this.startingplace = new FormControl('', [townMatcher])
@@ -136,6 +138,6 @@ export class RidecreateComponent implements OnInit {
   };
 
   updateId() {
-    return localStorage.getItem('_id')
+    return this.localAuthService.decodeToken();
   }
 }

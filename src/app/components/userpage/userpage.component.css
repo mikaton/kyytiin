@@ -11,3 +11,19 @@
 .profileInfo {
 	margin-bottom: 10px;
 }
+
+#phoneNumber {
+	max-width: 400px;
+}
+
+.updateDataBtn {
+	position: relative;
+	top: 20px;
+}
+.fa-vc {
+	line-height:inherit!important;
+	vertical-align: middle;
+	position: relative;
+	top: 15px;
+  }
+  

@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Subject';
   template: `
       <h1 mat-dialog-title>Tarkista tiedot</h1>
       <mat-dialog-content>
-      <mat-card style="width: 500px">
+      <mat-card style="max-width: 500px">
       <div fxLayout="column">
       <mat-card-title>
       Lähtöpaikka: {{ride.startingplace}}

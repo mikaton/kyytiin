@@ -7,14 +7,15 @@ import { RidelistComponent } from '../components/ridelist/ridelist.component';
 import { AuthDialogComponent } from '../components/auth-dialog/auth-dialog.component';
 import { Subject } from 'rxjs/Subject';
 import { API_URL } from '../app.config';
+import { JwtHelperService  } from '@auth0/angular-jwt';
 
 @Injectable()
 export class LocalAuthService {
     apiUrlSocial = `${API_URL}/auth/social`;
     apiUrlLocalLogin = `${API_URL}/auth/local/login`;
     apiUrlLocalRegister = `${API_URL}/auth/local/register`;
-    constructor(private http: HttpClient, private router: Router) { }
-
+    constructor(private http: HttpClient, private router: Router, private jwt: JwtHelperService) { }
+JwtHelperService
     authenticate(user) {
         let response = new Promise((resolve, reject) => {
             if (user) {
@@ -23,7 +24,6 @@ export class LocalAuthService {
                     .then(
                         res => {
                             this.setToken(res);
-                            this.setCurrentUserId(res);
                             this.checkLocalStorageToken();
                             resolve(res);
                         },
@@ -42,7 +42,6 @@ export class LocalAuthService {
             .then(
                 res => {
                     this.setToken(res);
-                    this.setCurrentUserId(res);
                     this.checkLocalStorageToken();
                     resolve();
                 },
@@ -60,7 +59,6 @@ export class LocalAuthService {
             .then(
                 res => {
                     this.setToken(res);
-                    this.setCurrentUserId(res);
                     location.reload();
                     resolve(res);
                 },
@@ -71,18 +69,15 @@ export class LocalAuthService {
         });
         return response;
     }
-    setCurrentUserId(res) {
-        if(!res._id) {
-        localStorage.setItem('_id', res.user._id);
-        } else {
-            localStorage.setItem('_id', res._id);
-        }
-    }
     private setToken(res) {
         localStorage.setItem('token', res.token);
     }
+
+    decodeToken() {
+        const _id = this.jwt.decodeToken(localStorage.getItem('token'));
+        return (_id._id);
+    }
     signOut() {
-        localStorage.removeItem('_id');
         localStorage.removeItem('token');
         this.checkLocalStorageToken();
     }

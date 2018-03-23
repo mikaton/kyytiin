@@ -30,10 +30,13 @@ const model = require('../models/index'),
 	// --- </Sähköpostin asetukset> //
 
 exports.getSingleRide = (req, res, next) => {
-  Ride.findOne({
-    where: { ride_id: req.params.id }
-  })
+  Ride.sequelize.query('SELECT r.customer_id AS customer_id, r.additional_information AS additional_information, r.startingplace AS startingplace, r.destination AS destination, r.time_of_departure AS time_of_departure, r.time_of_arrival AS time_of_arrival, r.free_seats AS free_seats, r.smoking AS smoking, r.pets AS pets, c.firstName AS firstName, c.lastName as lastName FROM Rides r INNER JOIN Customers c on r.customer_id = c.customer_id WHERE r.ride_id = :ride_id',
+  {
+			replacements: { ride_id: req.params.id },
+			type: Ride.sequelize.QueryTypes.SELECT
+		})
   .then((ride) => {
+    console.log(ride);
     res.status(200).json({
       message: 'Ride found',
       data: ride

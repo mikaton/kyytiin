@@ -1,4 +1,7 @@
 <div class="wrapper">
+  <mat-card *ngIf="isCreator" class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
+    <mat-card-title>Tämä on sinun luoma kyyti.</mat-card-title>
+  </mat-card>
   <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
     <div fxLayout="column">
       <mat-card-title fxFlex="50">
@@ -9,7 +12,8 @@
       </mat-card-title>
     </div>
     <mat-card-content>
-        <a routerLink="/user/{{ride.customer_id}}">Kyydin tarjoaja</a>
+      Kyydin tarjoaja:
+      <a routerLink="/user/{{ride?.customer_id}}">{{ride.firstName}} {{ride.lastName}}</a>
     </mat-card-content>
     <mat-card-content>
       Lähtöpäivä: {{ride?.time_of_departure | date:'mediumDate'}} aika: {{ride?.time_of_departure | date:'shortTime'}}
@@ -29,17 +33,20 @@
     <mat-card-content>
       Lisätiedot: {{ride?.additional_information}}
     </mat-card-content>
-    <button mat-raised-button color="primary" (click)="openAlertDialog(alertTemplate)">Liity kyytiin</button>
+    <button *ngIf="!isCreator" mat-raised-button color="primary" (click)="openAlertDialog(alertTemplate)">Liity kyytiin</button>
     <button mat-raised-button (click)="goBack()">Takaisin</button>
   </mat-card>
   <ng-template #alertTemplate>
-      <h1 mat-dialog-title>Lähetä pyyntö liittyä kyytiin?</h1>
-      <div class="spinner_icon" *ngIf="!confirmEmailSent && confirmEmailButtonClicked"><i class="fas fa-spinner fa-pulse"></i></div>
-      <div class="check_icon" *ngIf="confirmEmailSent && confirmEmailButtonClicked"><i class="fas fa-check"></i>&nbsp;&nbsp;Liittymispyyntö lähetetty!</div>
-      <mat-dialog-actions>
-        <button *ngIf="!confirmEmailSent && !confirmEmailButtonClicked" mat-raised-button color="primary" (click)="joinRide(ride_id, creator_id, joiner_id)">Kyllä</button>
-        <button *ngIf="!confirmEmailSent && !confirmEmailButtonClicked" mat-button type="button" (click)="dialogRef.close()">Peruuta</button>
-        <button *ngIf="confirmEmailSent && confirmEmailButtonClicked" mat-raised-button color="primary" (click)="dialogRef.close()">Sulje</button>
-      </mat-dialog-actions>
+    <h1 mat-dialog-title>Lähetä pyyntö liittyä kyytiin?</h1>
+    <div class="spinner_icon" *ngIf="!confirmEmailSent && confirmEmailButtonClicked">
+      <i class="fas fa-spinner fa-pulse"></i>
+    </div>
+    <div class="check_icon" *ngIf="confirmEmailSent && confirmEmailButtonClicked">
+      <i class="fas fa-check"></i>&nbsp;&nbsp;Liittymispyyntö lähetetty!</div>
+    <mat-dialog-actions>
+      <button *ngIf="!confirmEmailSent && !confirmEmailButtonClicked" mat-raised-button color="primary" (click)="joinRide()">Kyllä</button>
+      <button *ngIf="!confirmEmailSent && !confirmEmailButtonClicked" mat-button type="button" (click)="dialogRef.close()">Peruuta</button>
+      <button *ngIf="confirmEmailSent && confirmEmailButtonClicked" mat-raised-button color="primary" (click)="dialogRef.close()">Sulje</button>
+    </mat-dialog-actions>
   </ng-template>
 </div>
