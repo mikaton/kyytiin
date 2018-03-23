@@ -6,9 +6,9 @@
       </mat-card-title>
       <div fxLayout="column">
         <div>
-          <mat-card-content>Nimi: {{localUser.user.firstName}} {{localUser.user.lastName}}</mat-card-content>
-          <mat-card-content>Sähköposti: {{localUser.user.email}}</mat-card-content>
-          <mat-card-content>Puhelinnumero: {{localUser.user.phoneNumber}}</mat-card-content>
+          <mat-card-content>Nimi: {{localUser?.user.firstName}} {{localUser?.user.lastName}}</mat-card-content>
+          <mat-card-content>Sähköposti: {{localUser?.user.email}}</mat-card-content>
+          <mat-card-content>Puhelinnumero: {{localUser?.user.phoneNumber}}</mat-card-content>
           <form [formGroup]="customerEditForm" (ngSubmit)="patchUser(customerEditForm.value)">
             <div fxLayout="row">
               <mat-form-field>

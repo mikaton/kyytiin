@@ -5,7 +5,7 @@ import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.compon
 import { RidelistComponent } from './components/ridelist/ridelist.component';
 import { UserpageComponent } from './components/userpage/userpage.component';
 import { FrontpageComponent } from './components/frontpage/frontpage.component';
-import { AuthGuard } from './services/auth.guard.service';
+import { AuthGuard } from './guards/auth.guard.service';
 import { RidecreateComponent } from './components/ridecreate/ridecreate.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { RideComponent } from './components/ride/ride.component';

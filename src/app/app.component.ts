@@ -36,32 +36,34 @@ export class AppComponent implements OnInit {
     this.mobileQuery = media.matchMedia('(max-width: 1279px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    //check auth status
-    this.localAuthService.checkLocalStorage$.subscribe(
-      () => {
-        this.checkLocalStorage();
-      }
-    );
-  }
+        //Tarpeellinen, kaikki rikki jos poissa. 
+        this.localAuthService.checkLocalStorage$.subscribe(
+          () => {
+            this.checkLoggedInStatus();
+          }
+        );
+    }
+  
 
   async ngOnInit() {
+    this.checkLoggedInStatus();
     try {
       await this.getUser();
-      this.checkLocalStorage();
     } catch(err) {
       console.log('App.component ngOnInit failed: ' + err.stack);
     }
     
   }
-
-  checkLocalStorage() {
-    if(localStorage.getItem('token')) {
+  checkLoggedInStatus() {
+    console.log('appmodulelogincheck')
+    if(this.localAuthService.decodeToken()) {
+      console.log('appmodulelogincheck_true')
       this.localStorageToken = true;
     } else {
+      console.log('appmodulelogincheck_false')
       this.localStorageToken = false;
     }
   }
-
   sidenavOpen(sidenav) {
     sidenav.toggle();
     this.isOpen = sidenav.opened;

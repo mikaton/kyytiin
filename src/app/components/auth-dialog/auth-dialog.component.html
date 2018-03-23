@@ -1,7 +1,4 @@
 <div id="wrapper">
-  <mat-card class="mat-elevation-z8" *ngIf="loggedInLocal">
-    <mat-card-content>Tervetuloa! </mat-card-content>
-  </mat-card>
   <mat-card class="mat-elevation-z8" *ngIf="!loggedInLocal">
     <div>
       <mat-card-content *ngIf="!showRegisterForm" fxLayout="column">
@@ -30,7 +27,7 @@
             </form>
             <!--LOKAALI SISÄÄNKIRJAUS PÄÄTTY -->
           </div>
-          <!--SOSIALISTIBLOKKI --> 
+          <!--SOSIALISTIBLOKKI -->
           <div ngClass.lt-md="authbox_socialmedia_login" ngClass.gt-sm="authbox_socialmedia_loginGtSm" fxLayout="column" fxLayoutAlign.gt-sm="space-around center">
             <button mat-raised-button class="btn-fb" (click)="signInWithFB()" ngClass.gt-sm="buttonsGtXs">
               <i class="fab fa-facebook fa-2x">&nbsp;&nbsp;</i>Tunnistaudu Facebook-tunnuksilla
@@ -45,12 +42,12 @@
           </div>
           <!--SOSIALISTIBLOKKI PÄÄTTYY -->
         </div>
-        <!--LOGINBLOKKI PÄÄTTYY --> 
+        <!--LOGINBLOKKI PÄÄTTYY -->
       </mat-card-content>
     </div>
 
     <mat-card-content *ngIf="showRegisterForm" fxLayout="column">
-      <mat-card-title>Rekisteröidy!</mat-card-title> 
+      <mat-card-title>Rekisteröidy!</mat-card-title>
       <!-- UUSI REAKTIIVINEN FORMI -->
       <form [formGroup]="registerForm" (ngSubmit)="registerLocal(registerForm.value)">
         <div fxLayout="column">
@@ -163,4 +160,16 @@
       </button>
     </mat-card-content>
   </mat-card>
+  <!--SOSIALISTIC MAFIA -->
+  <div>
+    <mat-card>
+      <ngx-twitter-timeline [data]="{
+        sourceType: 'url',
+        url: 'https://twitter.com/kyytiin'}" [opts]="{
+        tweetLimit: 5,
+        borderColor: '#689F38'
+    }"></ngx-twitter-timeline>
+    </mat-card>
+  </div>
+  <!--SOSIALISTIC MAFIA -->
 </div>

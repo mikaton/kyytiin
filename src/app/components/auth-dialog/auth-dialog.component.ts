@@ -46,18 +46,18 @@ export class AuthDialogComponent implements OnInit {
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router
-    ) {
+  ) {
 
     this.registerForm = fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(80)]],
-      checkbox:['', Validators.requiredTrue],
+      checkbox: ['', Validators.requiredTrue],
       phoneNumber: ['', [Validators.pattern("^[0-9]{8,10}")]],
       email: this.fb.group({
         confEmail: ['', [Validators.required, Validators.email]],
         confirmedEmail: ['', [Validators.required, Validators.email]],
-      }, { validator: [emailMatcher]}
-      ), 
+      }, { validator: [emailMatcher] }
+      ),
       password: this.fb.group({
         pwd: ['', [Validators.required, Validators.minLength(8)]],
         confirmPwd: ['', [Validators.required, Validators.minLength(8)]]
@@ -65,37 +65,38 @@ export class AuthDialogComponent implements OnInit {
     });
 
     this.loginForm = fb.group({
-      email: ['',[Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
   ngOnInit() {
+    this.checkLoggedInStatus();
     this.passwordFailed = false;
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   checkLoggedInStatus() {
-    if(this.localAuthService.decodeToken) {
+    if (this.localAuthService.decodeToken()) {
       this.loggedInLocal = true;
     } else {
       this.loggedInLocal = false;
     }
   }
-  get firstName() { return this.registerForm.get('firstName')};
-  get lastName()  { return this.registerForm.get('lastName')};
-  get email()     { return this.registerForm.get('email')};
-  get confEmail() { return this.registerForm.get('email.confEmail')}
-  get confirmedEmail() { return this.registerForm.get('email.confirmedEmail')}
-  get phoneNumber() { return this.registerForm.get('phoneNumber')};
-  get password()  { return this.registerForm.get('password')};
-  get checkbox()  { return this.registerForm.get('checkbox')};
+  get firstName() { return this.registerForm.get('firstName') };
+  get lastName() { return this.registerForm.get('lastName') };
+  get email() { return this.registerForm.get('email') };
+  get confEmail() { return this.registerForm.get('email.confEmail') }
+  get confirmedEmail() { return this.registerForm.get('email.confirmedEmail') }
+  get phoneNumber() { return this.registerForm.get('phoneNumber') };
+  get password() { return this.registerForm.get('password') };
+  get checkbox() { return this.registerForm.get('checkbox') };
 
   signInWithGoogle() {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((user) => {
         this.updateUser();
         this.localAuthService.authenticate(user).then(() => this.router.navigateByUrl(this.returnUrl));
-        
+
       })
       .catch((err) => {
         console.error('signInWithGoogle failed: ' + err.message);
@@ -110,36 +111,36 @@ export class AuthDialogComponent implements OnInit {
       })
       .catch((err) => {
         console.error('signInWithFB() failed: ' + err.message);
-      });
-  }
 
+      })
+  } 
   signInLocalUser(loginForm) {
     this.localAuthService.signIn(loginForm)
-    .then((res) => this.router.navigateByUrl(this.returnUrl))
-    .catch((err) => {
-      this.passwordFailed = true;
-      this.loginForm.patchValue({
-        password: null
-      })
-      console.error('signInLocalUser() failed: ' + err.message);
-    });
+      .then((res) => this.router.navigateByUrl(this.returnUrl))
+      .catch((err) => {
+        this.passwordFailed = true;
+        this.loginForm.patchValue({
+          password: null
+        })
+        console.error('signInLocalUser() failed: ' + err.message);
+      });
   }
 
   registerLocal(registerForm) {
     this.localAuthService.registerLocal(registerForm)
-    .then((user) => {
-      console.log('Registered user: ' + user);
-      this.router.navigateByUrl(this.returnUrl);
-    })
-    .catch((err) => {
-      this.errorDialogRef = this.dialog.open(ErrorDialog, {
-        data: {
-          errorMessage: 'Jotain meni pieleen',
-          serverError: err.error.message
-        }
-      });
+      .then((user) => {
+        console.log('Registered user: ' + user);
+        this.router.navigateByUrl(this.returnUrl);
+      })
+      .catch((err) => {
+        this.errorDialogRef = this.dialog.open(ErrorDialog, {
+          data: {
+            errorMessage: 'Jotain meni pieleen',
+            serverError: err.error.message
+          }
+        });
         console.error('registerLocal() failed: ' + err.message);
-    });
+      });
   }
 
   async updateUser() {
@@ -153,6 +154,7 @@ export class AuthDialogComponent implements OnInit {
     this.localAuthService.signOut();
     this.router.navigate(['/frontpage']);
     this.authService.signOut();
+    this.checkLoggedInStatus()
   }
 
   openRegisterForm() {

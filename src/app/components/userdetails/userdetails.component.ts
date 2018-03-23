@@ -67,7 +67,6 @@ export class UserdetailsComponent implements OnInit {
   }
 
   sendReview(reviewForm) {
-    console.log(reviewForm);
     this.reviewService.sendReview(reviewForm)
       .then(response => console.log('ok'))
       .catch(err => console.error('sendReview() failed: ' + err.message));
