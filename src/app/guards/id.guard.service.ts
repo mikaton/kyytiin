@@ -14,6 +14,11 @@ export class IdGuardService implements CanActivate {
     // expectedId annetaan routen path{} -konfiguraatiossa erillisessä dataobjektissa
     const expectedId = route.data.expectedId;
     // Haetaan localstoragesta nykyinen id
-
+    const currentId = this.authService.decodeToken();
+    // Jos Id ei mätsää reitin odotettuun idhen, ei päästetä ko. käyttäjää reittiin
+    if(!expectedId === currentId) {
+      return false;
+    }
+    return true;
   }
 }
