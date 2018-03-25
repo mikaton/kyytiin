@@ -7,10 +7,6 @@ const express = require('express'),
 	router = require('./server/router'),
 	models = require('./server/models'),
 	winston = require('winston'),
-	Sequelize = require('sequelize'),
-	sequelize = new Sequelize('mysql://root@localhost:3306/kyyti', {
-		logging: winston.debug
-	  });
 	http = require('http'),
 	cors = require('cors'),
 	app = express(),
