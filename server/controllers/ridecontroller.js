@@ -256,34 +256,44 @@ exports.confirmRideJoin = (req, res, next) => {
   // Luodaan uusi kenttä CustomersRides_ride tauluun näillä tiedoilla
   CustomersRides.create(data)
     .then((data) => {
-      // Etsitään liittynyt käyttäjä
-      User.find({
-        where: { customer_id: req.body.customer_id }
+      // Etsitään matka
+      Ride.find({
+        where: { ride_id: data.ride_id }
       })
-        .then((user) => {
-          // Luodaan sähköposti
-          const emailData = {
-            to: user.dataValues.email,
-            template: 'ride-join-confirm',
-            subject: 'Kyyti.in - Pyyntösi liittyä matkalle hyväksyttiin',
-            context: {
-              name: user.firstName,
-            }
-          };
-          // Lähetetään sähköposti
-          smtpTransport.sendMail(emailData, (err) => {
-            if (!err) {
-              return res.status(200).json({
-                success: true,
-                message: 'Pyynnön hyväksyminen onnistui'
+        .then((ride) => {
+          // Vähennetään matkalta -1 vapaa paikka
+          const rideData = { free_seats: free_seats - 1 }
+          ride.updateAttributes(rideData).then(() => {
+            // Etsitään liittynyt käyttäjä
+            User.find({
+              where: { customer_id: req.body.customer_id }
+            })
+              .then((user) => {
+                // Luodaan sähköposti
+                const emailData = {
+                  to: user.dataValues.email,
+                  template: 'ride-join-confirm',
+                  subject: 'Kyyti.in - Pyyntösi liittyä matkalle hyväksyttiin',
+                  context: {
+                    name: user.firstName,
+                  }
+                };
+                // Lähetetään sähköposti
+                smtpTransport.sendMail(emailData, (err) => {
+                  if (!err) {
+                    return res.status(200).json({
+                      success: true,
+                      message: 'Pyynnön hyväksyminen onnistui'
+                    });
+                  } else {
+                    return res.status(500).json({
+                      success: false,
+                      message: 'Pyynnön hyväksyminen epäonnistui',
+                      error: err
+                    });
+                  }
+                });
               });
-            } else {
-              return res.status(500).json({
-                success: false,
-                message: 'Pyynnön hyväksyminen epäonnistui',
-                error: err
-              });
-            }
           });
         });
     })
