@@ -255,29 +255,31 @@ exports.denyRideJoin = (req, res, next) => {
             }
           })
         })
+    })
+    .catch((err) => console.log('denyRideJoin failed: ' + err));
+};
+
+
+exports.confirmRideJoin = (req, res, next) => {
+  // ride_id ja joiner_id
+  console.log(req.body);
+  const data = req.body;
+  // Luodaan uusi kenttä CustomersRides_ride tauluun näillä tiedoilla
+  CustomersRides.create(data)
+    .then((data) => {
+
+      console.log("customersrides.create", data);
+      // Etsitään matka
+      Ride.find({
+        where: { ride_id: data.ride_id }
       })
-        .catch((err) => console.log('denyRideJoin failed: ' + err));
-    };
-
-  exports.confirmRideJoin = (req, res, next) => {
-    // ride_id ja joiner_id
-    console.log(req.body);
-    const data = req.body;
-    // Luodaan uusi kenttä CustomersRides_ride tauluun näillä tiedoilla
-    CustomersRides.create(data)
-      .then((data) => {
-
-        console.log("customersrides.create", data);
-        // Etsitään matka
-        Ride.find({
-          where: { ride_id: data.ride_id }
-        })
-          .then((ride) => {
-            // Vähennetään matkalta -1 vapaa paikka
-            console.log("original data", ride.free_seats);
-            const rideData = { free_seats: ride.free_seats - 1 }
-            console.log("ridedata", rideData);
-            ride.updateAttributes(rideData).then(() => {
+        .then((ride) => {
+          // Vähennetään matkalta -1 vapaa paikka
+          console.log("original data", ride.free_seats);
+          const rideData = { free_seats: ride.free_seats - 1 }
+          console.log("ridedata", rideData);
+          ride.updateAttributes(rideData)
+            .then(() => {
               // Etsitään liittynyt käyttäjä
               User.find({
                 where: { customer_id: req.body.customer_id }
@@ -289,7 +291,7 @@ exports.denyRideJoin = (req, res, next) => {
                     template: 'ride-join-confirm',
                     subject: 'Kyyti.in - Pyyntösi liittyä matkalle hyväksyttiin',
                     context: {
-                      name: user.firstName,
+                      rideURL: req.body.ride_id
                     }
                   };
                   // Lähetetään sähköposti
@@ -309,10 +311,10 @@ exports.denyRideJoin = (req, res, next) => {
                   });
                 });
             });
-          });
-      })
-      .catch((err) => console.log('confirmRideJoin failed: ' + err.stack));
+        });
+    })
+    .catch((err) => console.log('confirmRideJoin failed: ' + err.stack));
 
 
-  };
+};
 
