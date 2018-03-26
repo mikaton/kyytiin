@@ -28,14 +28,16 @@ module.exports = (app) => {
 
   // Matka CRUD reitit
   router.post('/ride', jwtAuth, RideController.createRide);
-  router.post('/ride/join', jwtAuth, RideController.joinRide);
   router.get('/ride/:id', jwtAuth, RideController.getSingleRide);
   router.get('/ride', RideController.getAllRides);
   router.get('/ride/user/:id', jwtAuth, RideController.getUserRides);
   router.get('/ride/user/joined/:id', RideController.getUserJoinedRides);
   router.patch('/ride/:id', jwtAuth, RideController.updateRide);
   router.delete('/ride/:id', jwtAuth, RideController.deleteRide);
-  router.post('/ride/:ride_id/:creator_id/:joiner_id/', jwtAuth, RideController.sendConfirmRideJoinEmail);
+  // Matkalle liittyminen
+  router.post('/ride/join/sendrequest', jwtAuth, RideController.sendConfirmRideJoinEmail);
+  router.post('/ride/join/confirm', jwtAuth, RideController.confirmRideJoin);
+  router.post('/ride/join/deny', jwtAuth, RideController.denyRideJoin);
 
   // Arvostelu CRUD reitit
   router.post('/review/:customer_id', jwtAuth, ReviewController.createReview);

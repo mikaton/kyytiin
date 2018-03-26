@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { LocalAuthService } from '../services/auth.service';
 
+@Injectable()
 export class IdGuard implements CanActivate {
   constructor(
     private router: Router,

@@ -1,18 +1,51 @@
 <div class="wrapper">
   <mat-card fxLayout="column" class="mat-elevation-z8">
     <mat-card-title>
-      Hei PLACEHOLDER!
+      Hei {{creator.firstName}}!
     </mat-card-title>
     <mat-card-content>
-      PLACEHOLDER2 haluaisi liittyä matkallesi PLACEHOLDER3 - PLACEHOLDER4
+      {{joiner.firstName}} haluaisi liittyä matkallesi
     </mat-card-content>
     <mat-card-content>
-      
+      Hyväksytkö käyttäjän pyynnön?
     </mat-card-content>
-    <mat-card-content>HUOM! Tätä toimintoa ei voi perua!</mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary">Hyväksy</button>
-      <button mat-raised-button color="warn">Hylkää</button>
+      <button mat-raised-button color="primary" (click)="openConfirmDialog(confirmDialogTemplate)">Hyväksy</button>
+      <button mat-raised-button color="warn" (click)="openDenyDialog(denyDialogTemplate)">Hylkää</button>
     </mat-card-actions>
   </mat-card>
+  <!-- Dialogitemplate hyväksymiselle -->
+  <ng-template #confirmDialogTemplate>
+    <div *ngIf="confirmButtonsPressed && promiseResolved">
+        <i class="fas fa-check"></i>&nbsp;&nbsp;Käyttäjä hyväksytty matkalle!
+    </div>
+    <div *ngIf="!confirmButtonsPressed && !promiseResolved">
+      <h1 mat-dialog-title>Haluatko varmasti hyväksyä käyttäjän kyytiin?</h1>
+      <mat-dialog-content>HUOM! Tätä toimintoa ei voi perua!</mat-dialog-content>
+      <br />
+    </div>
+    <div *ngIf="confirmButtonsPressed && !promiseResolved"><i class="fas fa-spinner fa-pulse"></i>Käsitellään..</div>
+    <div *ngIf="!confirmButtonsPressed && !promiseResolved">
+      <button mat-raised-button color="primary" (click)="confirmJoin()">Kyllä</button>
+      <button mat-raised-button color="warn" (click)="dialogRef.close()">Peruuta</button>
+    </div>
+  </ng-template>
+  <!-- Dialogitemplate hylkäämiselle -->
+  <ng-template #denyDialogTemplate>
+      <div *ngIf="confirmButtonsPressed && promiseResolved">
+          <i class="fas fa-check"></i>&nbsp;&nbsp;Käyttäjän liittyminen matkalle hylätty
+      </div>
+      <div *ngIf="!confirmButtonsPressed && !promiseResolved">
+        <h1 mat-dialog-title>Haluatko varmasti hylätä käyttäjän pyynnön liittyä kyytiin?</h1>
+        <mat-dialog-content>HUOM! Tätä toimintoa ei voi perua!</mat-dialog-content>
+        <br />
+      </div>
+      <div *ngIf="confirmButtonsPressed && !promiseResolved"><i class="fas fa-spinner fa-pulse"></i>Käsitellään..</div>
+      <div *ngIf="!confirmButtonsPressed && !promiseResolved">
+        <mat-dialog-actions>
+            <button mat-raised-button color="primary" (click)="denyJoin()">Kyllä</button>
+            <button mat-raised-button color="warn" (click)="dialogRef.close()">Peruuta</button>
+        </mat-dialog-actions>
+      </div>
+    </ng-template>
 </div>
