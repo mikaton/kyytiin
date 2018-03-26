@@ -14,13 +14,13 @@ export class IdGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot) {
     // Haetaan owner_id routen parametreistä
     const expectedId = route.params.owner_id;
-    console.log(expectedId);
     // Haetaan localstoragesta nykyinen id
     const currentId = this.authService.decodeToken();
     // Jos Id ei mätsää reitin odotettuun idhen, ei päästetä ko. käyttäjää reittiin
-    if(!expectedId === currentId) {
-      return false;
+    console.log(expectedId === currentId);
+    if(expectedId === currentId) {
+      return true;
     }
-    return true;
+    return false;
   }
 }
