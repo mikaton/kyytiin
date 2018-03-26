@@ -36,9 +36,9 @@ export class RideJoinConfirmComponent implements OnInit {
   async getData() {
     await Promise.all([
       this.userService.getUser(this.route.snapshot.params.owner_id)
-      .then((data) => this.creator = data.user),
+      .then((data) => this.creator = data),
       this.userService.getUser(this.route.snapshot.params.joiner_id)
-      .then((data) => this.joiner = data.user),
+      .then((data) => this.joiner = data),
       this.rideService.getRide(this.route.snapshot.params.ride_id)
       .then((ride) => this.ride = ride.data[0])
     ]);
@@ -63,16 +63,23 @@ export class RideJoinConfirmComponent implements OnInit {
     });
   }
 
+
   denyJoin() {
     this.confirmButtonsPressed = true;
-    this.rideService.denyJoinRide(this.joiner.customer_id)
+    const ridedenyshit = { 
+        customer_id: this.joiner.user.customer_id,
+        creator_id: this.creator.user.customer_id,
+        ride_id: this.ride.ride_id,
+        paska: 'ripulipaska',
+      }
+    this.rideService.denyJoinRide(ridedenyshit)
     .then((data) => this.promiseResolved = true)
     .catch((err) => console.log('denyJoin() failed: ' + err.message));
   }
   confirmJoin() {
     this.confirmButtonsPressed = true;
-    this.rideService.confirmJoinRide(this.ride.ride_id,  this.joiner.customer_id)
+    this.rideService.confirmJoinRide(this.ride.ride_id, this.joiner.user.customer_id)
     .then((data) => this.promiseResolved = true)
-    .catch((err) => console.log('confirmJoin() failed: ' + err.stack));
+    .catch((err) => console.log('confirmJoin() failed: ' + err.message));
   }
 }

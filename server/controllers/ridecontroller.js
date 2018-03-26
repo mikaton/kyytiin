@@ -144,6 +144,7 @@ exports.deleteRide = (req, res, next) => {
     .catch((err) => console.log('deleteRide failed: ' + err.message));
 };
 
+
 exports.sendConfirmRideJoinEmail = (req, res, next) => {
   // Etsitään matkan luoja
   User.find({
@@ -179,7 +180,6 @@ exports.sendConfirmRideJoinEmail = (req, res, next) => {
                   time_of_departure: ride.dataValues.time_of_departure
                 }
               };
-
               // Luodaan sähköposti
               const emailData = {
                 to: data.creator.email,
@@ -219,86 +219,100 @@ exports.sendConfirmRideJoinEmail = (req, res, next) => {
 exports.denyRideJoin = (req, res, next) => {
   // Etsitään liittymistä yrittänyt käyttäjä
   User.find({
-    where: { customer_id: req.body.joiner_id }
+    where: { customer_id: req.body.customer_id }
   })
     .then((joiner) => {
-      // Luodaan sähköposti
-      const emailData = {
-        to: joiner.dataValues.email,
-        template: 'ride-join-deny',
-        subject: 'Kyyti.in - Pyyntö liittyä matkalle hylättiin',
-        context: {
-          name: joiner.dataValues.firstName,
-        }
-      };
-      // Lähetetään sähköposti
-      smtpTransport.sendMail(emailData, (err) => {
-        if (!err) {
-          return res.status(200).json({
-            success: true,
-            message: 'Pyynnön hylkäys onnistui',
-          });
-        } else {
-          return res.status(500).json({
-            success: false,
-            message: 'Pyynnön hylkäys epäonnistui',
-            error: err
-          });
-        }
+      User.find({
+        where: { customer_id: req.body.creator_id }
       })
-    })
-    .catch((err) => console.log('denyRideJoin failed: ' + err));
-};
-
-exports.confirmRideJoin = (req, res, next) => {
-  // ride_id ja joiner_id
-  const data = req.body;
-  // Luodaan uusi kenttä CustomersRides_ride tauluun näillä tiedoilla
-  CustomersRides.create(data)
-    .then((data) => {
-      // Etsitään matka
-      Ride.find({
-        where: { ride_id: data.ride_id }
-      })
-        .then((ride) => {
-          // Vähennetään matkalta -1 vapaa paikka
-          const rideData = { free_seats: free_seats - 1 }
-          ride.updateAttributes(rideData).then(() => {
-            // Etsitään liittynyt käyttäjä
-            User.find({
-              where: { customer_id: req.body.customer_id }
-            })
-              .then((user) => {
-                // Luodaan sähköposti
-                const emailData = {
-                  to: user.dataValues.email,
-                  template: 'ride-join-confirm',
-                  subject: 'Kyyti.in - Pyyntösi liittyä matkalle hyväksyttiin',
-                  context: {
-                    name: user.firstName,
-                  }
-                };
-                // Lähetetään sähköposti
-                smtpTransport.sendMail(emailData, (err) => {
-                  if (!err) {
-                    return res.status(200).json({
-                      success: true,
-                      message: 'Pyynnön hyväksyminen onnistui'
-                    });
-                  } else {
-                    return res.status(500).json({
-                      success: false,
-                      message: 'Pyynnön hyväksyminen epäonnistui',
-                      error: err
-                    });
-                  }
-                });
+        .then((creator) => {
+          console.log(creator);
+          // Luodaan sähköposti
+          const emailData = {
+            to: joiner.dataValues.email,
+            template: 'ride-join-deny',
+            subject: 'Kyyti.in - Pyyntö liittyä matkalle hylättiin',
+            context: {
+              name: joiner.dataValues.firstName,
+              creatorName: creator.dataValues.firstName,
+              rideUrl: req.body.ride_id
+            }
+          };
+          // Lähetetään sähköposti
+          smtpTransport.sendMail(emailData, (err) => {
+            if (!err) {
+              return res.status(200).json({
+                success: true,
+                message: 'Pyynnön hylkäys onnistui',
               });
+            } else {
+              console.log(err);
+              return res.status(500).json({
+                success: false,
+                message: 'Pyynnön hylkäys epäonnistui',
+                error: err
+              });
+            }
+          })
+        })
+      })
+        .catch((err) => console.log('denyRideJoin failed: ' + err));
+    };
+
+  exports.confirmRideJoin = (req, res, next) => {
+    // ride_id ja joiner_id
+    console.log(req.body);
+    const data = req.body;
+    // Luodaan uusi kenttä CustomersRides_ride tauluun näillä tiedoilla
+    CustomersRides.create(data)
+      .then((data) => {
+
+        console.log("customersrides.create", data);
+        // Etsitään matka
+        Ride.find({
+          where: { ride_id: data.ride_id }
+        })
+          .then((ride) => {
+            // Vähennetään matkalta -1 vapaa paikka
+            console.log("original data", ride.free_seats);
+            const rideData = { free_seats: ride.free_seats - 1 }
+            console.log("ridedata", rideData);
+            ride.updateAttributes(rideData).then(() => {
+              // Etsitään liittynyt käyttäjä
+              User.find({
+                where: { customer_id: req.body.customer_id }
+              })
+                .then((user) => {
+                  // Luodaan sähköposti
+                  const emailData = {
+                    to: user.dataValues.email,
+                    template: 'ride-join-confirm',
+                    subject: 'Kyyti.in - Pyyntösi liittyä matkalle hyväksyttiin',
+                    context: {
+                      name: user.firstName,
+                    }
+                  };
+                  // Lähetetään sähköposti
+                  smtpTransport.sendMail(emailData, (err) => {
+                    if (!err) {
+                      return res.status(200).json({
+                        success: true,
+                        message: 'Pyynnön hyväksyminen onnistui'
+                      });
+                    } else {
+                      return res.status(500).json({
+                        success: false,
+                        message: 'Pyynnön hyväksyminen epäonnistui',
+                        error: err
+                      });
+                    }
+                  });
+                });
+            });
           });
-        });
-    })
-    .catch((err) => console.log('confirmRideJoin failed: ' + err.stack));
+      })
+      .catch((err) => console.log('confirmRideJoin failed: ' + err.stack));
 
 
-};
+  };
 

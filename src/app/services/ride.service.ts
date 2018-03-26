@@ -145,9 +145,9 @@ export class RideService {
   }
 
   /* Lähettää hylätylle käyttäjälle sähköposti-ilmoituksen */
-  denyJoinRide(joiner_id): Promise<any> {
+  denyJoinRide(ridedenyshit): Promise<any> {
     let response = new Promise((resolve, reject) => {
-      this.http.post(this.apiUrlJoinDeny, joiner_id)
+      this.http.post(`${this.apiUrlJoinDeny}`, ridedenyshit)
       .toPromise()
       .then(
         data => resolve(data),
