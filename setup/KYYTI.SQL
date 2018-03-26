@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS CustomersRides_ride;
 DROP TABLE IF EXISTS CustomersCars;
 DROP TABLE IF EXISTS Cars;
 DROP TABLE IF EXISTS Reviews;
+DROP TABLE IF EXISTS Requests;
 DROP TABLE IF EXISTS Rides;
 DROP TABLE IF EXISTS Customers;
 
@@ -43,6 +44,23 @@ CREATE TABLE IF NOT EXISTS Rides (
   CONSTRAINT customer_ride_fk
     FOREIGN KEY(customer_id) REFERENCES Customers(customer_id)
       ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+
+CREATE TABLE IF NOT EXISTS Requests (
+  request_id VARCHAR(100) NOT NULL PRIMARY KEY,
+  creator_id VARCHAR(100) NOT NULL,
+  joiner_id VARCHAR(100) NOT NULL,
+  ride_id VARCHAR(100) NOT NULL,
+  additional_information VARCHAR(512),
+  CONSTRAINT request_creator_fk
+    FOREIGN KEY(creator_id) REFERENCES Customers(customer_id)
+      ON UPDATE CASCADE ON DELETE RESTRICT
+  CONSTRAINT request_joiner_fk
+    FOREIGN KEY(joiner_id) REFERENCES Customers(customer_id)
+      ON UPDATE CASCADE ON DELETE RESTRICT
+  CONSTRAINT request_ride_fk
+    FOREIGN KEY(ride_id) REFERENCES Rides(ride_id)
+      ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS Reviews (

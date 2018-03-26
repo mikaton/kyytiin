@@ -14,13 +14,11 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { UserdetailsComponent } from './components/userdetails/userdetails.component';
-import { RideJoinConfirmComponent } from './components/ridejoinconfirm/ridejoinconfirm.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/frontpage', pathMatch: 'full' },
   { path: 'rides', component: RidelistComponent },
   { path: 'rides/:ride_id', canActivate: [AuthGuard], component: RideComponent},
-  { path: 'rides/confirm/:owner_id/:ride_id/:joiner_id', canActivate: [IdGuard], component: RideJoinConfirmComponent },
   { path: 'frontpage', component: FrontpageComponent },
   { path: 'faq', component: FaqComponent},
   { path: 'user', canActivate: [AuthGuard], component: UserpageComponent},

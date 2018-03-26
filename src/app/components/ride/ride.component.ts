@@ -14,8 +14,8 @@ import { AuthService } from 'angularx-social-login';
 export class RideComponent implements OnInit {
   ride: any;
   dialogRef: any;
-  confirmEmailSent: boolean = false;
-  confirmEmailButtonClicked: boolean = false;
+  promiseResolved: boolean = false;
+  confirmButtonClicked: boolean = false;
   isCreator: boolean;
 
   constructor(
@@ -62,16 +62,9 @@ export class RideComponent implements OnInit {
     });
 }
 
-  joinRide(ride_id: string, creator_id: string, joiner_id: string) {
-    this.confirmEmailButtonClicked = true;
+  sendRequest() {
+    // Luo uuden pyynnön ja lähettää sen matkan luojalle
 
-    ride_id = this.ride.ride_id;
-    creator_id = this.ride.customer_id;
-    joiner_id = localStorage.getItem('_id');
-
-    this.rideService.sendJoinRequest(ride_id, creator_id, joiner_id)
-    .then((res) => this.confirmEmailSent = true)
-    .catch((err) => console.log('joinRide() failed: ' + err.message));
     
   }
 }

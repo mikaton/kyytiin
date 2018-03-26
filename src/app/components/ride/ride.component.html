@@ -38,15 +38,15 @@
   </mat-card>
   <ng-template #alertTemplate>
     <h1 mat-dialog-title>Lähetä pyyntö liittyä kyytiin?</h1>
-    <div class="spinner_icon" *ngIf="!confirmEmailSent && confirmEmailButtonClicked">
-      <i class="fas fa-spinner fa-pulse"></i>
+    <div class="spinner_icon" *ngIf="!promiseResolved && confirmButtonClicked">
+      <i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;Käsitellään..
     </div>
-    <div class="check_icon" *ngIf="confirmEmailSent && confirmEmailButtonClicked">
+    <div class="check_icon" *ngIf="promiseResolved && confirmButtonClicked">
       <i class="fas fa-check"></i>&nbsp;&nbsp;Liittymispyyntö lähetetty!</div>
     <mat-dialog-actions>
-      <button *ngIf="!confirmEmailSent && !confirmEmailButtonClicked" mat-raised-button color="primary" (click)="joinRide()">Kyllä</button>
-      <button *ngIf="!confirmEmailSent && !confirmEmailButtonClicked" mat-button type="button" (click)="dialogRef.close()">Peruuta</button>
-      <button *ngIf="confirmEmailSent && confirmEmailButtonClicked" mat-raised-button color="primary" (click)="dialogRef.close()">Sulje</button>
+      <button *ngIf="!promiseResolved && !confirmEmailButtonClicked" mat-raised-button color="primary" (click)="sendRequest()">Kyllä</button>
+      <button *ngIf="!promiseResolved && !confirmEmailButtonClicked" mat-button type="button" (click)="dialogRef.close()">Peruuta</button>
+      <button *ngIf="promiseResolved && confirmEmailButtonClicked" mat-raised-button color="primary" (click)="dialogRef.close()">Sulje</button>
     </mat-dialog-actions>
   </ng-template>
 </div>

@@ -57,7 +57,6 @@ import { ErrorHandlerService } from './services/error.service';
 import { UserdetailsComponent } from './components/userdetails/userdetails.component';
 import { ReviewService } from './services/review.service';
 import { StarRatingModule } from 'angular-star-rating';
-import { RideJoinConfirmComponent } from './components/ridejoinconfirm/ridejoinconfirm.component';
 import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
 
 registerLocaleData(localeFi);
@@ -97,8 +96,7 @@ export function tokenGetter() {
     ChangePasswordComponent,
     FeedbackComponent,
     UserdetailsComponent,
-    ErrorDialog,
-    RideJoinConfirmComponent, 
+    ErrorDialog
   ],
   imports: [
     BrowserModule,
