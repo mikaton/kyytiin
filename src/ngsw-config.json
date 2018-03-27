@@ -12,16 +12,33 @@
 		  "/*.bundle.css",
 		  "/*.bundle.js",
 		  "/*.chunk.js"
+		], 
+		"urls": [
+			"https://use.fontawesome.com/releases/v5.0.8/css/all.css"
 		]
 	  }
 	}, {
 	  "name": "assets",
-	  "installMode": "lazy",
+	  "installMode": "prefetch",
 	  "updateMode": "prefetch",
 	  "resources": {
 		"files": [
 		  "/assets/**"
 		]
 	  }
-	}]
+	}],
+	"dataGroups": [
+    {
+      "name": "api-performance",
+      "urls": [
+				"localhost:3000/api/user",
+				"localhost:3000/api/rides"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 100,
+        "maxAge": "2d"
+      }
+    }
+  ]
   }

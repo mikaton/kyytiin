@@ -26,7 +26,7 @@ export class RideJoinConfirmComponent implements OnInit {
     private authService: LocalAuthService,
     private userService: UserService
   ) {
-    
+
   }
 
   async ngOnInit() {
@@ -36,11 +36,11 @@ export class RideJoinConfirmComponent implements OnInit {
   async getData() {
     await Promise.all([
       this.userService.getUser(this.route.snapshot.params.owner_id)
-      .then((data) => this.creator = data),
+        .then((data) => this.creator = data),
       this.userService.getUser(this.route.snapshot.params.joiner_id)
-      .then((data) => this.joiner = data),
+        .then((data) => this.joiner = data),
       this.rideService.getRide(this.route.snapshot.params.ride_id)
-      .then((ride) => this.ride = ride.data[0])
+        .then((ride) => this.ride = ride.data[0])
     ]);
   }
 
@@ -66,20 +66,21 @@ export class RideJoinConfirmComponent implements OnInit {
 
   denyJoin() {
     this.confirmButtonsPressed = true;
-    const ridedenyshit = { 
-        customer_id: this.joiner.user.customer_id,
-        creator_id: this.creator.user.customer_id,
-        ride_id: this.ride.ride_id,
-        paska: 'ripulipaska',
-      }
+    const ridedenyshit = {
+      customer_id: this.joiner.user.customer_id,
+      creator_id: this.creator.user.customer_id,
+      ride_id: this.ride.ride_id,
+      paska: 'ripulipaska',
+    }
+    console.log(ridedenyshit);
     this.rideService.denyJoinRide(ridedenyshit)
-    .then((data) => this.promiseResolved = true)
-    .catch((err) => console.log('denyJoin() failed: ' + err.message));
+      .then((data) => this.promiseResolved = true)
+      .catch((err) => console.log('denyJoin() failed: ' + err.message));
   }
   confirmJoin() {
     this.confirmButtonsPressed = true;
     this.rideService.confirmJoinRide(this.ride.ride_id, this.joiner.user.customer_id)
-    .then((data) => this.promiseResolved = true)
-    .catch((err) => console.log('confirmJoin() failed: ' + err.message));
+      .then((data) => this.promiseResolved = true)
+      .catch((err) => console.log('confirmJoin() failed: ' + err.message));
   }
 }
