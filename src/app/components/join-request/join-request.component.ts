@@ -57,4 +57,17 @@ export class JoinRequestComponent implements OnInit {
     })
     .catch((err) => console.error('joinRide epäonnistui: ' + err.message));
   }
+
+  denyJoinRide() {
+    this.confirmButtonsPressed = true;
+    const joiner_id = this.request.joiner_id;
+    const ride_id = this.request.ride_id;
+
+    this.rideService.denyJoinRide(ride_id, joiner_id)
+    .then((res) => {
+      this.promiseResolved = true;
+      this.router.navigate(['/requests']);
+    })
+    .catch((err) => console.error('denyJoinRide epäonnistui: ' + err.message));
+  }
 }

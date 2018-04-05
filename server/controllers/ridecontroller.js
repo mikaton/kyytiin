@@ -150,7 +150,7 @@ exports.denyJoinRide = (req, res, next) => {
   const notificationData = {
     customer_id: req.body.joiner_id,
     ride_id: req.params.ride_id,
-    message: 'Pyyntösi liittyä matkalle hylättiin!'
+    notification_message: 'Pyyntösi liittyä matkalle hylättiin!'
   };
   Notification.create(notificationData).then((notification) => {
     res.status(200).json({

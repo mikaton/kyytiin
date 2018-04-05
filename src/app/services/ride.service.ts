@@ -125,4 +125,18 @@ export class RideService {
     return response;
   }
 
+  denyJoinRide(ride_id, joiner_id): Promise<any> {
+    let response = new Promise((resolve, reject) => {
+      const data = {
+        joiner_id: joiner_id
+      };
+      this.http.post(`${this.apiUrl}/deny/${ride_id}`, data)
+      .toPromise()
+      .then(
+        data => resolve(data),
+        err => reject(err)
+      );
+    });
+    return response;
+  }
 }
