@@ -8,24 +8,28 @@
   </mat-card>
   <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between">
     <!-- PYYNNÖT -->
-    <div fxLayout="column" fxFlex="49">
-      <mat-card class="mat-elevation-z8" fxLayout="column">
-        <mat-card-title>Pyynnöt:</mat-card-title>
-        <div *ngFor="let request of requests">
-          <mat-card-content>
-            Pyynnön lähettäjä:
-            <a routerLink="/user/{{request.joiner_id}}">{{request.joiner_name}}</a>
-          </mat-card-content>
-          <mat-card-content>
-            Matka:
-            <a routerLink="/rides/{{request.ride_id}}">{{request.startingplace}} - {{request.destination}}</a>
-          </mat-card-content>
-          <mat-card-content>
-            Viesti: {{request.additional_information}}
-          </mat-card-content>
+      <div fxLayout="column" fxFlex="49">
+          <mat-card class="mat-elevation-z8" fxLayout="column">
+            <mat-card-title>Pyynnöt:</mat-card-title>
+            <div *ngFor="let request of requests">
+              <a routerLink="/request/{{request.request_id}}">
+                <mat-card class="mat-elevation-z8">
+                    <mat-card-content>
+                        Pyynnön lähettäjä:
+                        <a routerLink="/user/{{request.joiner_id}}">{{request.joiner_name}}</a>
+                      </mat-card-content>
+                      <mat-card-content>
+                        Matka:
+                        <a routerLink="/rides/{{request.ride_id}}">{{request.startingplace}} - {{request.destination}}</a>
+                      </mat-card-content>
+                      <mat-card-content>
+                        Viesti: {{request.additional_information}}
+                      </mat-card-content>
+                </mat-card>
+              </a>
+            </div>
+          </mat-card>
         </div>
-      </mat-card>
-    </div>
     <!-- PYYNNÖT PÄÄTTYY -->
     <!-- ILMOITUKSET -->
     <div fxLayout="column" fxFlex="49">
