@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         ride_id: {
-            type: DataaTypes.UUID,
+            type: DataTypes.UUID,
             allowNull: false,
         },
         notification_message: {
