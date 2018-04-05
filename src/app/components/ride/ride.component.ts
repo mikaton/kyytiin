@@ -8,6 +8,7 @@ import { AuthService } from 'angularx-social-login';
 import { JoinRequestService } from '../../services/joinrequest.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { ErrorDialog } from '../../dialogs/error-dialog';
 
 @Component({
   selector: 'app-ride',
@@ -17,13 +18,16 @@ import { UserService } from '../../services/user.service';
 export class RideComponent implements OnInit {
   ride: any;
   dialogRef: any;
+  errorDialogRef: any;
   promiseResolved: boolean = false;
+  promiseRejected: boolean = false;
   confirmButtonClicked: boolean = false;
   messageForm: FormGroup;
   isCreator: boolean;
   joiner_name: string;
   startingplace: string;
   destination: string;
+  requestSent: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -61,7 +65,6 @@ export class RideComponent implements OnInit {
     })
     .catch(err => console.error('getRide() failed: ' + err.message));
   }
-  
 
   goBack(): void {
     this.location.back();
@@ -107,7 +110,17 @@ export class RideComponent implements OnInit {
     .then((res) => {
       this.promiseResolved = true;
     })
-    .catch((err) => console.error('createRequest() failed: ' + err.message));
+    .catch((err) => {
+      // Muutetaan dialogin sisältö virheviestiksi, suljetaan se ja avataan errorDialog
+      this.promiseRejected = true;
+      this.dialogRef.close();
+      this.errorDialogRef = this.dialog.open(ErrorDialog, {
+        data: {
+          errorMessage: 'Jotain meni pieleen',
+          serverError: err.error.message
+        }
+      });
+    });
   }
 
 }

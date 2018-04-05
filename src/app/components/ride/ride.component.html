@@ -33,26 +33,33 @@
     <mat-card-content>
       Lisätiedot: {{ride?.additional_information}}
     </mat-card-content>
-    <button *ngIf="!isCreator" mat-raised-button color="primary" (click)="openAlertDialog(alertTemplate)">Liity kyytiin</button>
+    <button *ngIf="!isCreator" mat-raised-button color="primary" [disabled]="userJoined" (click)="openAlertDialog(alertTemplate)">Liity kyytiin</button>
     <button mat-raised-button (click)="goBack()">Takaisin</button>
   </mat-card>
   <ng-template #alertTemplate>
-    <h1 mat-dialog-title>Lähetä pyyntö liittyä kyytiin?</h1>
-    <div [formGroup]="messageForm" *ngIf="!promiseResolved && !confirmButtonClicked">
-      <mat-form-field>
-        <input matInput #message id="message" name="message" formControlName="message" placeholder="Valinnainen viesti kuskille">
-        <mat-hint>{{message.value.length}} / 512</mat-hint>
-      </mat-form-field>
+    <div *ngIf="!promiseRejected">
+        <h1 mat-dialog-title>Lähetä pyyntö liittyä kyytiin?</h1>
+        <div [formGroup]="messageForm" *ngIf="!promiseResolved && !confirmButtonClicked">
+          <mat-form-field>
+            <input matInput #message id="message" name="message" formControlName="message" placeholder="Valinnainen viesti kuskille">
+            <mat-hint>{{message.value.length}} / 512</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="spinner_icon" *ngIf="!promiseResolved && confirmButtonClicked">
+          <i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;Käsitellään..
+        </div>
+        <div class="check_icon" *ngIf="promiseResolved && confirmButtonClicked">
+          <i class="fas fa-check"></i>&nbsp;&nbsp;Liittymispyyntö lähetetty!</div>
+        <mat-dialog-actions>
+          <button *ngIf="!promiseResolved && !confirmButtonClicked" mat-raised-button color="primary" (click)="createRequest()">Kyllä</button>
+          <button *ngIf="!promiseResolved && !confirmButtonClicked" mat-button type="button" (click)="dialogRef.close()">Peruuta</button>
+          <button *ngIf="promiseResolved && confirmButtonClicked" mat-raised-button color="primary" (click)="dialogRef.close()">Sulje</button>
+        </mat-dialog-actions>
     </div>
-    <div class="spinner_icon" *ngIf="!promiseResolved && confirmButtonClicked">
-      <i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;Käsitellään..
+    <div *ngIf="promiseRejected">
+      <h1 mat-dialog-title>
+          <i class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp; Jotain meni pieleen. Kokeile päivittää sivu uudestaan.
+      </h1>
     </div>
-    <div class="check_icon" *ngIf="promiseResolved && confirmButtonClicked">
-      <i class="fas fa-check"></i>&nbsp;&nbsp;Liittymispyyntö lähetetty!</div>
-    <mat-dialog-actions>
-      <button *ngIf="!promiseResolved && !confirmButtonClicked" mat-raised-button color="primary" (click)="createRequest()">Kyllä</button>
-      <button *ngIf="!promiseResolved && !confirmButtonClicked" mat-button type="button" (click)="dialogRef.close()">Peruuta</button>
-      <button *ngIf="promiseResolved && confirmButtonClicked" mat-raised-button color="primary" (click)="dialogRef.close()">Sulje</button>
-    </mat-dialog-actions>
   </ng-template>
 </div>

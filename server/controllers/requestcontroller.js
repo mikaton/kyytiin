@@ -13,13 +13,29 @@ exports.createJoinRequest = (req, res, next) => {
     destination: req.body.destination,
     additional_information: req.body.additional_information
   };
-  // Luodaan uusi pyyntö
-  Request.create(data)
-  .then((data) => res.status(200).json({
-    success: true,
-    message: 'Pyyntö luotu'
-  }))
-  .catch((err) => console.error('Pyynnön luonti epäonnistui: ' + err.stack));
+
+
+  Request.find({
+    where: { ride_id: data.ride_id, joiner_id: data.joiner_id }
+  })
+  .then((response) => {
+    if(response === null) {
+      // Luodaan uusi pyyntö
+      Request.create(data)
+      .then(() => res.status(200).json({
+        success: true,
+        message: 'Pyyntö luotu'
+      })).catch((err) => console.error('Pyynnön luonti epäonnistui: ' + err.stack));
+    } else {
+      res.status(400).json({
+        success: false,
+        message: 'Olet jo pyytänyt liittyä tälle matkalle'
+      });
+    }
+  }).catch((err) => console.error('Request.find epäonnistui: ' + err.stack));
+
+
+
 };
 
 exports.getRequestById = (req, res, next) => {
