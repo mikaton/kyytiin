@@ -3,8 +3,8 @@
     <mat-card-title>Pyynnöt ja ilmoitukset</mat-card-title>
     <mat-card-content *ngIf="unreadRequestsCount <= 0">Ei uusia pyyntöjä.</mat-card-content>
     <mat-card-content *ngIf="unreadRequestsCount > 0">Sinulla on {{unreadRequestsCount}} uutta pyyntöä!</mat-card-content>
-    <mat-card-content *ngIf="unreadNotifications <= 0">Ei uusia ilmoituksia.</mat-card-content>
-    <mat-card-content *ngIf="unreadNotifications > 0">Sinulla on {{unreadNotifications}} uutta pyyntöä!</mat-card-content>
+    <mat-card-content *ngIf="unreadNotificationsCount <= 0">Ei uusia ilmoituksia.</mat-card-content>
+    <mat-card-content *ngIf="unreadNotificationsCount > 0">Sinulla on {{unreadNotificationsCount}} uutta ilmoitusta!</mat-card-content>
   </mat-card>
   <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between">
     <!-- PYYNNÖT -->

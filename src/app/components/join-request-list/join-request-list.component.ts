@@ -13,7 +13,7 @@ export class JoinRequestListComponent implements OnInit {
   requests = [];
   notifications = [];
   unreadRequestsCount: number = 0;
-  unreadNotifications: number = 0;
+  unreadNotificationsCount: number = 0;
 
   constructor(
     private requestService: JoinRequestService,
@@ -39,7 +39,7 @@ export class JoinRequestListComponent implements OnInit {
     this.notificationService.getUserNotifications(this.localAuthService.decodeToken())
     .then((notifications) => {
       this.notifications = notifications.data;
-      if(this.requests.length > 0) this.unreadRequestsCount = this.requests.length;
+      if(this.notifications.length > 0) this.unreadNotificationsCount = this.notifications.length;
     })
     .catch((err) => console.error('getNotifications epäonnistui: ' + err.message));
   }
