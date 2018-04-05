@@ -22,7 +22,7 @@ export class JoinRequestListComponent implements OnInit {
     ) { }
 
   async ngOnInit() {
-    await Promise.all([this.getUserRequests(), this.getNotification()])
+    await Promise.all([this.getUserRequests(), this.getNotifications()])
   }
 
   getUserRequests() {
@@ -35,7 +35,8 @@ export class JoinRequestListComponent implements OnInit {
     .catch((err) => console.error(err));
   }
 
-  getNotification() {
+  getNotifications() {
+    //TODO: Hae myös kuudin tiedot
     this.notificationService.getUserNotifications(this.localAuthService.decodeToken())
     .then((notifications) => {
       this.notifications = notifications.data;
