@@ -15,6 +15,7 @@ import {
   MatSliderModule,
   MatAutocompleteModule,
   MatCheckboxModule,
+  MatTableModule,
 } from '@angular/material';
 import { MatListModule } from '@angular/material/list';
 import { MatNavList } from '@angular/material';
@@ -115,6 +116,7 @@ export function tokenGetter() {
     MatSidenavModule,
     MatIconModule,
     MatAutocompleteModule,
+    MatTableModule,
     LayoutModule,
     SocialLoginModule,
     HttpClientModule,

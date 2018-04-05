@@ -150,7 +150,8 @@ exports.denyJoinRide = (req, res, next) => {
   const notificationData = {
     customer_id: req.body.joiner_id,
     ride_id: req.params.ride_id,
-    notification_message: 'Pyyntösi liittyä matkalle hylättiin!'
+    canJoin: false,
+    notification_message: "Pyyntösi liittyä matkalle hylättiin!"
   };
   Notification.create(notificationData).then((notification) => {
     res.status(200).json({
@@ -177,10 +178,12 @@ exports.joinRide = (req, res, next) => {
       }
       CustomersRides.create(crData).then(() => {
         // Luodaan uusi ilmoitus
+
         const notificationData = {
           customer_id: req.body.joiner_id,
           ride_id: req.params.ride_id,
-          notification_message: 'Pyyntösi liittyä matkalle hyväksyttiin!'
+          canJoin: true,
+          notification_message: "Pyyntösi liittyä matkalle hyväksyttiin!"
         };
         Notification.create(notificationData).then((notification) => {
           res.status(200).json({

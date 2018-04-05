@@ -5,7 +5,11 @@ body {
 a {
     text-decoration: none;
 }
-
+a:-webkit-any-link {
+    color: black;
+    text-decoration: none;
+}
 .fa-check {
 	color: #689F38;
 }
+

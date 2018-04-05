@@ -6,3 +6,19 @@
 .headerCard {
   margin-bottom: 10px;
 }
+
+.notification_button {
+  
+}
+
+.fa-ok {
+  color: #689F38;
+}
+
+.fa-notok {
+  color: #f44336;
+}
+
+.requestlist {
+  height: 100px;
+}
