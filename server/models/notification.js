@@ -17,7 +17,11 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'customer_id'
             }
         },
-        message: {
+        ride_id: {
+            type: DataaTypes.UUID,
+            allowNull: false,
+        },
+        notification_message: {
             type: DataTypes.STRING,
             allowNull: false
         },

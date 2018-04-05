@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class JoinRequestComponent implements OnInit {
   request: any;
+  notification: any; 
 
   constructor(
     private requestService: JoinRequestService,

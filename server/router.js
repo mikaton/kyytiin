@@ -40,7 +40,7 @@ module.exports = (app) => {
 
   // Matkalle liittyminen
   router.post('/ride/join/:ride_id', jwtAuth, RideController.joinRide);
-
+  router.post('/ride/deny/:ride_id', jwtAuth, RideController.denyJoinRide);
 
   // Liittymispyyntö CRUD
   router.post('/request', jwtAuth, RequestController.createJoinRequest);
@@ -48,11 +48,10 @@ module.exports = (app) => {
   router.get('/request/:request_id', jwtAuth, RequestController.getRequestById);
   router.patch('/request/:request_id', jwtAuth, RequestController.updateRequest);
   router.delete('/request/:request_id', jwtAuth, RequestController.deleteRequest);
- 
   // Notifikaatio CRUD
-  router.get('/notification/:customer_id', jwtAuth, NotificationController.getNotifications);
-  router.patch('/notification/:notification_id', jwtAuth, NotificationController.updateNotification);
-  router.delete('/notification/:notification_id', jwtAuth, NotificationController.deleteNotification);
+  router.get('/notifications/:customer_id', jwtAuth, NotificationController.getNotifications);
+  router.patch('/notifications/:notification_id', jwtAuth, NotificationController.updateNotification);
+  router.delete('/notifications/:notification_id', jwtAuth, NotificationController.deleteNotification);
 
   // Arvostelu CRUD reitit
   router.post('/review/:customer_id', jwtAuth, ReviewController.createReview);

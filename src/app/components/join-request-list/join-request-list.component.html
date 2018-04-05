@@ -8,31 +8,38 @@
   </mat-card>
   <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between">
     <!-- PYYNNÖT -->
-      <div fxLayout="column" fxFlex="49">
-          <mat-card class="mat-elevation-z8" fxLayout="column">
-            <mat-card-title>Pyynnöt:</mat-card-title>
-            <div *ngFor="let request of requests">
-                <mat-card-content>
-                  Pyynnön lähettäjä:
-                  <a routerLink="/user/{{request.joiner_id}}">{{request.joiner_name}}</a>
-                </mat-card-content>
-                <mat-card-content>
-                  Matka:
-                  <a routerLink="/rides/{{request.ride_id}}">{{request.startingplace}} - {{request.destination}}</a>
-                </mat-card-content>
-                <mat-card-content>
-                  Viesti: {{request.additional_information}}
-                </mat-card-content>
-            </div>
-          </mat-card>
+    <div fxLayout="column" fxFlex="49">
+      <mat-card class="mat-elevation-z8" fxLayout="column">
+        <mat-card-title>Pyynnöt:</mat-card-title>
+        <div *ngFor="let request of requests">
+          <mat-card-content>
+            Pyynnön lähettäjä:
+            <a routerLink="/user/{{request.joiner_id}}">{{request.joiner_name}}</a>
+          </mat-card-content>
+          <mat-card-content>
+            Matka:
+            <a routerLink="/rides/{{request.ride_id}}">{{request.startingplace}} - {{request.destination}}</a>
+          </mat-card-content>
+          <mat-card-content>
+            Viesti: {{request.additional_information}}
+          </mat-card-content>
         </div>
+      </mat-card>
+    </div>
     <!-- PYYNNÖT PÄÄTTYY -->
     <!-- ILMOITUKSET -->
     <div fxLayout="column" fxFlex="49">
+      <div *ngFor="let notification of notifications">
         <mat-card class="mat-elevation-z8" fxLayout="column">
           <mat-card-title>Ilmoitukset:</mat-card-title>
+          <div>
+            <mat-card-content>
+              Viesti: {{notification.notification_message}}
+            </mat-card-content>
+          </div>
         </mat-card>
       </div>
+    </div>
     <!-- ILMOITUKSET PÄÄTTYY -->
   </div>
 </div>
