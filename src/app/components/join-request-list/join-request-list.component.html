@@ -33,10 +33,17 @@
     <!-- PYYNNÖT PÄÄTTYY -->
     <!-- ILMOITUKSET -->
     <div fxLayout="column" fxFlex="49">
+      <div *ngFor="let notification of notifications">
         <mat-card class="mat-elevation-z8" fxLayout="column">
           <mat-card-title>Ilmoitukset:</mat-card-title>
+          <div>
+            <mat-card-content>
+              Viesti: {{notification.notification_message}}
+            </mat-card-content>
+          </div>
         </mat-card>
       </div>
+    </div>
     <!-- ILMOITUKSET PÄÄTTYY -->
   </div>
 </div>

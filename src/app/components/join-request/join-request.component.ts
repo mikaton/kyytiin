@@ -14,6 +14,7 @@ export class JoinRequestComponent implements OnInit {
   dialogRef: any;
   promiseResolved: boolean = false;
   confirmButtonsPressed: boolean = false;
+  notification: any;
 
   constructor(
     private requestService: JoinRequestService,

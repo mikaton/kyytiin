@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS Requests (
 CREATE TABLE IF NOT EXISTS Notifications (
   notification_id VARCHAR(100) NOT NULL PRIMARY KEY,
   customer_id VARCHAR(100) NOT NULL,
+  ride_id VARCHAR(100) NOT NULL,
   notification_message VARCHAR(512) NOT NULL,
   unread BOOLEAN DEFAULT true,
   CONSTRAINT notification_user_fk

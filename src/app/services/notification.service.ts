@@ -8,7 +8,7 @@ export class NotificationService {
     constructor(private http: HttpClient) {}
 
     // Haetaan käyttäjän ilmoitukset palvelimelta
-    getUserNotifications(customer_id) {
+    getUserNotifications(customer_id): Promise<any> {
         let response = new Promise((resolve, reject) => {
             this.http.get(`${this.apiUrl}/notifications/${customer_id}`)
             .toPromise()
