@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { JoinRequestService } from '../../services/joinrequest.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RideService } from '../../services/ride.service';
 import { MatDialog } from '@angular/material';
 
@@ -19,7 +19,8 @@ export class JoinRequestComponent implements OnInit {
     private requestService: JoinRequestService,
     private rideService: RideService,
     private dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   async ngOnInit() {
@@ -45,14 +46,13 @@ export class JoinRequestComponent implements OnInit {
 
   joinRide() {
     this.confirmButtonsPressed = true;
-    console.log(this.request);
     const joiner_id = this.request.joiner_id;
     const ride_id = this.request.ride_id;
 
     this.rideService.joinRide(ride_id, joiner_id)
     .then((res) => {
       this.promiseResolved = true;
-      console.log('onnistui');
+      this.router.navigate(['/requests']);
     })
     .catch((err) => console.error('joinRide epäonnistui: ' + err.message));
   }
