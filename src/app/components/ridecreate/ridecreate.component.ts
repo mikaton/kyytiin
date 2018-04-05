@@ -16,6 +16,7 @@ import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 import { townMatcher } from '../../validators/town-validator';
 import { LocalAuthService } from '../../services/auth.service';
+import { ErrorUiService } from '../../services/error-ui.service';
 
 @Component({
   selector: 'app-ridecreate',
@@ -34,7 +35,9 @@ export class RidecreateComponent implements OnInit {
   constructor(private rideService: RideService,
     private dialog: MatDialog,
     private fb: FormBuilder,
-    private localAuthService: LocalAuthService) {
+    private localAuthService: LocalAuthService,
+    private errorUiService: ErrorUiService
+  ) {
     
     //Formcontrollit formgroupin ulkopuolella jotta hakutoiminto onnistuisi
     this.startingplace = new FormControl('', [townMatcher])
@@ -134,7 +137,10 @@ export class RidecreateComponent implements OnInit {
         this.rideService.postRides(rideCreateForm);
       }
     })
-    .catch(err => console.error('rideCreate() failed: ' + err.message));
+    .catch((err) => {
+      this.errorUiService.popErrorDialog(err);
+      console.error('rideCreate epäonnistui: ' + err.message)
+    });
   };
 
   updateId() {

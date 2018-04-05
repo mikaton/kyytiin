@@ -3,6 +3,7 @@ import { UserService } from '../../services/user.service';
 import { LocalAuthService } from '../../services/auth.service';
 import { DatePipe } from '@angular/common';
 import { RideService } from '../../services/ride.service';
+import { ErrorUiService } from '../../services/error-ui.service';
 import {
   FormBuilder,
   FormGroup,
@@ -21,7 +22,9 @@ export class UserpageComponent implements OnInit {
     private userService: UserService,
     private localAuthService: LocalAuthService,
     private rideService: RideService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private errorUiService: ErrorUiService
+  ) { }
 
   localUser: any;
   rides = [];
@@ -43,16 +46,22 @@ export class UserpageComponent implements OnInit {
     this.localAuthService.decodeToken();
     this.userService.patchUserData(customerEditForm)
       .then((result) =>  this.updateUserdata()) 
-      .catch(err => console.error('patchUser() failed: ' + err.message));
-  }
+      .catch((err) => {
+        this.errorUiService.popErrorDialog(err);
+        console.error('patchUser epäonnistui: ' + err.message)
+      });
+    }
 
   updateUserdata() {
     this.userService.getUser(this.localAuthService.decodeToken())
       .then((result) => {
         this.localUser = result;
       })
-      .catch(err => console.error('updateUserData() failed: ' + err.message));
-  }
+      .catch((err) => {
+        this.errorUiService.popErrorDialog(err);
+        console.error('updateUserData epäonnistui: ' + err.message)
+      });
+    }
 
   getRides() {
     this.rideService.getRideToUserPage(this.localAuthService.decodeToken())
@@ -64,8 +73,11 @@ export class UserpageComponent implements OnInit {
       .then((rides => {
         this.joinedRides = rides.data;
       }))
-      .catch(err => console.error('getRides() failed: ' + err.message));
-  }
+      .catch((err) => {
+        this.errorUiService.popErrorDialog(err);
+        console.error('getRides epäonnistui: ' + err.message)
+      });
+    }
 
   // Poistaa selaimen konsolin virheilmoitukset alustamalla datan 
   // huono fixi, pitää ottaa selvää serviceworkkereista ja välimuistista. 

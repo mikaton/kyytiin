@@ -97,6 +97,7 @@ export class AuthDialogComponent implements OnInit {
 
       })
       .catch((err) => {
+        this.errorUiService.popErrorDialog(err);
         console.error('signInWithGoogle failed: ' + err.message);
       });
   }
@@ -108,6 +109,7 @@ export class AuthDialogComponent implements OnInit {
         this.localAuthService.authenticate(user).then(() => window.location.reload());
       })
       .catch((err) => {
+        this.errorUiService.popErrorDialog(err);
         console.error('signInWithFB() failed: ' + err.message);
 
       })

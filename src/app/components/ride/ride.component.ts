@@ -8,6 +8,7 @@ import { AuthService } from 'angularx-social-login';
 import { JoinRequestService } from '../../services/joinrequest.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { ErrorUiService } from '../../services/error-ui.service';
 
 @Component({
   selector: 'app-ride',
@@ -33,7 +34,8 @@ export class RideComponent implements OnInit {
     private dialog: MatDialog,
     private localAuthService: LocalAuthService,
     private requestService: JoinRequestService,
-    private userService: UserService
+    private userService: UserService,
+    private errorUiService: ErrorUiService
   ) {
     this.messageForm = this.fb.group({
       message: ['', Validators.maxLength(512)]
@@ -59,7 +61,10 @@ export class RideComponent implements OnInit {
         this.isCreator = false;
       }
     })
-    .catch(err => console.error('getRide() failed: ' + err.message));
+    .catch((err) => {
+      this.errorUiService.popErrorDialog(err);
+      console.error('getRide epäonnistui: ' + err.message)
+    });
   }
   
 
@@ -107,7 +112,10 @@ export class RideComponent implements OnInit {
     .then((res) => {
       this.promiseResolved = true;
     })
-    .catch((err) => console.error('createRequest() failed: ' + err.message));
+    .catch((err) => {
+      this.errorUiService.popErrorDialog(err);
+      console.error('createRequest epäonnistui: ' + err.message)
+    });
   }
 
 }
