@@ -3,43 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { NgForm, FormGroup, FormBuilder } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
 @Component({
-  template: `
-      <h1 mat-dialog-title>Tarkista tiedot</h1>
-      <mat-dialog-content>
-      <mat-card style="max-width: 500px">
-      <div fxLayout="column">
-      <mat-card-title>
-      Lähtöpaikka: {{ride.startingplace}}
-    </mat-card-title>
-    <mat-card-title> 
-      Määränpää: {{ride.destination}}
-    </mat-card-title>
-  </div>
-  <mat-card-content>
-    Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
-  </mat-card-content>
-  <mat-card-content>
-    Saapumispäivä: {{ride.time_of_arrival | date:'mediumDate'}} aika: {{ride.time_of_arrival | date:'shortTime'}}
-  </mat-card-content>
-  <mat-card-content>
-    Vapaita paikkoja: {{ride.free_seats}}
-  </mat-card-content>
-  <mat-card-content>
-  Saako kyydissä tupakoida?: {{ride?.smoking ? 'Kyllä' : 'Ei'}}
-</mat-card-content>
-<mat-card-content>
-  Voiko kyytiin ottaa lemmikkejä?: {{ride?.pets ? 'Kyllä' : 'Ei'}}
-</mat-card-content>
-<mat-card-content>
-  Lisätiedot: {{ride?.additional_information}}
-</mat-card-content>
-</mat-card> 
-      </mat-dialog-content>
-      <mat-dialog-actions> 
-        <button mat-button (click)="confirm()">Lisää kyyti!</button>
-        <button mat-button type="button" (click)="dialogRef.close()">Peruuta</button>
-      </mat-dialog-actions>
-  `
+  templateUrl: './ridecreate-confirm-dialog.html',
+
 })
 export class RideCreateConfirmDialog {
 
