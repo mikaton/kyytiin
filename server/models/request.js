@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'customer_id'
             }
         },
+        joiner_name: { type: DataTypes.STRING },
         ride_id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -35,6 +36,8 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'ride_id'
             }
         },
+        startingplace: { type: DataTypes.STRING },
+        destination: { type: DataTypes.STRING },
         additional_information: { type: DataTypes.STRING } 
 	},
 		{

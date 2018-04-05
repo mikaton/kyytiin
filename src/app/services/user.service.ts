@@ -17,7 +17,7 @@ export class UserService {
     private authService: AuthService,
     private localAuthService: LocalAuthService) { }
 
-  getUser(user): Promise<object> {
+  getUser(user): Promise<any> {
     let response = new Promise((resolve, reject) => {
       this.http.get(`${API_URL}/user/${user}`)
         .toPromise()

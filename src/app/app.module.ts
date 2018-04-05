@@ -52,12 +52,14 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ForgotPasswordService } from './services/forgot-password.service';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
-import { GlobalErrorHandler } from './app.error-handler';
-import { ErrorHandlerService } from './services/error.service';
 import { UserdetailsComponent } from './components/userdetails/userdetails.component';
 import { ReviewService } from './services/review.service';
 import { StarRatingModule } from 'angular-star-rating';
 import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
+import { JoinRequestComponent } from './components/join-request/join-request.component';
+import { JoinRequestListComponent } from './components/join-request-list/join-request-list.component';
+import { JoinRequestService } from './services/joinrequest.service';
+import { NotificationService } from './services/notification.service';
 
 registerLocaleData(localeFi);
 
@@ -96,7 +98,9 @@ export function tokenGetter() {
     ChangePasswordComponent,
     FeedbackComponent,
     UserdetailsComponent,
-    ErrorDialog
+    ErrorDialog,
+    JoinRequestComponent,
+    JoinRequestListComponent
   ],
   imports: [
     BrowserModule,
@@ -150,11 +154,8 @@ export function tokenGetter() {
     RideService,
     ForgotPasswordService,
     ReviewService,
-    {
-      provide: ErrorHandler,
-      useClass: GlobalErrorHandler
-    },
-    ErrorHandlerService
+    JoinRequestService,
+    NotificationService
   ],
   bootstrap: [AppComponent],
   entryComponents: [RideCreateConfirmDialog, ErrorDialog],
