@@ -9,6 +9,7 @@ import { LocalAuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
+import { JoinRequestService } from './services/joinrequest.service';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,7 @@ export class AppComponent implements OnInit {
   loggedIn: boolean;
   mobileQuery: MediaQueryList;
   currentUserId: any;
-  localStorageToken: boolean; 
+  localStorageToken: boolean;
   private _mobileQueryListener: () => void;
 
   constructor(private authService: AuthService,
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
     media: MediaMatcher,
     private localAuthService: LocalAuthService,
     private userService: UserService,
+    private requestService: JoinRequestService,
     private router: Router) {
 
     this.mobileQuery = media.matchMedia('(max-width: 1279px)');
@@ -43,16 +45,9 @@ export class AppComponent implements OnInit {
           }
         );
     }
-  
 
   async ngOnInit() {
-    this.checkLoggedInStatus();
-    try {
-      await this.getUser();
-    } catch(err) {
-      console.log('App.component ngOnInit failed: ' + err.stack);
-    }
-    
+    await this.checkLoggedInStatus();
   }
   checkLoggedInStatus() {
     console.log('appmodulelogincheck')
@@ -82,6 +77,7 @@ export class AppComponent implements OnInit {
       console.error('getUser() failed, ' + err.message);
     })
   }
+
   signOut() {
     this.authService.signOut();
     this.localAuthService.signOut();

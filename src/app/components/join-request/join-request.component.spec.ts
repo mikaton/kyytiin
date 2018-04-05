@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RideJoinConfirmComponent } from './ridejoinconfirm.component';
+import { JoinRequestComponent } from './join-request.component';
 
-describe('RidejoinconfirmComponent', () => {
-  let component: RideJoinConfirmComponent;
-  let fixture: ComponentFixture<RideJoinConfirmComponent>;
+describe('JoinRequestComponent', () => {
+  let component: JoinRequestComponent;
+  let fixture: ComponentFixture<JoinRequestComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RideJoinConfirmComponent ]
+      declarations: [ JoinRequestComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RideJoinConfirmComponent);
+    fixture = TestBed.createComponent(JoinRequestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

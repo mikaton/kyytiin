@@ -12,9 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     social_id: {
       type: DataTypes.STRING
     },
-    social_token: {
-      type: DataTypes.STRING
-    },
     social_provider: {
       type: DataTypes.STRING
     },

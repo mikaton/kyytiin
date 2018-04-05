@@ -4,7 +4,9 @@ const model = require('../models/index'),
   Ride = model.Ride,
   async = require('async'),
   CustomersRides = model.CustomersRides_ride,
-  User = model.Customer;
+  User = model.Customer,
+  Request = model.Request,
+  Notification = model.Notification;
 
 // --- <Sähköpostin asetukset> ---
 hbs = require('nodemailer-express-handlebars'),
@@ -144,161 +146,50 @@ exports.deleteRide = (req, res, next) => {
     .catch((err) => console.log('deleteRide failed: ' + err.message));
 };
 
-exports.sendConfirmRideJoinEmail = (req, res, next) => {
-  // Etsitään matkan luoja
-  User.find({
-    where: { customer_id: req.body.creator_id }
+exports.denyJoinRide = (req, res, next) => {
+  const notificationData = {
+    customer_id: req.body.joiner_id,
+    ride_id: req.params.ride_id,
+    notification_message: 'Pyyntösi liittyä matkalle hylättiin!'
+  };
+  Notification.create(notificationData).then((notification) => {
+    res.status(200).json({
+      success: true,
+      message: 'Notifikaation luominen onnistui',
+      notification: notification.dataValues
+    });
+  }).catch((err) => console.error('Notifikaation luonti epäonnistui: ' + err.stack));
+}
+
+
+exports.joinRide = (req, res, next) => {
+  // Vähennetään vapaa paikka matkalta
+  Ride.findOne({
+    where: { ride_id: req.params.ride_id }
   })
-    .then((creator) => {
-      // Luoja löytyi, etsitään liittyjä
-      User.find({
-        where: { customer_id: req.user.customer_id }
-      })
-        .then((joiner) => {
-          // Liittyjä löytyi, etsitään matka
-          Ride.find({
-            where: { ride_id: req.body.ride_id }
-          })
-            .then((ride) => {
-              // Matka löytyi. Laitetaan kaikki tieto data-olioon
-              const data = {
-                creator: {
-                  customer_id: creator.dataValues.customer_id,
-                  name: creator.dataValues.firstName,
-                  email: creator.dataValues.email
-                },
-                joiner: {
-                  customer_id: joiner.dataValues.customer_id,
-                  name: joiner.dataValues.firstName,
-                  email: joiner.dataValues.email
-                },
-                ride: {
-                  ride_id: ride.dataValues.ride_id,
-                  startingplace: ride.dataValues.startingplace,
-                  destination: ride.dataValues.destination,
-                  time_of_departure: ride.dataValues.time_of_departure
-                }
-              };
-
-              // Luodaan sähköposti
-              const emailData = {
-                to: data.creator.email,
-                from: email,
-                template: 'ride-join-request',
-                subject: 'Kyyti.in - Matkallesi halutaan liittyä',
-                context: {
-                  creatorName: data.creator.name,
-                  joinerName: data.joiner.name,
-                  url: `https://kyyti.in/rides/confirm/${data.creator.customer_id}/${data.ride.ride_id}/${data.joiner.customer_id}`
-                }
-              };
-
-              // Lähetetään sähköposti
-              smtpTransport.sendMail(emailData, (err) => {
-                if (!err) {
-                  return res.status(200).json({
-                    success: true,
-                    message: 'Request to join sent',
-                    data: data
-                  });
-                } else {
-                  return res.status(500).json({
-                    success: false,
-                    message: 'Request to join failed',
-                    error: err
-                  });
-                }
-              });
-            })
-            .catch((err) => console.log(err));
-        })
-    })
-    .catch((err) => console.log('sendConfirmRideJoinEmail failed: ' + err.stack));
-};
-
-exports.denyRideJoin = (req, res, next) => {
-  // Etsitään liittymistä yrittänyt käyttäjä
-  User.find({
-    where: { customer_id: req.body.joiner_id }
-  })
-    .then((joiner) => {
-      // Luodaan sähköposti
-      const emailData = {
-        to: joiner.dataValues.email,
-        template: 'ride-join-deny',
-        subject: 'Kyyti.in - Pyyntö liittyä matkalle hylättiin',
-        context: {
-          name: joiner.dataValues.firstName,
-        }
-      };
-      // Lähetetään sähköposti
-      smtpTransport.sendMail(emailData, (err) => {
-        if (!err) {
-          return res.status(200).json({
+  .then((ride) => {
+    const data = { free_seats: ride.free_seats - 1 };
+    ride.updateAttributes(data).then(() => {
+      // Luodaan tietue CustomersRides_ride tauluun
+      const crData = {
+        customer_id: req.body.joiner_id,
+        ride_id: req.params.ride_id,
+      }
+      CustomersRides.create(crData).then(() => {
+        // Luodaan uusi ilmoitus
+        const notificationData = {
+          customer_id: req.body.joiner_id,
+          ride_id: req.params.ride_id,
+          notification_message: 'Pyyntösi liittyä matkalle hyväksyttiin!'
+        };
+        Notification.create(notificationData).then((notification) => {
+          res.status(200).json({
             success: true,
-            message: 'Pyynnön hylkäys onnistui',
+            message: 'Matkalle liittyminen onnistui',
+            notification: notification.dataValues
           });
-        } else {
-          return res.status(500).json({
-            success: false,
-            message: 'Pyynnön hylkäys epäonnistui',
-            error: err
-          });
-        }
-      })
-    })
-    .catch((err) => console.log('denyRideJoin failed: ' + err));
-};
-
-exports.confirmRideJoin = (req, res, next) => {
-  // ride_id ja joiner_id
-  const data = req.body;
-  // Luodaan uusi kenttä CustomersRides_ride tauluun näillä tiedoilla
-  CustomersRides.create(data)
-    .then((data) => {
-      // Etsitään matka
-      Ride.find({
-        where: { ride_id: data.ride_id }
-      })
-        .then((ride) => {
-          // Vähennetään matkalta -1 vapaa paikka
-          const rideData = { free_seats: free_seats - 1 }
-          ride.updateAttributes(rideData).then(() => {
-            // Etsitään liittynyt käyttäjä
-            User.find({
-              where: { customer_id: req.body.customer_id }
-            })
-              .then((user) => {
-                // Luodaan sähköposti
-                const emailData = {
-                  to: user.dataValues.email,
-                  template: 'ride-join-confirm',
-                  subject: 'Kyyti.in - Pyyntösi liittyä matkalle hyväksyttiin',
-                  context: {
-                    name: user.firstName,
-                  }
-                };
-                // Lähetetään sähköposti
-                smtpTransport.sendMail(emailData, (err) => {
-                  if (!err) {
-                    return res.status(200).json({
-                      success: true,
-                      message: 'Pyynnön hyväksyminen onnistui'
-                    });
-                  } else {
-                    return res.status(500).json({
-                      success: false,
-                      message: 'Pyynnön hyväksyminen epäonnistui',
-                      error: err
-                    });
-                  }
-                });
-              });
-          });
-        });
-    })
-    .catch((err) => console.log('confirmRideJoin failed: ' + err.stack));
-
-
-};
-
+        }).catch((err) => console.error('Notifikaation luonti epäonnistui: ' + err.stack));
+      }).catch((err) => console.error('Customers_Rides_ride luonti epäonnistui: ' + err.stack));
+    }).catch((err) => console.error('Matkan tietojen päivitys epäonnistui ' + err.stack));
+  }).catch((err) => console.error('Matkan hakeminen epäonnistui: ' + err.stack));
+}

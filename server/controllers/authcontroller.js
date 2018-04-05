@@ -90,7 +90,6 @@ exports.localRegister = (req, res, next) => {
 
 exports.socialRegister = (req, res, next) => {
 	let social_id = req.body.id,
-		social_token = req.body.authToken,
 		social_provider = req.body.provider,
 		social_photourl = req.body.photoUrl,
 		firstName = req.body.firstName,
@@ -114,7 +113,6 @@ exports.socialRegister = (req, res, next) => {
 				// Jos email löytyy, mutta social_id ei ole sama, päivitetään social data
 				const updateData = {
 					social_id: social_id,
-					social_token: social_token,
 					social_provider: social_provider,
 					social_photourl: social_photourl
 				};
@@ -132,7 +130,6 @@ exports.socialRegister = (req, res, next) => {
 			if (social_provider === 'GOOGLE') {
 				data = {
 					social_id: social_id,
-					social_token: social_token,
 					social_provider: social_provider,
 					social_photourl: social_photourl,
 					firstName: gFirstName,
@@ -142,7 +139,6 @@ exports.socialRegister = (req, res, next) => {
 			} else {
 				data = {
 					social_id: social_id,
-					social_token: social_token,
 					social_provider: social_provider,
 					social_photourl: social_photourl,
 					firstName: firstName,

@@ -95,7 +95,7 @@ export class AuthDialogComponent implements OnInit {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((user) => {
         this.updateUser();
-        this.localAuthService.authenticate(user).then(() => this.router.navigateByUrl(this.returnUrl));
+        this.localAuthService.authenticate(user).then(() => window.location.reload());
 
       })
       .catch((err) => {
@@ -107,7 +107,7 @@ export class AuthDialogComponent implements OnInit {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID)
       .then((user) => {
         this.updateUser();
-        this.localAuthService.authenticate(user).then(() => this.router.navigateByUrl(this.returnUrl));
+        this.localAuthService.authenticate(user).then(() => window.location.reload());
       })
       .catch((err) => {
         console.error('signInWithFB() failed: ' + err.message);
@@ -116,7 +116,7 @@ export class AuthDialogComponent implements OnInit {
   } 
   signInLocalUser(loginForm) {
     this.localAuthService.signIn(loginForm)
-      .then((res) => this.router.navigateByUrl(this.returnUrl))
+      .then(() => window.location.reload())
       .catch((err) => {
         this.passwordFailed = true;
         this.loginForm.patchValue({

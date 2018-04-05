@@ -5,6 +5,8 @@ DROP TABLE IF EXISTS CustomersRides_ride;
 DROP TABLE IF EXISTS CustomersCars;
 DROP TABLE IF EXISTS Cars;
 DROP TABLE IF EXISTS Reviews;
+DROP TABLE IF EXISTS Notifications;
+DROP TABLE IF EXISTS Requests;
 DROP TABLE IF EXISTS Rides;
 DROP TABLE IF EXISTS Customers;
 
@@ -45,12 +47,43 @@ CREATE TABLE IF NOT EXISTS Rides (
       ON UPDATE RESTRICT ON DELETE RESTRICT
 );
 
+CREATE TABLE IF NOT EXISTS Requests (
+  request_id VARCHAR(100) NOT NULL PRIMARY KEY,
+  creator_id VARCHAR(100) NOT NULL,
+  joiner_id VARCHAR(100) NOT NULL,
+  joiner_name VARCHAR(100) NOT NULL,
+  ride_id VARCHAR(100) NOT NULL,
+  startingplace VARCHAR(100) NOT NULL,
+  destination VARCHAR(100) NOT NULL,
+  additional_information VARCHAR(512),
+  CONSTRAINT request_creator_fk
+    FOREIGN KEY(creator_id) REFERENCES Customers(customer_id)
+      ON UPDATE CASCADE ON DELETE RESTRICT,
+  CONSTRAINT request_joiner_fk
+    FOREIGN KEY(joiner_id) REFERENCES Customers(customer_id)
+      ON UPDATE CASCADE ON DELETE RESTRICT,
+  CONSTRAINT request_ride_fk
+    FOREIGN KEY(ride_id) REFERENCES Rides(ride_id)
+      ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE IF NOT EXISTS Notifications (
+  notification_id VARCHAR(100) NOT NULL PRIMARY KEY,
+  customer_id VARCHAR(100) NOT NULL,
+  ride_id VARCHAR(100) NOT NULL,
+  notification_message VARCHAR(512) NOT NULL,
+  unread BOOLEAN DEFAULT true,
+  CONSTRAINT notification_user_fk
+    FOREIGN KEY(customer_id) REFERENCES Customers(customer_id)
+      ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
 CREATE TABLE IF NOT EXISTS Reviews (
   review_id VARCHAR(100) NOT NULL PRIMARY KEY, 
   customer_id VARCHAR(100) NOT NULL,
   stars TINYINT NOT NULL,
   review_text VARCHAR(600),
-  ALTER TABLE Reviews ADD review_created DATETIME default CURRENT_TIMESTAMP,
+  /* ALTER TABLE Reviews ADD review_created DATETIME default CURRENT_TIMESTAMP, */
   FOREIGN KEY(customer_id) REFERENCES Customers(customer_id)
     ON UPDATE RESTRICT ON DELETE RESTRICT
 );

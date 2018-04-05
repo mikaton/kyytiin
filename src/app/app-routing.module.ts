@@ -14,17 +14,19 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { UserdetailsComponent } from './components/userdetails/userdetails.component';
-import { RideJoinConfirmComponent } from './components/ridejoinconfirm/ridejoinconfirm.component';
+import { JoinRequestListComponent } from './components/join-request-list/join-request-list.component';
+import { JoinRequestComponent } from './components/join-request/join-request.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/frontpage', pathMatch: 'full' },
   { path: 'rides', component: RidelistComponent },
   { path: 'rides/:ride_id', canActivate: [AuthGuard], component: RideComponent},
-  { path: 'rides/confirm/:owner_id/:ride_id/:joiner_id', canActivate: [IdGuard], component: RideJoinConfirmComponent },
   { path: 'frontpage', component: FrontpageComponent },
   { path: 'faq', component: FaqComponent},
   { path: 'user', canActivate: [AuthGuard], component: UserpageComponent},
   { path: 'user/:customer_id', canActivate: [AuthGuard], component: UserdetailsComponent},
+  { path: 'requests', canActivate: [AuthGuard], component: JoinRequestListComponent},
+  { path: 'request/:id', canActivate: [AuthGuard], component: JoinRequestComponent},
   { path: 'ridecreate', canActivate: [AuthGuard], component: RidecreateComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'change-password/:token', component: ChangePasswordComponent},

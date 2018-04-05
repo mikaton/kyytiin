@@ -109,32 +109,13 @@ export class RideService {
     });
     return response;
   }
-  /* Lähettää matkan luojalle sähköpostiin linkin, josta pääsee hyväksymään/hylkäämään pyynnön */
-  sendJoinRequest(ride, creator, joiner) {
+
+  joinRide(ride_id, joiner_id): Promise<any> {
     let response = new Promise((resolve, reject) => {
       const data = {
-        ride_id: ride,
-        creator_id: creator,
-        joiner_id: joiner
+        joiner_id: joiner_id
       };
-      this.http.post(`${this.apiUrlJoinRequest}`, data)
-      .toPromise()
-      .then(
-        res => resolve(res),
-        err => reject(err)
-      );
-    });
-    return response;
-  }
-  /* Lähettää hyväksytylle käyttäjälle sähköposti-ilmoituksen ja päivittää CustomersRides_ride taulun */
-  confirmJoinRide(ride_id, joiner_id): Promise<any> {
-    let response = new Promise((resolve, reject) => {
-      let ride = {
-        customer_id: joiner_id,
-        ride_id: ride_id
-      };
-
-      this.http.post(`${this.apiUrlJoinConfirm}`, ride)
+      this.http.post(`${this.apiUrl}/join/${ride_id}`, data)
       .toPromise()
       .then(
         data => resolve(data),
@@ -144,10 +125,12 @@ export class RideService {
     return response;
   }
 
-  /* Lähettää hylätylle käyttäjälle sähköposti-ilmoituksen */
-  denyJoinRide(joiner_id): Promise<any> {
+  denyJoinRide(ride_id, joiner_id): Promise<any> {
     let response = new Promise((resolve, reject) => {
-      this.http.post(this.apiUrlJoinDeny, joiner_id)
+      const data = {
+        joiner_id: joiner_id
+      };
+      this.http.post(`${this.apiUrl}/deny/${ride_id}`, data)
       .toPromise()
       .then(
         data => resolve(data),
@@ -156,6 +139,4 @@ export class RideService {
     });
     return response;
   }
-
-
 }

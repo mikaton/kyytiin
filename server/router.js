@@ -4,8 +4,11 @@ const express = require('express'),
       passportService = require('./config/passport'),
       AuthController = require('./controllers/authcontroller'),
       UserController = require('./controllers/usercontroller'),
-      RideController = require('./controllers/ridecontroller');
-      ReviewController = require('./controllers/reviewcontroller');
+      RideController = require('./controllers/ridecontroller'),
+      ReviewController = require('./controllers/reviewcontroller'),
+      RequestController = require('./controllers/requestcontroller'),
+      NotificationController = require('./controllers/notificationcontroller');
+
 module.exports = (app) => {
   const router = express.Router();
   app.use('/api', router);
@@ -34,10 +37,21 @@ module.exports = (app) => {
   router.get('/ride/user/joined/:id', RideController.getUserJoinedRides);
   router.patch('/ride/:id', jwtAuth, RideController.updateRide);
   router.delete('/ride/:id', jwtAuth, RideController.deleteRide);
+
   // Matkalle liittyminen
-  router.post('/ride/join/sendrequest', jwtAuth, RideController.sendConfirmRideJoinEmail);
-  router.post('/ride/join/confirm', jwtAuth, RideController.confirmRideJoin);
-  router.post('/ride/join/deny', jwtAuth, RideController.denyRideJoin);
+  router.post('/ride/join/:ride_id', jwtAuth, RideController.joinRide);
+  router.post('/ride/deny/:ride_id', jwtAuth, RideController.denyJoinRide);
+
+  // Liittymispyyntö CRUD
+  router.post('/request', jwtAuth, RequestController.createJoinRequest);
+  router.get('/request/all/:customer_id', jwtAuth, RequestController.getAllRequests);
+  router.get('/request/:request_id', jwtAuth, RequestController.getRequestById);
+  router.patch('/request/:request_id', jwtAuth, RequestController.updateRequest);
+  router.delete('/request/:request_id', jwtAuth, RequestController.deleteRequest);
+  // Notifikaatio CRUD
+  router.get('/notifications/:customer_id', jwtAuth, NotificationController.getNotifications);
+  router.patch('/notifications/:notification_id', jwtAuth, NotificationController.updateNotification);
+  router.delete('/notifications/:notification_id', jwtAuth, NotificationController.deleteNotification);
 
   // Arvostelu CRUD reitit
   router.post('/review/:customer_id', jwtAuth, ReviewController.createReview);
