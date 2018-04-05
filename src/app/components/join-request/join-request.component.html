@@ -24,7 +24,7 @@
     </div>
     <div *ngIf="confirmButtonsPressed && !promiseResolved"><i class="fas fa-spinner fa-pulse"></i>Käsitellään..</div>
     <div *ngIf="!confirmButtonsPressed && !promiseResolved">
-      <button mat-raised-button color="primary" (click)="confirmJoin()">Kyllä</button>
+      <button mat-raised-button color="primary" (click)="joinRide()">Kyllä</button>
       <button mat-raised-button color="warn" (click)="dialogRef.close()">Peruuta</button>
     </div>
   </ng-template>
@@ -41,7 +41,7 @@
       <div *ngIf="confirmButtonsPressed && !promiseResolved"><i class="fas fa-spinner fa-pulse"></i>Käsitellään..</div>
       <div *ngIf="!confirmButtonsPressed && !promiseResolved">
         <mat-dialog-actions>
-            <button mat-raised-button color="primary" (click)="denyJoin()">Kyllä</button>
+            <button mat-raised-button color="primary" (click)="denyJoinRide()">Kyllä</button>
             <button mat-raised-button color="warn" (click)="dialogRef.close()">Peruuta</button>
         </mat-dialog-actions>
       </div>

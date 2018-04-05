@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'customer_id'
             }
         },
-        message: {
+        notification_message: {
             type: DataTypes.STRING,
             allowNull: false
         },
