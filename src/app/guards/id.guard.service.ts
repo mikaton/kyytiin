@@ -17,9 +17,10 @@ export class IdGuard implements CanActivate {
     // Haetaan localstoragesta nykyinen id
     const currentId = this.authService.decodeToken();
     // Jos Id ei mätsää reitin odotettuun idhen, ei päästetä ko. käyttäjää reittiin
-    if(!expectedId === currentId) {
-      return false;
+    console.log(expectedId === currentId);
+    if(expectedId === currentId) {
+      return true;
     }
-    return true;
+    return false;
   }
 }

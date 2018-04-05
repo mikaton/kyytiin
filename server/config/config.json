@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
+    "username": "kyytiin",
+    "password": "NakkiTraktori666.kyyti",
     "database": "kyyti",
-    "host": "127.0.0.1",
+    "host": "165.227.141.110",
     "dialect": "mysql"
   }
 }
