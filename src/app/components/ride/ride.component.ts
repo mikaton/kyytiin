@@ -69,9 +69,6 @@ export class RideComponent implements OnInit {
     });
   }
   
-  log() {
-    console.log(this.ride);
-  }
   goBack(): void {
     this.location.back();
   }
