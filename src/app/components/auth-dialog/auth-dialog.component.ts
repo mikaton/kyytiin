@@ -122,13 +122,8 @@ export class AuthDialogComponent implements OnInit {
       .catch((err) => {
         // Jos tunnusta ei ole vahvistettu
         if(err.status === 403) {
-          this.errorDialogRef = this.dialog.open(ErrorDialog, {
-            data: {
-              errorMessage: 'Jotain meni pieleen',
-              serverError: err.error.message
+          this.errorUiService.popErrorDialog(err);
             }
-          });
-        }
         // Jos salasana on väärin
         if(err.status === 401) {
           this.passwordFailed = true;
