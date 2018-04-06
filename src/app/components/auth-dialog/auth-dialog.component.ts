@@ -3,6 +3,7 @@ import { AuthService } from 'angularx-social-login';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login/src/entities/user';
 import { LocalAuthService } from '../../services/auth.service';
+import { ErrorUiService } from '../../services/error-ui.service';
 import { Observable } from 'rxjs/Observable';
 import {
   NgForm,
@@ -20,8 +21,6 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { SocialLoginModule } from 'angularx-social-login/src/sociallogin.module';
 import { NgClass } from '@angular/common';
-import { ErrorDialog } from '../../dialogs/error-dialog';
-import { VERSION, MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -40,14 +39,13 @@ export class AuthDialogComponent implements OnInit {
   user: SocialUser;
   registerForm: FormGroup;
   loginForm: FormGroup;
-  errorDialogRef: MatDialogRef<ErrorDialog>
 
   constructor(private authService: AuthService,
     private localAuthService: LocalAuthService,
     private fb: FormBuilder,
-    private dialog: MatDialog,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private errorUiService: ErrorUiService
   ) {
 
     this.registerForm = fb.group({
@@ -101,6 +99,7 @@ export class AuthDialogComponent implements OnInit {
 
       })
       .catch((err) => {
+        this.errorUiService.popErrorDialog(err);
         console.error('signInWithGoogle failed: ' + err.message);
       });
   }
@@ -112,6 +111,7 @@ export class AuthDialogComponent implements OnInit {
         this.localAuthService.authenticate(user).then(() => window.location.reload());
       })
       .catch((err) => {
+        this.errorUiService.popErrorDialog(err);
         console.error('signInWithFB() failed: ' + err.message);
       });
   }
@@ -154,12 +154,7 @@ export class AuthDialogComponent implements OnInit {
         this.router.navigate(['/register-success']);
       })
       .catch((err) => {
-        this.errorDialogRef = this.dialog.open(ErrorDialog, {
-          data: {
-            errorMessage: 'Jotain meni pieleen',
-            serverError: err.error.message
-          }
-        });
+        this.errorUiService.popErrorDialog(err);
         console.error('registerLocal() failed: ' + err.message);
       });
   }

@@ -16,6 +16,7 @@ import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 import { townMatcher } from '../../validators/town-validator';
 import { LocalAuthService } from '../../services/auth.service';
+import { ErrorUiService } from '../../services/error-ui.service';
 
 @Component({
   selector: 'app-ridecreate',
@@ -34,7 +35,9 @@ export class RidecreateComponent implements OnInit {
   constructor(private rideService: RideService,
     private dialog: MatDialog,
     private fb: FormBuilder,
-    private localAuthService: LocalAuthService) {
+    private localAuthService: LocalAuthService,
+    private errorUiService: ErrorUiService
+  ) {
     
     //Formcontrollit formgroupin ulkopuolella jotta hakutoiminto onnistuisi
     this.startingplace = new FormControl('', [townMatcher])
@@ -84,8 +87,8 @@ export class RidecreateComponent implements OnInit {
       free_seats: ['', Validators.compose([Validators.required, Validators.min(1), Validators.max(20)])],
       pets: [false,],
       smoking: [false,],
+      deviate: [false,],
       time_of_departure: [new Date(), Validators.required],
-      time_of_arrival: [new Date(), Validators.required],
       additional_information: ['', Validators.maxLength(512)],
     });
   }
@@ -96,11 +99,11 @@ export class RidecreateComponent implements OnInit {
         startingplace: ride.startingplace,
         destination: ride.destination,
         time_of_departure: ride.time_of_departure,
-        time_of_arrival: ride.time_of_arrival,
         free_seats: ride.free_seats,
         smoking: ride.smoking,
         additional_information: ride.additional_information,
-        pets: ride.pets
+        pets: ride.pets,
+        deviate: ride.deviate
       }
     })
     return this.rideCreateConfirmDialogRef.afterClosed().toPromise()
@@ -116,7 +119,6 @@ export class RidecreateComponent implements OnInit {
 
   rideCreate(rideCreateForm, startingplace, destination) {
     const date = new Date();
-    rideCreateForm.time_of_arrival = date.toISOString();
     rideCreateForm.time_of_departure = date.toISOString();
     rideCreateForm.customer_id = this.updateId();
     rideCreateForm.startingplace = startingplace;
@@ -128,13 +130,13 @@ export class RidecreateComponent implements OnInit {
         if (rideCreateForm.alternate_time_of_departure === undefined) {
           rideCreateForm.alternate_time_of_departure = rideCreateForm.time_of_departure;
         }
-        if (rideCreateForm.alternate_time_of_arrival === undefined) {
-          rideCreateForm.alternate_time_of_arrival = rideCreateForm.time_of_arrival;
-        }
         this.rideService.postRides(rideCreateForm);
       }
     })
-    .catch(err => console.error('rideCreate() failed: ' + err.message));
+    .catch((err) => {
+      this.errorUiService.popErrorDialog(err);
+      console.error('rideCreate epäonnistui: ' + err.message)
+    });
   };
 
   updateId() {

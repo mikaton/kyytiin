@@ -32,7 +32,7 @@ smtpTransport.use('compile', hbs(handlebarsOptions));
 // --- </Sähköpostin asetukset> //
 
 exports.getSingleRide = (req, res, next) => {
-  Ride.sequelize.query('SELECT r.ride_id AS ride_id, r.customer_id AS customer_id, r.additional_information AS additional_information, r.startingplace AS startingplace, r.destination AS destination, r.time_of_departure AS time_of_departure, r.time_of_arrival AS time_of_arrival, r.free_seats AS free_seats, r.smoking AS smoking, r.pets AS pets, c.firstName AS firstName, c.lastName as lastName FROM Rides r INNER JOIN Customers c on r.customer_id = c.customer_id WHERE r.ride_id = :ride_id',
+  Ride.sequelize.query('SELECT r.deviate AS deviate, r.ride_id AS ride_id, r.customer_id AS customer_id, r.additional_information AS additional_information, r.startingplace AS startingplace, r.destination AS destination, r.time_of_departure AS time_of_departure, r.time_of_arrival AS time_of_arrival, r.free_seats AS free_seats, r.smoking AS smoking, r.pets AS pets, c.firstName AS firstName, c.lastName as lastName FROM Rides r INNER JOIN Customers c on r.customer_id = c.customer_id WHERE r.ride_id = :ride_id',
     {
       replacements: { ride_id: req.params.id },
       type: Ride.sequelize.QueryTypes.SELECT
@@ -73,7 +73,7 @@ exports.getUserRides = (req, res, next) => {
 };
 
 exports.getUserJoinedRides = (req, res, next) => {
-  Ride.sequelize.query('SELECT r.startingplace AS startingplace, r.destination AS destination, r.time_of_departure AS time_of_departure, r.time_of_arrival AS time_of_arrival, r.free_seats AS free_seats, r.smoking AS smoking, r.pets AS pets FROM CustomersRides_ride CRr INNER JOIN Rides r on CRr.ride_id = r.ride_id WHERE CRr.customer_id = :joiner_customer_id',
+  Ride.sequelize.query('SELECT r.ride_id as ride_id, r.startingplace AS startingplace, r.destination AS destination, r.time_of_departure AS time_of_departure, r.time_of_arrival AS time_of_arrival, r.free_seats AS free_seats, r.smoking AS smoking, r.pets AS pets FROM CustomersRides_ride CRr INNER JOIN Rides r on CRr.ride_id = r.ride_id WHERE CRr.customer_id = :joiner_customer_id',
     {
       replacements: { joiner_customer_id: req.params.id },
       type: Ride.sequelize.QueryTypes.SELECT
@@ -100,6 +100,7 @@ exports.createRide = (req, res, next) => {
     free_seats: req.body.free_seats,
     smoking: req.body.smoking,
     pets: req.body.pets,
+    deviate: req.body.deviate,
     hidden: req.body.hidden,
     additional_information: req.body.additional_information
   };
@@ -150,7 +151,8 @@ exports.denyJoinRide = (req, res, next) => {
   const notificationData = {
     customer_id: req.body.joiner_id,
     ride_id: req.params.ride_id,
-    notification_message: 'Pyyntösi liittyä matkalle hylättiin!'
+    canJoin: false,
+    notification_message: "Pyyntösi liittyä matkalle hylättiin!"
   };
   Notification.create(notificationData).then((notification) => {
     res.status(200).json({
@@ -177,10 +179,12 @@ exports.joinRide = (req, res, next) => {
       }
       CustomersRides.create(crData).then(() => {
         // Luodaan uusi ilmoitus
+
         const notificationData = {
           customer_id: req.body.joiner_id,
           ride_id: req.params.ride_id,
-          notification_message: 'Pyyntösi liittyä matkalle hyväksyttiin!'
+          canJoin: true,
+          notification_message: "Pyyntösi liittyä matkalle hyväksyttiin!"
         };
         Notification.create(notificationData).then((notification) => {
           res.status(200).json({

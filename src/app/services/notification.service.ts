@@ -19,5 +19,15 @@ export class NotificationService {
         });
         return response;
     }
-
+    deleteUserNotifications(customer_id): Promise<any> {
+        let response = new Promise((resolve, reject) => {
+            this.http.delete(`${this.apiUrl}/notifications/${customer_id}`)
+            .toPromise()
+            .then(
+                res => resolve(res),
+                err => reject(err)
+            );
+        });
+        return response;
+    }
 }

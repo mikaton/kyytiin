@@ -75,6 +75,7 @@ CREATE TABLE IF NOT EXISTS Notifications (
   ride_id VARCHAR(100) NOT NULL,
   notification_message VARCHAR(512) NOT NULL,
   unread BOOLEAN DEFAULT true,
+  canjoin BOOLEAN,
   CONSTRAINT notification_user_fk
     FOREIGN KEY(customer_id) REFERENCES Customers(customer_id)
       ON UPDATE CASCADE ON DELETE RESTRICT

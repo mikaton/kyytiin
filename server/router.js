@@ -52,7 +52,7 @@ module.exports = (app) => {
   // Notifikaatio CRUD
   router.get('/notifications/:customer_id', jwtAuth, NotificationController.getNotifications);
   router.patch('/notifications/:notification_id', jwtAuth, NotificationController.updateNotification);
-  router.delete('/notifications/:notification_id', jwtAuth, NotificationController.deleteNotification);
+  router.delete('/notifications/:customer_id', jwtAuth, NotificationController.deleteNotifications);
 
   // Arvostelu CRUD reitit
   router.post('/review/:customer_id', jwtAuth, ReviewController.createReview);

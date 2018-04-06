@@ -1,0 +1,37 @@
+<div>
+	<h1 mat-dialog-title>Tarkista tiedot</h1>
+	<mat-dialog-content>
+		<mat-card style="max-width: 800px" class="mat-elevation-z">
+			<div fxLayout="column">
+				<mat-card-title>
+					Lähtöpaikka: {{ride.startingplace}}
+				</mat-card-title>
+				<mat-card-title>
+					Määränpää: {{ride.destination}}
+				</mat-card-title>
+			</div>
+			<mat-card-content>
+				Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
+			</mat-card-content>
+			<mat-card-content>
+				Vapaita paikkoja: {{ride.free_seats}}
+			</mat-card-content>
+			<mat-card-content>
+				Saako kyydissä tupakoida?: {{ride?.smoking ? 'Kyllä' : 'Ei'}}
+			</mat-card-content>
+			<mat-card-content>
+				Voiko kyytiin ottaa lemmikkejä?: {{ride?.pets ? 'Kyllä' : 'Ei'}}
+			</mat-card-content>
+			<mat-card-content>
+				Oletko valmis poikkeamaan reitiltä lähikuntiin?: {{ride?.deviate ? 'Kyllä' : 'Ei'}}
+			</mat-card-content>
+			<mat-card-content>
+				Lisätiedot: {{ride?.additional_information}}
+			</mat-card-content>
+		</mat-card>
+	</mat-dialog-content>
+	<mat-dialog-actions>
+		<button mat-button (click)="confirm()">Lisää kyyti!</button>
+		<button mat-button type="button" (click)="dialogRef.close()">Peruuta</button>
+	</mat-dialog-actions>
+</div>

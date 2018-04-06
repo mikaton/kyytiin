@@ -106,7 +106,7 @@ export class RideService {
           reject(err);
         }
       );
-    });
+    }); 
     return response;
   }
 

@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { RideService } from '../../services/ride.service';
 import { ActivatedRoute } from '@angular/router';
 import { ReviewService } from '../../services/review.service';
+import { ErrorUiService } from '../../services/error-ui.service';
 
 import {
   FormBuilder,
@@ -26,7 +27,9 @@ export class UserdetailsComponent implements OnInit {
     private localAuthService: LocalAuthService,
     private rideService: RideService,
     private reviewService: ReviewService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private errorUiService: ErrorUiService
+  ) { }
   localUser: any;
   reviews = [];
   customer_id: any;
@@ -57,19 +60,28 @@ export class UserdetailsComponent implements OnInit {
   getUserData() {
     this.userService.getUser(this.customer_id)
       .then(localUser => this.localUser = localUser)
-      .catch(err => console.error('userdetails.getUserData() failed: ' + err.message));
-  }
+      .catch((err) => {
+        this.errorUiService.popErrorDialog(err);
+        console.error('userDetails.getUserdata epäonnistui: ' + err.message)
+      });
+    }
 
   allowReview() {
     this.reviewService.allowReview(this.customer_id, this.localAuthService.decodeToken())
       .then(response => this.canReview = true)
-      .catch(err => console.error('allowReview() failed: ' + err.message));
+      .catch((err) => {
+        this.errorUiService.popErrorDialog(err);
+        console.error('allowReview epäonnistui: ' + err.message)
+      });
   }
 
   sendReview(reviewForm) {
     this.reviewService.sendReview(reviewForm)
       .then(response => console.log('ok'))
-      .catch(err => console.error('sendReview() failed: ' + err.message));
+      .catch((err) => {
+        this.errorUiService.popErrorDialog(err);
+        console.error('sendReview epäonnistui: ' + err.message)
+      });
   }
 
   getReviews(customer_id) {
@@ -78,9 +90,11 @@ export class UserdetailsComponent implements OnInit {
         this.reviews = reviews.review;
         this.calculateAverageStars(reviews);
       }))
-      .catch(err => console.error('getReviews() failed: ' + err.message));
-  }
-
+      .catch((err) => {
+        this.errorUiService.popErrorDialog(err);
+        console.error('getReviews epäonnistui: ' + err.message)
+      });
+    }
   calculateAverageStars(reviews) {
     let length = reviews.review.length; 
     let sum = 0;

@@ -49,6 +49,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false
     },
+    deviate: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
     hidden: {
       type: DataTypes.BOOLEAN,
       allowNull: false

@@ -15,6 +15,7 @@ import {
   MatSliderModule,
   MatAutocompleteModule,
   MatCheckboxModule,
+  MatTableModule,
 } from '@angular/material';
 import { MatListModule } from '@angular/material/list';
 import { MatNavList } from '@angular/material';
@@ -62,6 +63,7 @@ import { JoinRequestService } from './services/joinrequest.service';
 import { NotificationService } from './services/notification.service';
 import { RegistersuccessComponent } from './components/registersuccess/registersuccess.component';
 
+import { ErrorUiService } from './services/error-ui.service';
 registerLocaleData(localeFi);
 
 const config = new AuthServiceConfig([
@@ -117,6 +119,7 @@ export function tokenGetter() {
     MatSidenavModule,
     MatIconModule,
     MatAutocompleteModule,
+    MatTableModule,
     LayoutModule,
     SocialLoginModule,
     HttpClientModule,
@@ -157,7 +160,8 @@ export function tokenGetter() {
     ForgotPasswordService,
     ReviewService,
     JoinRequestService,
-    NotificationService
+    NotificationService,
+    ErrorUiService,
   ],
   bootstrap: [AppComponent],
   entryComponents: [RideCreateConfirmDialog, ErrorDialog],

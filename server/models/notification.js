@@ -28,7 +28,11 @@ module.exports = (sequelize, DataTypes) => {
         unread: { 
             type: DataTypes.BOOLEAN,
             defaultValue: true
-        }
+        },
+        canJoin: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true,
+        },
 	},
 		{
 			timestamps: false,

@@ -3,6 +3,7 @@ import { JoinRequestService } from '../../services/joinrequest.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RideService } from '../../services/ride.service';
 import { MatDialog } from '@angular/material';
+import { ErrorUiService } from '../../services/error-ui.service';
 
 @Component({
   selector: 'app-join-request',
@@ -21,7 +22,8 @@ export class JoinRequestComponent implements OnInit {
     private rideService: RideService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private errorUiService: ErrorUiService
   ) { }
 
   async ngOnInit() {
@@ -34,7 +36,10 @@ export class JoinRequestComponent implements OnInit {
     .then((request) => {
       this.request = request.data;
     })
-    .catch((err) => console.error('getRequest epäonnistui: ' + err.message));
+    .catch((err) => {
+      this.errorUiService.popErrorDialog(err);
+      console.error('getRequest epäonnistui: ' + err.message)
+    });
   }
 
   openConfirmDialog(confirmDialogTemplate) {
@@ -53,9 +58,13 @@ export class JoinRequestComponent implements OnInit {
     this.rideService.joinRide(ride_id, joiner_id)
     .then((res) => {
       this.promiseResolved = true;
+      this.requestService.deleteRequest(this.request.request_id);
       this.router.navigate(['/requests']);
     })
-    .catch((err) => console.error('joinRide epäonnistui: ' + err.message));
+    .catch((err) => {
+      this.errorUiService.popErrorDialog(err);
+      console.error('joinRide epäonnistui: ' + err.message)
+    });
   }
 
   denyJoinRide() {
@@ -66,8 +75,12 @@ export class JoinRequestComponent implements OnInit {
     this.rideService.denyJoinRide(ride_id, joiner_id)
     .then((res) => {
       this.promiseResolved = true;
+      this.requestService.deleteRequest(this.request.request_id);
       this.router.navigate(['/requests']);
     })
-    .catch((err) => console.error('denyJoinRide epäonnistui: ' + err.message));
+    .catch((err) => {
+      this.errorUiService.popErrorDialog(err);
+      console.error('denyJoinRide epäonnistui: ' + err.message)
+    });
   }
 }
