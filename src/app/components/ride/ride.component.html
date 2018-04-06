@@ -33,7 +33,7 @@
     <mat-card-content>
       Lisätiedot: {{ride?.additional_information}}
     </mat-card-content>
-    <button *ngIf="!isCreator" mat-raised-button color="primary" [disabled]="userJoined" (click)="openAlertDialog(alertTemplate)">Liity kyytiin</button>
+    <button *ngIf="!isCreator" mat-raised-button color="primary" (click)="openAlertDialog(alertTemplate)">Liity kyytiin</button>
     <button mat-raised-button (click)="goBack()">Takaisin</button>
   </mat-card>
   <ng-template #alertTemplate>
