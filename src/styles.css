@@ -1,6 +1,7 @@
 @import "picker.min.css";
 body {
     background-color: #EEE;
+    margin: 0px;
 }
 a {
     text-decoration: none;
@@ -9,3 +10,4 @@ a {
 .fa-check {
 	color: #689F38;
 }
+

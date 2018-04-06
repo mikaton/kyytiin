@@ -3,7 +3,7 @@ import { passwordMatcher } from '../../validators/password-validator';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ForgotPasswordService } from '../../services/forgot-password.service';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
-
+import { ErrorUiService } from '../../services/error-ui.service';
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
@@ -16,7 +16,8 @@ export class ChangePasswordComponent implements OnInit {
   constructor(
       private fb: FormBuilder,
       private forgotPasswordService: ForgotPasswordService,
-      private route: ActivatedRoute) {
+      private route: ActivatedRoute,
+      private errorUiService: ErrorUiService) {
     this.changePasswordForm = this.fb.group({
       password: this.fb.group({
         pwd: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
@@ -34,6 +35,9 @@ export class ChangePasswordComponent implements OnInit {
     console.log(token);
     this.forgotPasswordService.changePassword(newPassword, token)
     .then(res => this.passwordChanged = true)
-    .catch(err => console.error('changePassword() failed: ' + err.message));
+    .catch((err) => {
+      this.errorUiService.popErrorDialog(err);
+      console.error('changePassword() failed: ' + err.message);
+    })
   }
 }

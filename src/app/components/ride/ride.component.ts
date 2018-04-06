@@ -37,7 +37,8 @@ export class RideComponent implements OnInit {
     private dialog: MatDialog,
     private localAuthService: LocalAuthService,
     private requestService: JoinRequestService,
-    private userService: UserService
+    private userService: UserService,
+    private errorUiService: ErrorUiService
   ) {
     this.messageForm = this.fb.group({
       message: ['', Validators.maxLength(512)]
@@ -63,8 +64,12 @@ export class RideComponent implements OnInit {
         this.isCreator = false;
       }
     })
-    .catch(err => console.error('getRide() failed: ' + err.message));
+    .catch((err) => {
+      this.errorUiService.popErrorDialog(err);
+      console.error('getRide epäonnistui: ' + err.message)
+    });
   }
+  
 
   goBack(): void {
     this.location.back();
@@ -111,15 +116,8 @@ export class RideComponent implements OnInit {
       this.promiseResolved = true;
     })
     .catch((err) => {
-      // Muutetaan dialogin sisältö virheviestiksi, suljetaan se ja avataan errorDialog
-      this.promiseRejected = true;
-      this.dialogRef.close();
-      this.errorDialogRef = this.dialog.open(ErrorDialog, {
-        data: {
-          errorMessage: 'Jotain meni pieleen',
-          serverError: err.error.message
-        }
-      });
+      this.errorUiService.popErrorDialog(err);
+      console.error('createRequest epäonnistui: ' + err.message)
     });
   }
 

@@ -3,6 +3,7 @@ import { LocalAuthService } from '../../services/auth.service';
 import { JoinRequestService } from '../../services/joinrequest.service';
 import { RideService } from '../../services/ride.service';
 import { NotificationService } from '../../services/notification.service';
+import { ErrorUiService } from '../../services/error-ui.service';
 
 @Component({
   selector: 'app-join-request-list',
@@ -18,11 +19,12 @@ export class JoinRequestListComponent implements OnInit {
   constructor(
     private requestService: JoinRequestService,
     private notificationService: NotificationService,
-    private localAuthService: LocalAuthService
+    private localAuthService: LocalAuthService,
+    private errorUiService: ErrorUiService,
     ) { }
 
   async ngOnInit() {
-    await Promise.all([this.getUserRequests(), this.getNotification()])
+    await Promise.all([this.getUserRequests(), this.getNotifications()])
   }
 
   getUserRequests() {
@@ -32,15 +34,23 @@ export class JoinRequestListComponent implements OnInit {
       this.requests = requests.data;
       if(this.requests.length > 0) this.unreadRequestsCount = this.requests.length;
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      this.errorUiService.popErrorDialog(err);
+      console.error('getUserRequests epäonnistui: ' + err.message)
+    });
   }
 
-  getNotification() {
+  getNotifications() {
+    //TODO: Hae myös kuudin tiedot
     this.notificationService.getUserNotifications(this.localAuthService.decodeToken())
     .then((notifications) => {
       this.notifications = notifications.data;
+      console.log(notifications.data);
       if(this.notifications.length > 0) this.unreadNotificationsCount = this.notifications.length;
     })
-    .catch((err) => console.error('getNotifications epäonnistui: ' + err.message));
+    .catch((err) => {
+      this.errorUiService.popErrorDialog(err);
+      console.error('getNotifications epäonnistui: ' + err.message)
+    });
   }
 }

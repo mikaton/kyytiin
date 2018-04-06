@@ -17,7 +17,7 @@
                 <a routerLink="/rides" routerLinkActive="router-link-active">
                     <mat-list-item>KYYDIT</mat-list-item>
                 </a>
-                <a routerLink="/ridecreate" routerLinkActive="router-link-active">
+                <a routerLink="/ridecreate" routerLinkActive="router-link-active" *ngIf="localStorageToken === true" >
                     <mat-list-item>LUO KYYTI</mat-list-item>
                 </a>
                 <a routerLink="/feedback" routerLinkActive="router-link-active">
@@ -26,7 +26,7 @@
                 <a routerLink="/faq" routerLinkActive="router-link-active">
                     <mat-list-item>INFO</mat-list-item>
                 </a>
-                <a routerLink="/requests" *ngIf="localStorageToken === true" routerLinkActive="router-link-active">
+                <a routerLink="/requests" *ngIf="localStorageToken === true" routerLinkActive="router-link-active" >
                     <mat-list-item>PYYNNÖT</mat-list-item>
                 </a>
                 <a routerLink="/user" *ngIf="localStorageToken === true" routerLinkActive="router-link-active">
@@ -60,14 +60,17 @@
         <mat-sidenav class="sidenav" ngClass.xs="sidenav_mobile" fxHide.gt-md #sidenav mode=side [fixedInViewport]="mobileQuery.matches"
             fixedTopGap="80" [opened]="false">
             <mat-nav-list>
-                <a routerLink="/user" routerLinkActive="router-link-active" (click)="sidenav.close()">
+                <a routerLink="/user" routerLinkActive="router-link-active" (click)="sidenav.close()" *ngIf="localStorageToken === true" >
                     <mat-list-item>PROFIILI</mat-list-item>
                 </a>
                 <a routerLink="/rides" routerLinkActive="router-link-active" (click)="sidenav.close()">
                     <mat-list-item>KYYDIT</mat-list-item>
                 </a>
-                <a routerLink="/ridecreate" routerLinkActive="router-link-active" (click)="sidenav.close()">
+                <a routerLink="/ridecreate" routerLinkActive="router-link-active" (click)="sidenav.close()" *ngIf="localStorageToken === true" >
                     <mat-list-item>LUO KYYTI</mat-list-item>
+                </a>
+                <a routerLink="/requests" *ngIf="localStorageToken === true" routerLinkActive="router-link-active" >
+                    <mat-list-item>PYYNNÖT</mat-list-item>
                 </a>
                 <a routerLink="/feedback" routerLinkActive="router-link-active" (click)="sidenav.close()">
                     <mat-list-item>PALAUTE</mat-list-item>

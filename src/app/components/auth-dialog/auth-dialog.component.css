@@ -120,3 +120,7 @@ width: 50%;
 [hidden] {
   display: none !important;
 }
+
+.socialisticblock {
+  margin-top: 8px;
+}

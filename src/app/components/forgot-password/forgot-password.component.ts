@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { emailPattern } from '../../validators/email-validator';
 import { ForgotPasswordService } from '../../services/forgot-password.service';
+import { ErrorUiService } from '../../services/error-ui.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -13,7 +14,10 @@ export class ForgotPasswordComponent implements OnInit {
   userEmail: any;
   resetEmailSent: boolean = false;
   resetEmailButtonClicked: boolean = false;
-  constructor(private fb: FormBuilder, private forgotPwService: ForgotPasswordService) {
+  constructor(
+    private fb: FormBuilder,
+    private forgotPwService: ForgotPasswordService,
+    private errorUiService: ErrorUiService) {
     this.resetPasswordForm = fb.group({
       email: ['', Validators.compose([Validators.required, Validators.pattern(emailPattern)])],
     });
@@ -26,7 +30,11 @@ export class ForgotPasswordComponent implements OnInit {
     this.userEmail = this.resetPasswordForm.value;
     this.resetEmailButtonClicked = true;
     this.forgotPwService.sendResetLink(this.userEmail)
-    .then(res => this.resetEmailSent = true)
-    .catch(err => console.error('Failed to send password reset email: ' + err.message));
+      .then(res => this.resetEmailSent = true)
+      .catch((err) => {
+        this.errorUiService.popErrorDialog(err);
+        console.error('passwordResetLink() failed: ' + err.message);
+      })
   }
 }
+

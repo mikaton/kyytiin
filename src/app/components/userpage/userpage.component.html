@@ -41,9 +41,10 @@
   <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between">
     <div fxLayout="column" fxFlex="49">
       <mat-card class="mat-elevation-z8" fxLayout="column">
-        <mat-card-title>
+        <mat-card-title class="mat-card-title-marginfix">
           Luomasi kyydit:
         </mat-card-title>
+        </mat-card>
         <div *ngFor="let ride of rides" fxLayout="column">
           <a routerLink="/rides/{{ride.ride_id}}">
             <mat-card class="ride_card" fxLayout="column" fxLayoutAlign="space around center">
@@ -64,13 +65,13 @@
             </mat-card>
           </a>
         </div>
-      </mat-card>
     </div>
     <div fxLayout="column" fxFlex="49">
       <mat-card class="mat-elevation-z8" fxLayout="column">
-        <mat-card-title>
+        <mat-card-title class="mat-card-title-marginfix">
           Liitytyt kyydit:
         </mat-card-title>
+        </mat-card>
         <div *ngFor="let ride of joinedRides" fxLayout="column">
           <a routerLink="/rides/{{ride.ride_id}}">
             <mat-card class="ride_card" fxLayout="column" fxLayoutAlign="space around center">
@@ -91,7 +92,6 @@
             </mat-card>
           </a>
         </div>
-      </mat-card>
     </div>
   </div>
 </div>
