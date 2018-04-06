@@ -16,6 +16,7 @@ import { FeedbackComponent } from './components/feedback/feedback.component';
 import { UserdetailsComponent } from './components/userdetails/userdetails.component';
 import { JoinRequestListComponent } from './components/join-request-list/join-request-list.component';
 import { JoinRequestComponent } from './components/join-request/join-request.component';
+import { RegistersuccessComponent } from './components/registersuccess/registersuccess.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/frontpage', pathMatch: 'full' },
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'ridecreate', canActivate: [AuthGuard], component: RidecreateComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'change-password/:token', component: ChangePasswordComponent},
-  { path: 'feedback', component: FeedbackComponent}
+  { path: 'feedback', component: FeedbackComponent},
+  { path: 'register-success', component: RegistersuccessComponent}
 ];
 
 @NgModule({

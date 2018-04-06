@@ -24,6 +24,7 @@ import { ErrorDialog } from '../../dialogs/error-dialog';
 import { VERSION, MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-auth-dialog',
   templateUrl: './auth-dialog.component.html',
@@ -33,6 +34,7 @@ export class AuthDialogComponent implements OnInit {
   loggedIn: boolean;
   loggedInLocal: boolean;
   passwordFailed: boolean;
+  emailFailed: boolean;
   returnUrl: string;
   showRegisterForm = false;
   user: SocialUser;
@@ -111,17 +113,37 @@ export class AuthDialogComponent implements OnInit {
       })
       .catch((err) => {
         console.error('signInWithFB() failed: ' + err.message);
+      });
+  }
 
-      })
-  } 
   signInLocalUser(loginForm) {
     this.localAuthService.signIn(loginForm)
       .then(() => window.location.reload())
       .catch((err) => {
-        this.passwordFailed = true;
-        this.loginForm.patchValue({
-          password: null
-        })
+        // Jos tunnusta ei ole vahvistettu
+        if(err.status === 403) {
+          this.errorDialogRef = this.dialog.open(ErrorDialog, {
+            data: {
+              errorMessage: 'Jotain meni pieleen',
+              serverError: err.error.message
+            }
+          });
+        }
+        // Jos salasana on väärin
+        if(err.status === 401) {
+          this.passwordFailed = true;
+          this.loginForm.patchValue({
+            password: null
+          });
+        }
+        // Jos käyttäjätunnusta ei löytynyt
+        if(err.status === 404) {
+          this.emailFailed = true;
+          this.loginForm.patchValue({
+            email: null
+          });
+        }
+        
         console.error('signInLocalUser() failed: ' + err.message);
       });
   }
@@ -129,8 +151,7 @@ export class AuthDialogComponent implements OnInit {
   registerLocal(registerForm) {
     this.localAuthService.registerLocal(registerForm)
       .then((user) => {
-        console.log('Registered user: ' + user);
-        this.router.navigateByUrl(this.returnUrl);
+        this.router.navigate(['/register-success']);
       })
       .catch((err) => {
         this.errorDialogRef = this.dialog.open(ErrorDialog, {

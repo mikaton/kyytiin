@@ -57,8 +57,6 @@ export class LocalAuthService {
                 .toPromise()
                 .then(
                     res => {
-                        this.setToken(res);
-                        location.reload();
                         resolve(res);
                     },
                     err => {
@@ -69,7 +67,6 @@ export class LocalAuthService {
         return response;
     }
     private setToken(res) {
-        console.log(res);
         localStorage.setItem('token', res.token);
     }
 

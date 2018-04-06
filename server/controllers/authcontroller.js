@@ -41,6 +41,10 @@ function setUserInfo(request) {
 	}
 };
 
+const checkPassword = function (candidatePassword, password) {
+	return bcrypt.compareSync(candidatePassword, password)
+};
+
 function hashPassword(password) {
 	return bcrypt.hashSync(password, 10, null);
 };
@@ -56,7 +60,6 @@ exports.localRegister = (req, res, next) => {
 		where: { email: email }
 	})
 		.then((user) => {
-			console.log(user);
 			if (user) {
 				res.status(400).json({
 					message: 'Sähköposti on jo rekisteröity käyttäjälle.'
@@ -70,22 +73,79 @@ exports.localRegister = (req, res, next) => {
 					lastName: lastName,
 					email: email,
 					password: userPassword,
-					phoneNumber: phoneNumber
+					phoneNumber: phoneNumber,
+					confirm_token: crypto.randomBytes(20).toString('hex'),
+					confirm_token_expiry: Date.now() + 2592000000
 				};
+
 				User.create(data)
 					.then((newUser) => {
-						const userInfo = setUserInfo(newUser);
-						if (newUser) res.status(201).json({
-							message: 'Käyttäjä luotu',
-							user: userInfo,
-							token: generateJwt(userInfo)
+						// Luodaan sähköposti
+						const emailData = {
+							to: newUser.email,
+							from: email,
+							template: 'verify-account',
+							subject: 'Vahvista Kyyti.in -tunnuksesi',
+							context: {
+								url: 'https://kyyti.in/verify-account/' + newUser.confirm_token,
+								name: newUser.firstName
+							}
+						};
+						// lähetetään sähköpost
+						smtpTransport.sendMail(emailData, () => {
+							return res.status(201).json({ success: true, message: 'Vahvistussähköposti lähetetty' });
 						});
+
+						// Luodaan käyttäjälle JWT
+						const userInfo = setUserInfo(newUser);
+						if (newUser) {
+							res.status(201).json({
+								message: 'Käyttäjä luotu',
+								user: userInfo,
+								token: generateJwt(userInfo)
+							});
+						} 
 					});
 			}
 		})
 		.catch((err) => {
-			console.log(err);
+			console.error('localRegister epäonnistui: ' + err.stack);
 		});
+};
+
+exports.verifyEmail = (req, res, next) => {
+	// Etsitään käyttäjä jonka confirm_token on voimassa
+	User.findOne({
+		where: { confirm_token: req.body.token, confirm_token_expiry: { $gt: Date.now() } }
+	})
+	.then((user) => {
+		const data = { confirmed: true };
+		return user.updateAttributes(data).then((confirmedUser) => {
+			res.redirect('localhost:4200');
+		}).catch((err) => console.error('Käyttätunnuksen vahvistaminen epäonnistui: ' + err.stack));
+	}).catch((err) => console.error('Käyttäjätunnuksen hakeminen vahvistamista varten epäonnistui: ' + err.stack));
+};
+
+exports.localLogin = (req, res, next) => {
+	User.findOne({
+		where: { email: req.body.email }
+	})
+	.then((user) => {
+		if (!user) return res.status(404).json({ success: false, message: 'Käyttäjää ei löytynyt' });
+		if (!checkPassword(req.body.password, user.dataValues.password)) return res.status(401).json({ success: false, message: 'Salasanat eivät täsmää' });
+		if(!user.dataValues.confirmed) return res.status(403).json({ success: false, message: 'Vahvista sähköpostiosoitteesi kirjautuaksesi sisään' });
+
+		const userInfo = setUserInfo(user.dataValues);
+		res.status(200).json({
+			message: 'Successfully logged in',
+			token: generateJwt(userInfo),
+			_id: userInfo._id
+		});
+	})
+	.catch((err) => {
+		console.log('localLogin failed: ' + err.stack);
+	});
+	
 };
 
 exports.socialRegister = (req, res, next) => {
@@ -156,19 +216,9 @@ exports.socialRegister = (req, res, next) => {
 						token: generateJwt(userInfo)
 					});
 				});
-				
 		}
 	})
 	.catch((err) => console.log('socialRegister failed: ' + err.message));
-};
-
-exports.localLogin = (req, res, next) => {
-	const userInfo = setUserInfo(req.user);
-	res.status(200).json({
-		message: 'Successfully logged in',
-		token: generateJwt(userInfo),
-		_id: userInfo._id
-	});
 };
 
 exports.socialLogin = (req, res, next) => {

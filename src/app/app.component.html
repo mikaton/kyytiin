@@ -2,14 +2,12 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 <div class="wrapper">
     <mat-toolbar color="primary" class="sidenav_toolbar">
-        <button mat-button ngClass.gt-md="hidebutton" (click)="sidenavOpen(sidenav)">
-            <mat-icon>menu</mat-icon>
-        </button>
+        
         <!-- fxHide fxShow temppuilu piilottaa ja näyttää conditionaalisesti spanit, 
         siirtää sivubaarileiskalla logon oikealle-->
-        <span fxHide fxShow.lt-lg class="toolbar_fillempty"></span>
-        <img id="logo_toolbar" src="../assets/images/kyytiin-icon-black_white.png" alt="kyyti.in logo" fxLayoutAlign.lt-md="space-between">
-        <span fxShow fxHide.lt-lg class="toolbar_fillempty"></span>
+
+        <img id="logo_toolbar" src="../assets/images/kyytiin-icon-black_white.png" alt="kyyti.in logo">
+        <span class="toolbar_fillempty"></span>
         <!-- Työpöydän, >1280px leveille näytöille tarkoitettu navigoitipalkki -->
         <!-- piilottaa listan jos ruudun leveys alle 1279px -->
         <div fxHide.lt-lg>
@@ -45,6 +43,9 @@
                 </mat-list-item>
             </mat-nav-list>
         </div>
+        <button mat-button ngClass.gt-md="hidebutton" (click)="sidenavOpen(sidenav)">
+            <mat-icon>menu</mat-icon>
+        </button>
     </mat-toolbar>
     <div class="wrapper">
         <mat-card>
@@ -57,7 +58,7 @@
     </div>
     <!--mobiilisivupalkki-->
     <mat-sidenav-container id="sidenav_container" fxHide.gt-md>
-        <mat-sidenav class="sidenav" ngClass.xs="sidenav_mobile" fxHide.gt-md #sidenav mode=side [fixedInViewport]="mobileQuery.matches"
+        <mat-sidenav align="end" class="sidenav" ngClass.xs="sidenav_mobile" fxHide.gt-md #sidenav mode=side [fixedInViewport]="mobileQuery.matches"
             fixedTopGap="80" [opened]="false">
             <mat-nav-list>
                 <a routerLink="/user" routerLinkActive="router-link-active" (click)="sidenav.close()">

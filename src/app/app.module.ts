@@ -60,6 +60,7 @@ import { JoinRequestComponent } from './components/join-request/join-request.com
 import { JoinRequestListComponent } from './components/join-request-list/join-request-list.component';
 import { JoinRequestService } from './services/joinrequest.service';
 import { NotificationService } from './services/notification.service';
+import { RegistersuccessComponent } from './components/registersuccess/registersuccess.component';
 
 registerLocaleData(localeFi);
 
@@ -100,7 +101,8 @@ export function tokenGetter() {
     UserdetailsComponent,
     ErrorDialog,
     JoinRequestComponent,
-    JoinRequestListComponent
+    JoinRequestListComponent,
+    RegistersuccessComponent
   ],
   imports: [
     BrowserModule,

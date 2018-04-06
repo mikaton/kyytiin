@@ -11,7 +11,7 @@
               <div fxLayout.lt-md="column" ngClass.gt-sm="loginformContainer1GtSm">
                 <div ngClass.gt-sm="loginformContainer2GtSm">
                   <mat-form-field ngClass.gt-sm="loginformGtSm" ngClass.lt-sm="loginformLtSm">
-                    <input matInput id="email" name="email" placeholder="Sähköpostiosoite" autocomplete="email" formControlName="email" required>
+                    <input matInput id="email" name="email" [placeholder]="emailFailed ? 'Tarkasta sähköposti': 'Sähköposti'" autocomplete="email" formControlName="email" required>
                   </mat-form-field>
                   <mat-form-field ngClass.gt-sm="loginformGtSm" ngClass.lt-sm="loginformLtSm">
                     <input matInput id="password" name="password" type="password" [placeholder]="passwordFailed ? 'Tarkasta salasanasi':'Salasana'"
