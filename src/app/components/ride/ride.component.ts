@@ -115,6 +115,8 @@ export class RideComponent implements OnInit {
     })
     .catch((err) => {
       this.errorUiService.popErrorDialog(err);
+      this.promiseRejected = true;
+      this.dialogRef.close();
       console.error('createRequest epäonnistui: ' + err.message)
     });
   }
