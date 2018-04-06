@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS Rides (
   smoking BOOLEAN NOT NULL, 
   pets BOOLEAN NOT NULL,
   additional_information VARCHAR(512),
+  deviate BOOLEAN NOT NULL,
   hidden BOOLEAN NOT NULL,
   CONSTRAINT customer_ride_fk
     FOREIGN KEY(customer_id) REFERENCES Customers(customer_id)

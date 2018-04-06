@@ -17,6 +17,7 @@ import { UserdetailsComponent } from './components/userdetails/userdetails.compo
 import { JoinRequestListComponent } from './components/join-request-list/join-request-list.component';
 import { JoinRequestComponent } from './components/join-request/join-request.component';
 import { RegistersuccessComponent } from './components/registersuccess/registersuccess.component';
+import { TosComponent } from './components/tos/tos.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/frontpage', pathMatch: 'full' },
@@ -32,7 +33,8 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'change-password/:token', component: ChangePasswordComponent},
   { path: 'feedback', component: FeedbackComponent},
-  { path: 'register-success', component: RegistersuccessComponent}
+  { path: 'register-success', component: RegistersuccessComponent},
+  { path: 'tos', component: TosComponent}
 ];
 
 @NgModule({
