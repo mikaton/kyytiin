@@ -1,7 +1,7 @@
 <div>
 		<h1 mat-dialog-title>Tarkista tiedot</h1>
 		<mat-dialog-content>
-			<mat-card style="max-width: 500px" class="mat-elevation-z">
+			<mat-card style="max-width: 800px" class="mat-elevation-z">
 				<div fxLayout="column">
 					<mat-card-title>
 						Lähtöpaikka: {{ride.startingplace}}
@@ -12,9 +12,6 @@
 				</div>
 				<mat-card-content>
 					Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
-				</mat-card-content>
-				<mat-card-content>
-					Saapumispäivä: {{ride.time_of_arrival | date:'mediumDate'}} aika: {{ride.time_of_arrival | date:'shortTime'}}
 				</mat-card-content>
 				<mat-card-content>
 					Vapaita paikkoja: {{ride.free_seats}}

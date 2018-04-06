@@ -28,11 +28,6 @@
                     [min]="min_time" [max]="max_time" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1">
                 <owl-date-time [pickerMode]="'dialog'" [firstDayOfWeek]=1 #dtPicker1></owl-date-time>
             </mat-form-field>
-            <mat-form-field ngClass.xs="ridecreate_time">
-                <input matInput id="time_of_arrival" name="time_of_arrival" formControlName="time_of_arrival" placeholder="Perilläoloaika"
-                    [min]="min_time" [max]="max_time" [owlDateTimeTrigger]="dtPicker2" [owlDateTime]="dtPicker2">
-                <owl-date-time [pickerMode]="'dialog'" [firstDayOfWeek]=1 #dtPicker2></owl-date-time>
-            </mat-form-field>
             <mat-form-field>
                 <input matInput id="free_seats" placeholder="Vapaiden paikkojen määrä" name="free_seats" type="number" formControlName="free_seats"
                     required>

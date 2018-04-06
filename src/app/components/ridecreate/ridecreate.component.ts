@@ -88,7 +88,6 @@ export class RidecreateComponent implements OnInit {
       pets: [false,],
       smoking: [false,],
       time_of_departure: [new Date(), Validators.required],
-      time_of_arrival: [new Date(), Validators.required],
       additional_information: ['', Validators.maxLength(512)],
     });
   }
@@ -99,7 +98,6 @@ export class RidecreateComponent implements OnInit {
         startingplace: ride.startingplace,
         destination: ride.destination,
         time_of_departure: ride.time_of_departure,
-        time_of_arrival: ride.time_of_arrival,
         free_seats: ride.free_seats,
         smoking: ride.smoking,
         additional_information: ride.additional_information,
@@ -119,7 +117,6 @@ export class RidecreateComponent implements OnInit {
 
   rideCreate(rideCreateForm, startingplace, destination) {
     const date = new Date();
-    rideCreateForm.time_of_arrival = date.toISOString();
     rideCreateForm.time_of_departure = date.toISOString();
     rideCreateForm.customer_id = this.updateId();
     rideCreateForm.startingplace = startingplace;
@@ -130,9 +127,6 @@ export class RidecreateComponent implements OnInit {
         rideCreateForm.hidden = false;
         if (rideCreateForm.alternate_time_of_departure === undefined) {
           rideCreateForm.alternate_time_of_departure = rideCreateForm.time_of_departure;
-        }
-        if (rideCreateForm.alternate_time_of_arrival === undefined) {
-          rideCreateForm.alternate_time_of_arrival = rideCreateForm.time_of_arrival;
         }
         this.rideService.postRides(rideCreateForm);
       }
