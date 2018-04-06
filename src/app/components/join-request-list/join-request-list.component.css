@@ -19,6 +19,21 @@
   color: #f44336;
 }
 
-.requestlist {
-  height: 100px;
+.requestcard a:hover {
+  background-color: #F5F5F5;
+}
+.requestcard {
+  margin-bottom: 8px;
+}
+.requestcard a:link {
+  padding: 16px;
+}
+.notification_item {
+  width: 100%;
+  margin-bottom: 8px;
+}
+.notification_list {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-top: 0px;
 }

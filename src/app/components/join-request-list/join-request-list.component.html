@@ -32,8 +32,10 @@
     <div fxLayout="column" fxFlex="49">
       <mat-card class="mat-elevation-z8" fxLayout="column">
         <mat-card-title class="mat-card-title-marginfix">Ilmoitukset:</mat-card-title>
-        <mat-nav-list>
-          <mat-list-item *ngFor="let notification of notifications">
+      </mat-card>
+      <mat-card *ngIf="unreadNotificationsCount>0">
+        <mat-nav-list class="notification_list">
+          <mat-list-item class="notification_item" *ngFor="let notification of notifications">
             <a matLine routerLink="/rides/{{notification.ride_id}}">
               <p matLine>
                 <span *ngIf="notification.canJoin === true">
