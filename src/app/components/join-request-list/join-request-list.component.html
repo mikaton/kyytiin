@@ -12,28 +12,29 @@
       <mat-card class="mat-elevation-z8" fxLayout="column">
         <mat-card-title class="mat-card-title-marginfix">Pyynnöt:</mat-card-title>
       </mat-card>
-        <mat-card class="mat-elevation-z8 requestcard" fxLayout="column" *ngFor="let request of requests">
-          <a routerLink="/request/{{request.request_id}}">
-            <mat-card-content>
-              Pyynnön lähettäjä: {{request.joiner_name}}
-            </mat-card-content>
-            <mat-card-content>
-              Matka: {{request.startingplace}} - {{request.destination}}
-            </mat-card-content>
-            <mat-card-content>
-              Viesti: {{request.additional_information}}
-            </mat-card-content>
-          </a>
-          <!-- MAT-TABLE -->
-        </mat-card>
+      <mat-card class="mat-elevation-z8 requestcard" fxLayout="column" *ngFor="let request of requests">
+        <a routerLink="/request/{{request.request_id}}">
+          <mat-card-content>
+            Pyynnön lähettäjä: {{request.joiner_name}}
+          </mat-card-content>
+          <mat-card-content>
+            Matka: {{request.startingplace}} - {{request.destination}}
+          </mat-card-content>
+          <mat-card-content>
+            Viesti: {{request.additional_information}}
+          </mat-card-content>
+        </a>
+        <!-- MAT-TABLE -->
+      </mat-card>
     </div>
     <!-- PYYNNÖT PÄÄTTYY -->
     <!-- ILMOITUKSET -->
     <div fxLayout="column" fxFlex="49">
       <mat-card class="mat-elevation-z8" fxLayout="column">
         <mat-card-title class="mat-card-title-marginfix">Ilmoitukset:</mat-card-title>
+            <button mat-raised-button color="primary" class="deleteNotificationsButton"(click)="deleteNotifications()" *ngIf="unreadNotificationsCount > 0">Tyhjennä ilmoitukset</button>
       </mat-card>
-      <mat-card *ngIf="unreadNotificationsCount>0">
+      <mat-card *ngIf="unreadNotificationsCount > 0">
         <mat-nav-list class="notification_list">
           <mat-list-item class="notification_item" *ngFor="let notification of notifications">
             <a matLine routerLink="/rides/{{notification.ride_id}}">
@@ -49,7 +50,8 @@
             </a>
           </mat-list-item>
         </mat-nav-list>
-        <mat-card-footer></mat-card-footer>
+        <mat-card-footer>
+        </mat-card-footer>
       </mat-card>
     </div>
     <!-- ILMOITUKSET PÄÄTTYY -->

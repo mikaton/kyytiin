@@ -58,6 +58,7 @@ export class JoinRequestComponent implements OnInit {
     this.rideService.joinRide(ride_id, joiner_id)
     .then((res) => {
       this.promiseResolved = true;
+      this.requestService.deleteRequest(this.request.request_id);
       this.router.navigate(['/requests']);
     })
     .catch((err) => {
@@ -74,6 +75,7 @@ export class JoinRequestComponent implements OnInit {
     this.rideService.denyJoinRide(ride_id, joiner_id)
     .then((res) => {
       this.promiseResolved = true;
+      this.requestService.deleteRequest(this.request.request_id);
       this.router.navigate(['/requests']);
     })
     .catch((err) => {

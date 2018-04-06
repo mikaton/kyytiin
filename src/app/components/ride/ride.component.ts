@@ -8,8 +8,7 @@ import { AuthService } from 'angularx-social-login';
 import { JoinRequestService } from '../../services/joinrequest.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { ErrorDialog } from '../../dialogs/error-dialog';
-
+import { ErrorUiService } from '../../services/error-ui.service';
 @Component({
   selector: 'app-ride',
   templateUrl: './ride.component.html',

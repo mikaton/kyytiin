@@ -53,4 +53,11 @@ export class JoinRequestListComponent implements OnInit {
       console.error('getNotifications epäonnistui: ' + err.message)
     });
   }
+  deleteNotifications() {
+    this.notificationService.deleteUserNotifications(this.localAuthService.decodeToken())
+      .then((response) => {
+        console.log(response)
+        this.getNotifications()
+      })  
+  }
 }

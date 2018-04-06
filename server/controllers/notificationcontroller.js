@@ -6,9 +6,7 @@ const model = require('../models/index'),
 exports.getNotifications = (req, res, next) => {
     // Hakee käyttäjän kaikki ilmoitukset
     // Otetaan id talteen parametreista
-    console.log(req.params);
     const id = req.params.customer_id;
-    console.log(id);
     // Etsitään notifikaatiot
     Notification.findAll({
         where: { customer_id: id }
@@ -25,6 +23,15 @@ exports.updateNotification = (req, res, next) => {
     // Päivitetään notifikaatio
 }
 
-exports.deleteNotification = (req, res, next) => {
-    // Poistetaan ilmoitus
-}
+exports.deleteNotifications = (req, res, next) => {
+    const id = req.params.customer_id;
+    // Etsitään notifikaatiot
+    Notification.destroy({
+        where: { customer_id: id }
+    })
+        .then((notification) => res.status(200).json({
+            success: true,
+            message: 'Notifikaatiot tuhottu',   
+        }))
+        .catch((err) => console.error('notifikaatioiden epäonnistui: ' + err.stack));
+};
