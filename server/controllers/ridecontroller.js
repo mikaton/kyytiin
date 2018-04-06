@@ -32,7 +32,7 @@ smtpTransport.use('compile', hbs(handlebarsOptions));
 // --- </Sähköpostin asetukset> //
 
 exports.getSingleRide = (req, res, next) => {
-  Ride.sequelize.query('SELECT r.ride_id AS ride_id, r.customer_id AS customer_id, r.additional_information AS additional_information, r.startingplace AS startingplace, r.destination AS destination, r.time_of_departure AS time_of_departure, r.time_of_arrival AS time_of_arrival, r.free_seats AS free_seats, r.smoking AS smoking, r.pets AS pets, c.firstName AS firstName, c.lastName as lastName FROM Rides r INNER JOIN Customers c on r.customer_id = c.customer_id WHERE r.ride_id = :ride_id',
+  Ride.sequelize.query('SELECT r.deviate AS deviate, r.ride_id AS ride_id, r.customer_id AS customer_id, r.additional_information AS additional_information, r.startingplace AS startingplace, r.destination AS destination, r.time_of_departure AS time_of_departure, r.time_of_arrival AS time_of_arrival, r.free_seats AS free_seats, r.smoking AS smoking, r.pets AS pets, c.firstName AS firstName, c.lastName as lastName FROM Rides r INNER JOIN Customers c on r.customer_id = c.customer_id WHERE r.ride_id = :ride_id',
     {
       replacements: { ride_id: req.params.id },
       type: Ride.sequelize.QueryTypes.SELECT
@@ -100,6 +100,7 @@ exports.createRide = (req, res, next) => {
     free_seats: req.body.free_seats,
     smoking: req.body.smoking,
     pets: req.body.pets,
+    deviate: req.body.deviate,
     hidden: req.body.hidden,
     additional_information: req.body.additional_information
   };

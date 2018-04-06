@@ -27,7 +27,7 @@ export class RideComponent implements OnInit {
   startingplace: string;
   destination: string;
   requestSent: boolean;
-
+  deviate: boolean;
   constructor(
     private route: ActivatedRoute,
     private rideService: RideService,
@@ -69,7 +69,9 @@ export class RideComponent implements OnInit {
     });
   }
   
-
+  log() {
+    console.log(this.ride);
+  }
   goBack(): void {
     this.location.back();
   }
@@ -107,7 +109,7 @@ export class RideComponent implements OnInit {
       joiner_name: this.joiner_name,
       startingplace: this.startingplace,
       destination: this.destination,
-      additional_information: this.message.value
+      additional_information: this.message.value,
     };
     // Lähetetään palvelimelle
     this.requestService.createRequest(data)

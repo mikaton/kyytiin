@@ -22,11 +22,14 @@
       Vapaita paikkoja: {{ride?.free_seats}}
     </mat-card-content>
     <mat-card-content>
-      Saako kyydissä tupakoida?: {{ride?.smoking ? 'Kyllä' : 'Ei'}}
+      Saako kyydissä tupakoida: {{ride?.smoking ? 'Kyllä' : 'Ei'}}
     </mat-card-content>
     <mat-card-content>
-      Voiko kyytiin ottaa lemmikkejä?: {{ride?.pets ? 'Kyllä' : 'Ei'}}
+      Voiko kyytiin ottaa lemmikkejä: {{ride?.pets ? 'Kyllä' : 'Ei'}}
     </mat-card-content>
+    <mat-card-content>
+      Kuski valmis poikkeamaan lähikuntiin: {{ride?.deviate ? 'Kyllä' : 'Ei'}}
+      </mat-card-content>  
     <mat-card-content>
       Lisätiedot: {{ride?.additional_information}}
     </mat-card-content>

@@ -87,6 +87,7 @@ export class RidecreateComponent implements OnInit {
       free_seats: ['', Validators.compose([Validators.required, Validators.min(1), Validators.max(20)])],
       pets: [false,],
       smoking: [false,],
+      deviate: [false,],
       time_of_departure: [new Date(), Validators.required],
       additional_information: ['', Validators.maxLength(512)],
     });
@@ -101,7 +102,8 @@ export class RidecreateComponent implements OnInit {
         free_seats: ride.free_seats,
         smoking: ride.smoking,
         additional_information: ride.additional_information,
-        pets: ride.pets
+        pets: ride.pets,
+        deviate: ride.deviate
       }
     })
     return this.rideCreateConfirmDialogRef.afterClosed().toPromise()
