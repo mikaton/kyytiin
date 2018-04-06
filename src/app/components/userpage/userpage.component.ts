@@ -41,9 +41,8 @@ export class UserpageComponent implements OnInit {
     });
   }
   get phoneNumber() { return this.customerEditForm.get('phoneNumber')};
-  log() {
-    console.log(this.joinedRides);
-  }
+
+  
   patchUser(customerEditForm) {
     this.localAuthService.decodeToken();
     this.userService.patchUserData(customerEditForm)

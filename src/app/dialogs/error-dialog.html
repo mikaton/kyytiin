@@ -1,11 +1,11 @@
-<div>
-	<mat-card-title>
-		<i class="fas fa-bug"></i>{{data?.errorMessage}}
-		<i class="fas fa-bug"></i>
-	</mat-card-title>
-	<pre>Palvelin palautti virheen:</pre>
-	<pre><strong>{{data?.serverError}}</strong></pre>
-	<mat-dialog-actions>
-		<button mat-button type="button" (click)="dialogRef.close()">Ok</button>
-	</mat-dialog-actions>
-</div>
+	<mat-card class="mat-elevation-z">
+		<mat-card-title>
+			<i class="fas fa-bug"></i>{{data?.errorMessage}}
+			<i class="fas fa-bug"></i>
+		</mat-card-title>
+		<pre>Palvelin palautti virheen:</pre>
+		<pre><strong>{{data?.serverError}}</strong></pre>
+		<mat-dialog-actions>
+			<button mat-raised-button color="primary" (click)="dialogRef.close()">Ok</button>
+		</mat-dialog-actions>
+	</mat-card>

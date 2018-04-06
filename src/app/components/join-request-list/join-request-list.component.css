@@ -25,6 +25,10 @@
 .requestcard {
   margin-bottom: 8px;
 }
+.requestcard a:-webkit-any-link {
+  color: black;
+  text-decoration: none;
+}
 .requestcard a:link {
   padding: 16px;
 }
