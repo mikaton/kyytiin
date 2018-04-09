@@ -38,7 +38,7 @@
             <button id="btn-local" mat-raised-button color="primary" (click)="openRegisterForm()" ngClass.gt-sm="buttonsGtXs">
               Tai rekisteröidy sähköpostiosoitteella
             </button>
-            <a class="touLink" routerLink="/faq" routerLinkActive="router-link-active">Kirjautumalla Facebookilla tai Googlella hyväksyt käyttöehdot</a>
+            <a class="touLink" routerLink="/tos" routerLinkActive="router-link-active">Kirjautumalla Facebookilla tai Googlella hyväksyt käyttöehdot</a>
           </div>
           <!--SOSIALISTIBLOKKI PÄÄTTYY -->
         </div>
@@ -147,7 +147,7 @@
             <mat-error *ngIf="password.hasError('nomatch')">Salasanat eivät täsmää.</mat-error>
           </div>
           <mat-checkbox matInput name="checkbox" formControlName="checkbox">Rekisteröitymällä hyväksyt
-            <a routerLink="/faq" routerLinkActive="router-link-active">käyttöehdot</a>
+            <a routerLink="/tos" routerLinkActive="router-link-active">käyttöehdot</a>
           </mat-checkbox>
 
           <!--NAPPULAT -->

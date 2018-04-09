@@ -62,8 +62,8 @@ import { JoinRequestListComponent } from './components/join-request-list/join-re
 import { JoinRequestService } from './services/joinrequest.service';
 import { NotificationService } from './services/notification.service';
 import { RegistersuccessComponent } from './components/registersuccess/registersuccess.component';
-
 import { ErrorUiService } from './services/error-ui.service';
+import { TosComponent } from './components/tos/tos.component';
 registerLocaleData(localeFi);
 
 const config = new AuthServiceConfig([
@@ -104,7 +104,8 @@ export function tokenGetter() {
     ErrorDialog,
     JoinRequestComponent,
     JoinRequestListComponent,
-    RegistersuccessComponent
+    RegistersuccessComponent,
+    TosComponent
   ],
   imports: [
     BrowserModule,
