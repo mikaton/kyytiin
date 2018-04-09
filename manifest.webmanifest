@@ -1,20 +1,15 @@
 {
     "short_name": "Kyytiin",
-    "name": "Kyytiin",
-	"background_color": "#fff",
-
-    "icons": [{
+    "name": "Kyytiin - Uuden ajan kimppakyytipalvelu",
+    "background_color": "#fff",
+    "icons": [
+        {
             "src": "favicon.ico",
-            "sizes": "96x96",
+            "sizes": "32x32",
             "type": "image/png"
         },
         {
-            "src": "favicon.ico",
-            "sizes": "144x144",
-            "type": "image/png"
-        },
-        {
-            "src": "favicon.ico",
+            "src": "/android-chrome-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
         }
