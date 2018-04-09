@@ -2,6 +2,7 @@ const model = require('../models/index'),
   config = require('../config/main'),
   Request = model.Request;
   CRr = model.CustomersRides_ride
+
 exports.createJoinRequest = (req, res, next) => {
   // Otetaan data talteen
   const data = {
@@ -14,7 +15,6 @@ exports.createJoinRequest = (req, res, next) => {
     additional_information: req.body.additional_information
   };
 
-
   Request.find({
     where: { ride_id: data.ride_id, joiner_id: data.joiner_id }
   })
@@ -22,7 +22,7 @@ exports.createJoinRequest = (req, res, next) => {
       if (response === null) {
         //Etsitään CustomersRides_ridestä uudelleen
         CRr.find({
-          where: { ride_id: data.ride_id, joiner_id: data.joiner_id }
+          where: { ride_id: data.ride_id, customer_id: data.joiner_id }
         })
           .then((response) => {
             if (response === null) {
