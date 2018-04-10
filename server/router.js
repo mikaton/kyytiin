@@ -22,7 +22,7 @@ module.exports = (app) => {
   router.post('/auth/social', AuthController.socialLogin);
   router.post('/auth/forgot-password', AuthController.forgotPassword);
   router.post('/auth/change-password', AuthController.changePassword);
-  router.post('/auth/verify-account', AuthController.verifyEmail);
+  router.get('/auth/verify-account/:token', AuthController.verifyEmail);
   
 
   // Käyttäjä CRUD reitit

@@ -34,7 +34,6 @@ const routes: Routes = [
   { path: 'change-password/:token', component: ChangePasswordComponent},
   { path: 'feedback', component: FeedbackComponent},
   { path: 'register-success', component: RegistersuccessComponent},
-  { path: 'verify-account/:token', redirectTo: '/frontpage'},
   { path: 'tos', component: TosComponent}
 ];
 

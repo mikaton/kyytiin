@@ -87,7 +87,7 @@ exports.localRegister = (req, res, next) => {
 							template: 'verify-account',
 							subject: 'Vahvista Kyyti.in -tunnuksesi',
 							context: {
-								url: 'https://kyyti.in/verify-account/' + newUser.confirm_token,
+								url: 'https://kyyti.in/api/auth/verify-account/' + newUser.confirm_token,
 								name: newUser.firstName
 							}
 						};
@@ -116,12 +116,12 @@ exports.localRegister = (req, res, next) => {
 exports.verifyEmail = (req, res, next) => {
 	// Etsitään käyttäjä jonka confirm_token on voimassa
 	User.findOne({
-		where: { confirm_token: req.body.token, confirm_token_expiry: { $gt: Date.now() } }
+		where: { confirm_token: req.params.token, confirm_token_expiry: { $gt: Date.now() } }
 	})
 	.then((user) => {
 		const data = { confirmed: true };
-		return user.updateAttributes(data).then((confirmedUser) => {
-			res.redirect('localhost:4200');
+		return user.updateAttributes(data).then(() => {
+			res.redirect('/');
 		}).catch((err) => console.error('Käyttätunnuksen vahvistaminen epäonnistui: ' + err.stack));
 	}).catch((err) => console.error('Käyttäjätunnuksen hakeminen vahvistamista varten epäonnistui: ' + err.stack));
 };
