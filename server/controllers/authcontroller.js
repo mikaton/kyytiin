@@ -9,12 +9,12 @@ const model = require('../models/index'),
 
 	// --- <Sähköpostin asetukset> ---
 	hbs = require('nodemailer-express-handlebars'),
-	email = process.env.MAILER_EMAIL_ID || config.mailer.user,
-	password = process.env.MAILER_PASSWORD || config.mailer.password,
+	email = config.mailer.user,
+	password = config.mailer.password,
 	nodemailer = require('nodemailer'),
 
 	smtpTransport = nodemailer.createTransport({
-		service: process.env.MAILER_SERVICE_PROVIDER || 'Gmail',
+		service: process.env.MAILER_SERVICE_PROVIDER,
 		auth: {
 			user: email,
 			pass: password

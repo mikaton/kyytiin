@@ -1,6 +1,7 @@
 #!/usr/bin/env nodejs
 
 const express = require('express'),
+	dotenv = require('dotenv').config(),
 	config = require('./server/config/main'),
 	bodyParser = require('body-parser'),
 	bcrypt = require('bcrypt'),
