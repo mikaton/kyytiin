@@ -11,7 +11,11 @@ exports.getUser = (req, res, next) => {
     });
     else res.status(200).json({
       message: 'User found',
-      user: user
+      user: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email
+      }
     });
   })
   .catch((err) => console.log('getUser failed: ' + err.message));
@@ -28,7 +32,11 @@ exports.updateUser = (req, res, next) => {
   .then(updatedUser => {
     res.status(200).json({
       message: 'User updated',
-      user: updatedUser
+      user: {
+        firstName: updatedUser.firstName,
+        lastName: updatedUser.lastName,
+        email: updatedUser.email
+      }
     });
   })
   .catch((err) => console.log('updatedUser failed: ' + err));
