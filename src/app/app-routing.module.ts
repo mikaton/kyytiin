@@ -36,7 +36,7 @@ const routes: Routes = [
   { path: 'feedback', component: FeedbackComponent},
   { path: 'register-success', component: RegistersuccessComponent},
   { path: 'tos', component: TosComponent},
-  { path: 'verify-email/:token', component: VerifyEmailComponent}
+  { path: 'verify-account/:token', component: VerifyEmailComponent}
 ];
 
 @NgModule({

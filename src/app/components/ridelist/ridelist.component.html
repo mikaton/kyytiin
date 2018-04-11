@@ -33,7 +33,7 @@
       <div *ngFor="let ride of rides | rideSearch: startingplace:destination">
         <div *ngIf="ride.free_seats > 0">
           <a routerLink="/rides/{{ride.ride_id}}">
-            <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
+            <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space  around center">
               <div fxLayout="column">
                 <mat-card-title fxFlex="50">
                   Lähtöpaikka: {{ride.startingplace}}

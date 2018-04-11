@@ -87,7 +87,7 @@ exports.localRegister = (req, res, next) => {
 							template: 'verify-account',
 							subject: 'Vahvista Kyyti.in -tunnuksesi',
 							context: {
-								url: 'https://kyyti.in/api/auth/verify-account/' + newUser.confirm_token,
+								url: 'https://kyyti.in/verify-account/' + newUser.confirm_token,
 								name: newUser.firstName
 							}
 						};
@@ -115,6 +115,7 @@ exports.localRegister = (req, res, next) => {
 
 exports.verifyEmail = (req, res, next) => {
 	// Etsitään käyttäjä jonka confirm_token on voimassa
+	console.log('täällä!')
 	console.log(req.params);
 	User.findOne({
 		where: { confirm_token: req.params.token, confirm_token_expiry: { $gt: Date.now() } }

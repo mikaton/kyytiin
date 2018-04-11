@@ -13,14 +13,11 @@ export class FilterPipe implements PipeTransform {
         if(items && items.length) {
             return items.filter(item => {
                 if(startingplace && item.startingplace.toLowerCase().indexOf(startingplace.toLowerCase()) === -1) {
-                    console.log(item.length)
                     return false;
                 }
                 if(destination && item.destination.toLowerCase().indexOf(destination.toLowerCase()) === -1) {
-                    console.log(item.length)
                     return false;
                 }
-                console.log(item.length)
                 return true;
             })
         } else {

@@ -23,13 +23,12 @@ export class VerifyEmailComponent implements OnInit {
     await this.verifyEmail()
   }
   verifyEmail() {
-    const token = this.route.snapshot.paramMap.get('customer_id');
+    const token = this.route.snapshot.paramMap.get('token');
+    console.log(token)
     this.localAuthService.verifyEmail(token)
-      .then((res) => {
-        this.router.navigate(['/rides'])
-      })
       .catch((err) => {
         this.errorUiService.popErrorDialog(err)
       })
+    this.router.navigate(['/frontpage'])
   }
 }
