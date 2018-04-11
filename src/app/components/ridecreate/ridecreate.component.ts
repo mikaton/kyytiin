@@ -118,11 +118,13 @@ export class RidecreateComponent implements OnInit {
   }
 
   rideCreate(rideCreateForm, startingplace, destination) {
-    const date = new Date();
+    const date = new Date(rideCreateForm.time_of_departure);
     rideCreateForm.time_of_departure = date.toISOString();
+    console.log(rideCreateForm.time_of_departure);
     rideCreateForm.customer_id = this.updateId();
     rideCreateForm.startingplace = startingplace;
     rideCreateForm.destination = destination;
+    console.log(rideCreateForm);
     this.openConfirmDialog(rideCreateForm)
     .then((confirmed) => {
       if (this.test_confirmed) {

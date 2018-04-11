@@ -47,8 +47,10 @@ exports.getSingleRide = (req, res, next) => {
 };
 
 exports.getAllRides = (req, res, next) => {
+  console.log(Date.now());
   Ride.findAll({
-    where: {},
+
+    where: { time_of_departure: { $gte: Date.now() } },
     order: [
       ['time_of_departure', 'ASC']
     ]
@@ -88,6 +90,7 @@ exports.getUserJoinedRides = (req, res, next) => {
 };
 
 exports.createRide = (req, res, next) => {
+  console.log('create ride')
   const data = {
     customer_id: req.body.customer_id,
     startingplace: req.body.startingplace,
@@ -169,31 +172,31 @@ exports.joinRide = (req, res, next) => {
   Ride.findOne({
     where: { ride_id: req.params.ride_id }
   })
-  .then((ride) => {
-    const data = { free_seats: ride.free_seats - 1 };
-    ride.updateAttributes(data).then(() => {
-      // Luodaan tietue CustomersRides_ride tauluun
-      const crData = {
-        customer_id: req.body.joiner_id,
-        ride_id: req.params.ride_id,
-      }
-      CustomersRides.create(crData).then(() => {
-        // Luodaan uusi ilmoitus
-
-        const notificationData = {
+    .then((ride) => {
+      const data = { free_seats: ride.free_seats - 1 };
+      ride.updateAttributes(data).then(() => {
+        // Luodaan tietue CustomersRides_ride tauluun
+        const crData = {
           customer_id: req.body.joiner_id,
           ride_id: req.params.ride_id,
-          canJoin: true,
-          notification_message: "Pyyntösi liittyä matkalle hyväksyttiin!"
-        };
-        Notification.create(notificationData).then((notification) => {
-          res.status(200).json({
-            success: true,
-            message: 'Matkalle liittyminen onnistui',
-            notification: notification.dataValues
-          });
-        }).catch((err) => console.error('Notifikaation luonti epäonnistui: ' + err.stack));
-      }).catch((err) => console.error('Customers_Rides_ride luonti epäonnistui: ' + err.stack));
-    }).catch((err) => console.error('Matkan tietojen päivitys epäonnistui ' + err.stack));
-  }).catch((err) => console.error('Matkan hakeminen epäonnistui: ' + err.stack));
+        }
+        CustomersRides.create(crData).then(() => {
+          // Luodaan uusi ilmoitus
+
+          const notificationData = {
+            customer_id: req.body.joiner_id,
+            ride_id: req.params.ride_id,
+            canJoin: true,
+            notification_message: "Pyyntösi liittyä matkalle hyväksyttiin!"
+          };
+          Notification.create(notificationData).then((notification) => {
+            res.status(200).json({
+              success: true,
+              message: 'Matkalle liittyminen onnistui',
+              notification: notification.dataValues
+            });
+          }).catch((err) => console.error('Notifikaation luonti epäonnistui: ' + err.stack));
+        }).catch((err) => console.error('Customers_Rides_ride luonti epäonnistui: ' + err.stack));
+      }).catch((err) => console.error('Matkan tietojen päivitys epäonnistui ' + err.stack));
+    }).catch((err) => console.error('Matkan hakeminen epäonnistui: ' + err.stack));
 }
