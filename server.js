@@ -14,7 +14,8 @@ const express = require('express'),
 	compression = require('compression'),
 	helmet = require('helmet'),
 	path = require('path');
-
+	
+process.env.NODE_ENV = "developement"
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());

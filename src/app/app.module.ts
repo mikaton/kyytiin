@@ -139,7 +139,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:3000', 'localhost:4200']
+        whitelistedDomains: ['localhost:3000', 'localhost:4200', 'https://kyyti.in', 'https://www.kyyti.in', 'kyyti.in', 'www.kyyti.in']
       }
     }),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
