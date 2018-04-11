@@ -29,6 +29,5 @@ export class VerifyEmailComponent implements OnInit {
       .catch((err) => {
         this.errorUiService.popErrorDialog(err)
       })
-    this.router.navigate(['/frontpage'])
   }
 }
