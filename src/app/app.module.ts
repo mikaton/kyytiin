@@ -64,6 +64,7 @@ import { NotificationService } from './services/notification.service';
 import { RegistersuccessComponent } from './components/registersuccess/registersuccess.component';
 import { ErrorUiService } from './services/error-ui.service';
 import { TosComponent } from './components/tos/tos.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 registerLocaleData(localeFi);
 
 const config = new AuthServiceConfig([
@@ -105,7 +106,8 @@ export function tokenGetter() {
     JoinRequestComponent,
     JoinRequestListComponent,
     RegistersuccessComponent,
-    TosComponent
+    TosComponent,
+    VerifyEmailComponent
   ],
   imports: [
     BrowserModule,

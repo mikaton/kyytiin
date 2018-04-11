@@ -15,7 +15,21 @@
         </mat-card-content>
       </mat-card>
     </div>
-    <div fxFlex="65" fxLayout="column">
+    <div fxFlex="65" fxLayout="column" *ngIf="noRides">
+      <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
+        <div fxLayout="column">
+          <mat-card-title fxFlex="50">
+          </mat-card-title>
+          <mat-card-content>Kyytejä ei löytynyt</mat-card-content>
+        </div>
+      </mat-card>
+    </div>
+    <div fxFlex="65" fxLayout="column" *ngIf="!noRides">
+      <div *ngIf="(rides | rideSearch: startingplace:destination).length === 0">
+        <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
+            <mat-card-content>Kyytejä ei löytynyt hakuehtojesi perusteella</mat-card-content>
+        </mat-card>
+      </div>
       <div *ngFor="let ride of rides | rideSearch: startingplace:destination">
         <div *ngIf="ride.free_seats > 0">
           <a routerLink="/rides/{{ride.ride_id}}">

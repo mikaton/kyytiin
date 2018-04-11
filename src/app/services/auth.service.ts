@@ -11,6 +11,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class LocalAuthService {
+    apiUrl = `${API_URL}`;
     apiUrlSocial = `${API_URL}/auth/social`;
     apiUrlLocalLogin = `${API_URL}/auth/local/login`;
     apiUrlLocalRegister = `${API_URL}/auth/local/register`;
@@ -83,7 +84,17 @@ export class LocalAuthService {
         localStorage.removeItem('token');
         window.location.reload();
     }
-    
+    verifyEmail(emailUUID) {
+        let response = new Promise((resolve, reject) => {
+            this.http.get(`${this.apiUrl}/auth/verify-account/${emailUUID}`)
+                .toPromise()
+                .then(
+                    res => resolve(res),
+                    err => reject(err)
+                );
+        });
+        return response;
+    }
     //Vaihtaa checkLocalStorage (vitun paska muuttujan nimi) arvon app.componentissa, 
     //implikoi käyttäjälle (ja meille) kirjautumisen tilan
     private checkLocalStorage = new Subject<any>();
@@ -91,5 +102,5 @@ export class LocalAuthService {
 
     checkLocalStorageToken() {
         this.checkLocalStorage.next();
-      }
+    }
 }

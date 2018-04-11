@@ -14,6 +14,7 @@ export class RidelistComponent implements OnInit {
     private errorUiService: ErrorUiService
   ) { }
   rides = [];
+  noRides: boolean;
   startingplace: string;
   destination: string;
 
@@ -25,6 +26,11 @@ export class RidelistComponent implements OnInit {
     this.rideService.getRides()
       .then((rides => {
         this.rides = rides;
+        if (rides.length === 0) {
+          this.noRides = true;
+        } else {
+          this.noRides = false;
+        }
       }))
       .catch((err) => {
         this.errorUiService.popErrorDialog(err);

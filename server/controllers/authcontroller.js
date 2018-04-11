@@ -115,13 +115,13 @@ exports.localRegister = (req, res, next) => {
 
 exports.verifyEmail = (req, res, next) => {
 	// Etsitään käyttäjä jonka confirm_token on voimassa
+	console.log(req.params);
 	User.findOne({
 		where: { confirm_token: req.params.token, confirm_token_expiry: { $gt: Date.now() } }
 	})
 	.then((user) => {
 		const data = { confirmed: true };
 		return user.updateAttributes(data).then(() => {
-			res.redirect('/');
 		}).catch((err) => console.error('Käyttätunnuksen vahvistaminen epäonnistui: ' + err.stack));
 	}).catch((err) => console.error('Käyttäjätunnuksen hakeminen vahvistamista varten epäonnistui: ' + err.stack));
 };
