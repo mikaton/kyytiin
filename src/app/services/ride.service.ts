@@ -30,7 +30,22 @@ export class RideService {
     })
     return response;
   }
+  getUserMadeRide(ride_id, customer_id): Promise<any> {
+    let response = new Promise ((resolve, reject) => {
+      this.http.get(`${this.apiUrl}/${ride_id}/${customer_id}`)
+      .toPromise()
+      .then(
+        ride => {
+          resolve(ride);
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
+    return response;
 
+  }
   getRideToUserPage(customer_id): Promise<any> {
     let response = new Promise((resolve, reject) => {
       this.http.get(`${this.apiUrlUser}/${customer_id}`)

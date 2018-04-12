@@ -32,6 +32,9 @@ export class UserService {
     })
     return response;
   }
+  getMultipleUsers(...data) {
+    console.log(data);
+  }
   patchUserData(data) {
     let response = new Promise((resolve, reject) => {
       this.http.patch(`${API_URL}/user/${this.localAuthService.decodeToken()}`, data)

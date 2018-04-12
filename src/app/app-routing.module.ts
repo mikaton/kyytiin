@@ -19,6 +19,7 @@ import { JoinRequestComponent } from './components/join-request/join-request.com
 import { RegistersuccessComponent } from './components/registersuccess/registersuccess.component';
 import { TosComponent } from './components/tos/tos.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { UserMadeRideComponent } from './components/user-made-ride/user-made-ride.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/frontpage', pathMatch: 'full' },
@@ -36,7 +37,8 @@ const routes: Routes = [
   { path: 'feedback', component: FeedbackComponent},
   { path: 'register-success', component: RegistersuccessComponent},
   { path: 'tos', component: TosComponent},
-  { path: 'verify-account/:token', component: VerifyEmailComponent}
+  { path: 'verify-account/:token', component: VerifyEmailComponent},
+  { path: 'user-rides/:ride_id', component: UserMadeRideComponent}
 ];
 
 @NgModule({

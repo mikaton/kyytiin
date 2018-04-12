@@ -65,6 +65,8 @@ import { RegistersuccessComponent } from './components/registersuccess/registers
 import { ErrorUiService } from './services/error-ui.service';
 import { TosComponent } from './components/tos/tos.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { ChangelogComponent } from './components/changelog/changelog.component';
+import { UserMadeRideComponent } from './components/user-made-ride/user-made-ride.component';
 registerLocaleData(localeFi);
 
 const config = new AuthServiceConfig([
@@ -107,7 +109,9 @@ export function tokenGetter() {
     JoinRequestListComponent,
     RegistersuccessComponent,
     TosComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    ChangelogComponent,
+    UserMadeRideComponent
   ],
   imports: [
     BrowserModule,

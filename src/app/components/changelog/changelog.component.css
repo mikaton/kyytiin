@@ -1,0 +1,7 @@
+.header-image {
+	background-image: url('../../../assets/images/android-chrome-192x192.png');
+	background-size: cover;
+  }
+  .mat-card-fp {
+	margin-bottom: 8px;
+  }

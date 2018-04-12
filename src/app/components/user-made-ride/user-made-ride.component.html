@@ -1,0 +1,36 @@
+<div class="wrapper">
+    <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
+      <mat-card-title>Tämä on sinun luoma kyyti.</mat-card-title>
+    </mat-card>
+    <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
+      <div fxLayout="column">
+        <mat-card-title fxFlex="50">
+          Lähtöpaikka: {{ride?.startingplace}}
+        </mat-card-title>
+        <mat-card-title fxFlex="50">
+          Määränpää: {{ride?.destination}}
+        </mat-card-title>
+      </div>
+      <mat-card-content>
+        Lähtöpäivä: {{ride?.time_of_departure | date:'mediumDate'}} aika: {{ride?.time_of_departure | date:'shortTime'}}
+      </mat-card-content>
+      <mat-card-content>
+        Vapaita paikkoja: {{ride?.free_seats}}
+      </mat-card-content>
+      <mat-card-content>
+        Saako kyydissä tupakoida: {{ride?.smoking ? 'Kyllä' : 'Ei'}}
+      </mat-card-content>
+      <mat-card-content>
+        Voiko kyytiin ottaa lemmikkejä: {{ride?.pets ? 'Kyllä' : 'Ei'}}
+      </mat-card-content>
+      <mat-card-content>
+        Kuski valmis poikkeamaan lähikuntiin: {{ride?.deviate ? 'Kyllä' : 'Ei'}}
+        </mat-card-content>  
+      <mat-card-content>
+        Lisätiedot: {{ride?.additional_information}}
+      </mat-card-content>
+      <button mat-raised-button (click)="goBack()">Takaisin</button>
+    </mat-card>
+  </div>
+
+  <button (click)="test()"></button>

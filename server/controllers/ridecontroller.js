@@ -7,6 +7,7 @@ const model = require('../models/index'),
   User = model.Customer,
   Request = model.Request,
   Notification = model.Notification;
+  Op = model.Sequelize.Op
 
 // --- <Sähköpostin asetukset> ---
 hbs = require('nodemailer-express-handlebars'),
@@ -88,6 +89,51 @@ exports.getUserJoinedRides = (req, res, next) => {
     })
     .catch((err) => console.log('getUserJoinedRides failed: ' + err.message));
 };
+exports.getUserMadeRides = (req, res, next) => {
+  console.log(req.params)
+  console.log('TÄÄLLÄ OLLAAAAAAAAAAAAAAN')
+  //etsitään Rides taulusta ridejoinereita, innerjoinin avulla. 
+  Ride.sequelize.query('SELECT CRr.customer_id AS joiner_id FROM Rides r INNER JOIN CustomersRides_ride CRr on r.ride_id = CRr.ride_id WHERE r.ride_id = :ride_id AND r.customer_id = :customer_id;',
+    {
+      replacements: { ride_id: req.params.ride_id, customer_id: req.params.customer_id },
+      type: Ride.sequelize.QueryTypes.SELECT
+    })
+    .then(rides => {
+      //jos kutsu palauttaa tyhjän taulukon (ei dataa customersride_ridessä) haetaan japalautetaan pelkästään kyydin tiedot
+      if (rides) {
+        console.log(rides);
+        Ride.find({
+          where: { ride_id: req.params.ride_id }
+        })
+          //haetaan käyttäjät
+          .then(ride => {
+            var i;
+            var joiners = [];
+            for (i = 0; i < rides.length; i++) {
+              joiners.push(rides[i].joiner_id);
+            }
+            console.log(joinersString)
+            User.findAll({
+              where: {
+                Customer_id: {
+                  [Op.in]: [joiners]
+                }
+              }
+            })
+              .then(joiners => {
+                res.status(200).json({
+                  message: 'Ride found',
+                  ride: ride,
+                  joiners: joiners
+                })
+              })
+          })
+      }
+    }
+    )
+    .catch((err) => console.log('getUserJoinedRides failed: ' + err.message));
+};
+
 
 exports.createRide = (req, res, next) => {
   console.log('create ride')

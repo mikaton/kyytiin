@@ -1,0 +1,9 @@
+.wrapper {
+	max-width: 900px;
+	margin: 50px auto;
+}
+
+.check_icon {
+	font-size: 90%;
+	font-family: 'Roboto', sans-serif;
+}

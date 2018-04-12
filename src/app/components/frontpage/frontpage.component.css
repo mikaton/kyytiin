@@ -1,3 +1,15 @@
-.spacer {
-  flex: 1 1 auto;
+.wrapper {
+  max-width: 900px;
+  margin: 20px auto;
+}
+.header-image {
+  background-image: url('../../../assets/images/android-chrome-192x192.png');
+  background-size: cover;
+}
+.mat-card-fp {
+  margin-bottom: 8px;
+}
+.fp-button {
+  background-color: #689F38;
+  color: white;
 }

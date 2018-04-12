@@ -35,7 +35,8 @@ module.exports = (app) => {
   router.get('/ride/:id', jwtAuth, RideController.getSingleRide);
   router.get('/ride', RideController.getAllRides);
   router.get('/ride/user/:id', jwtAuth, RideController.getUserRides);
-  router.get('/ride/user/joined/:id', RideController.getUserJoinedRides);
+  router.get('/ride/user/joined/:id', jwtAuth, RideController.getUserJoinedRides);
+  router.get('/ride/:ride_id/:customer_id', RideController.getUserMadeRides); //palauttaa myös kyytiin liittyneet käyttäjät ja niiden tiedot
   router.patch('/ride/:id', jwtAuth, RideController.updateRide);
   router.delete('/ride/:id', jwtAuth, RideController.deleteRide);
 

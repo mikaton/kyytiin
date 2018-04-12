@@ -1,7 +1,28 @@
-<div id="container">
-  <div id="authBox">
-    <app-auth-dialog></app-auth-dialog>
-  </div>
+<div class="wrapper">
+  <mat-card class="mat-card-fp">
+    <mat-card-header>
+      <div mat-card-avatar class="header-image"></div>
+      <mat-card-title>Tervetuloa Kyyti.in palveluun!</mat-card-title>
+      <mat-card-subtitle>Kimppakyytejä, joihin voit luottaa.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      Kyyti.in on uuden ajan kimppakyytipalvelu, jossa tarve kohtaa tarpeen. Täällä autoilija voi jakaa autostaan paikkoja kanssaihmisille
+      jotka ovat kulkemassa samaa matkaa. Matkustaminen on joustavampaa kuin julkisilla kulkuneuvoilla. Pääset helpommin
+      pienille paikkakunnille sekä tutustut matkalla uusiin ihmisiin?
+    </mat-card-content>
+    <mat-card-actions>
+      <a routerLink="/register" routerLinkActive="router-link-active">
+        <button class="fp-button" mat-button>
+          Rekisteröidy palveluun tästä
+        </button>
+      </a>
+      <a routerLink="/faq" routerLinkActive="router-link-active">
+        <button class="fp-button" mat-button>
+          Lisätietoa "info" -osiosta
+        </button>
+      </a>
+    </mat-card-actions>
+  </mat-card>
+  <app-changelog></app-changelog>
+  <app-auth-dialog></app-auth-dialog>
 </div>
-
-

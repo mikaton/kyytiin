@@ -14,7 +14,8 @@ exports.getUser = (req, res, next) => {
       user: {
         firstName: user.firstName,
         lastName: user.lastName,
-        email: user.email
+        email: user.email,
+        customer_id: user.customer_id
       }
     });
   })
