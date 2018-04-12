@@ -22,7 +22,6 @@ exports.getUser = (req, res, next) => {
 };
 
 exports.updateUser = (req, res, next) => {
-  console.log(req.body);
   const updateData = req.body;
   User.find({
     where: {customer_id: req.params.id}

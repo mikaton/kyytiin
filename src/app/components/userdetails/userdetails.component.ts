@@ -70,7 +70,6 @@ export class UserdetailsComponent implements OnInit {
     this.reviewService.allowReview(this.customer_id, this.localAuthService.decodeToken())
       .then(response => this.canReview = true)
       .catch((err) => {
-        this.errorUiService.popErrorDialog(err);
         console.error('allowReview epäonnistui: ' + err.message)
       });
   }

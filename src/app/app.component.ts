@@ -50,12 +50,9 @@ export class AppComponent implements OnInit {
     await this.checkLoggedInStatus();
   }
   checkLoggedInStatus() {
-    console.log('appmodulelogincheck')
     if(this.localAuthService.decodeToken()) {
-      console.log('appmodulelogincheck_true')
       this.localStorageToken = true;
     } else {
-      console.log('appmodulelogincheck_false')
       this.localStorageToken = false;
     }
   }

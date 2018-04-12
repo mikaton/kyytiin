@@ -32,7 +32,6 @@ export class ChangePasswordComponent implements OnInit {
   changePassword(newPassword: string, token: string) {
     // Lähetetään uusi salasana ja token backendiin
     token = this.route.snapshot.params.token;
-    console.log(token);
     this.forgotPasswordService.changePassword(newPassword, token)
     .then(res => this.passwordChanged = true)
     .catch((err) => {

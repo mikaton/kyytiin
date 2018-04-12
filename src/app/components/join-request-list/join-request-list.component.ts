@@ -45,7 +45,6 @@ export class JoinRequestListComponent implements OnInit {
     this.notificationService.getUserNotifications(this.localAuthService.decodeToken())
     .then((notifications) => {
       this.notifications = notifications.data;
-      console.log(notifications.data);
       if(this.notifications.length > 0) this.unreadNotificationsCount = this.notifications.length;
     })
     .catch((err) => {
@@ -56,7 +55,6 @@ export class JoinRequestListComponent implements OnInit {
   deleteNotifications() {
     this.notificationService.deleteUserNotifications(this.localAuthService.decodeToken())
       .then((response) => {
-        console.log(response)
         this.getNotifications()
       })  
   }
