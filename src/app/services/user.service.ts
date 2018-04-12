@@ -32,8 +32,20 @@ export class UserService {
     })
     return response;
   }
-  getMultipleUsers(...data) {
-    console.log(data);
+  getMultipleUsers(...data): Promise <any> {
+    let response = new Promise((resolve, reject) => {
+      this.http.get(`${API_URL}/user/${data}`)
+        .toPromise()
+        .then(
+          data => {
+            resolve(data);
+          },
+          err => {
+            reject(err);
+          }
+        )
+    })
+    return response;
   }
   patchUserData(data) {
     let response = new Promise((resolve, reject) => {

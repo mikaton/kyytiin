@@ -63,8 +63,8 @@ export class UserMadeRideComponent implements OnInit {
         console.log(data);
         this.ride = data.ride
         this.joiner = data.joiner
-        this.userService.getMultipleUsers(...this.joiner)
-
+        this.joiner.toString();
+        this.userService.getMultipleUsers(this.joiner)
       })
       .catch((err) => {
         this.errorUiService.popErrorDialog(err);
