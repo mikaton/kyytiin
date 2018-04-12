@@ -112,8 +112,8 @@ exports.getUserMadeRides = (req, res, next) => {
             for (i = 0; i < rides.length; i++) {
               joiners.push(rides[i].joiner_id);
             }
-            console.log(joinersString)
             User.findAll({
+              attributes: ['firstName', 'lastName', 'email', 'phoneNumber'],
               where: {
                 Customer_id: {
                   [Op.in]: [joiners]
