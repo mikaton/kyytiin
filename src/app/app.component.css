@@ -13,15 +13,24 @@
 #logo_toolbar {
     max-height: 95%;
 }
+
+#logo_toolbar:hover {
+    filter: drop-shadow(1px 1px 1px #333);
+}
+#logo_toolbar:active {
+    filter: drop-shadow(2px 2px 2px #111);
+}
 .app_wrapper {
     display: flex;
     width: 100%;
     margin: auto;
 }
+
 .wrapper {
     margin: 0px;
     padding: 0px;
 }
+
 /* sidenav isoile leiskoille */
 
 .sidenav_footer {
@@ -65,7 +74,6 @@
     z-index: 11;
 }
 
-
 /*sidenav mobiileille*/
 
 .sidenav_mobile {
@@ -106,8 +114,9 @@
     height: 0px;
     float: left;
 }
+
 #logo_mobile_img {
     height: 50px;
-    position: relative; 
+    position: relative;
     top: 57px;
 }

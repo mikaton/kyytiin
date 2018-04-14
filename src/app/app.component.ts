@@ -49,6 +49,7 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     await this.checkLoggedInStatus();
   }
+
   checkLoggedInStatus() {
     if(this.localAuthService.decodeToken()) {
       this.localStorageToken = true;
@@ -74,7 +75,9 @@ export class AppComponent implements OnInit {
       console.error('getUser() failed, ' + err.message);
     })
   }
-
+  toFrontPage() {
+    this.router.navigate(['/frontpage'])
+  }
   signOut() {
     this.authService.signOut();
     this.localAuthService.signOut();
