@@ -31,7 +31,7 @@
                     <mat-list-item>PROFIILI</mat-list-item>
                 </a>
                 <mat-list-item *ngIf="localStorageToken === false">
-                    <a routerLink="/frontpage">
+                    <a routerLink="/register">
                         Kirjaudu Sisään
                     </a>
                 </mat-list-item>
@@ -99,7 +99,7 @@
                 </div>
                 <mat-list-item *ngIf="localStorageToken === false" (click)="sidenav.close()">
                     <button mat-raised-button color="primary">
-                        <a routerLink="/frontpage">
+                        <a routerLink="/register">
                             Kirjaudu Sisään
                         </a>
                     </button>
