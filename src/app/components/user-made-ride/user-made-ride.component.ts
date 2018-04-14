@@ -3,13 +3,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { RideService } from '../../services/ride.service';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { LocalAuthService } from '../../services/auth.service';
 import { AuthService } from 'angularx-social-login';
 import { JoinRequestService } from '../../services/joinrequest.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { ErrorUiService } from '../../services/error-ui.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-user-made-ride',
   templateUrl: './user-made-ride.component.html',
@@ -18,15 +20,15 @@ import { ErrorUiService } from '../../services/error-ui.service';
 export class UserMadeRideComponent implements OnInit {
 
   ride: any;
-  dialogRef: any;
-  errorDialogRef: any;
-  messageForm: FormGroup;
   joiner_name: string;
   startingplace: string;
   destination: string;
   requestSent: boolean;
   deviate: boolean;
-  joiner: any[];
+  promiseResolved: boolean;
+  joiners: any[];
+  dialogRef: any;
+  confirmButtonsPressed: boolean;
   constructor(
     private route: ActivatedRoute,
     private rideService: RideService,
@@ -36,40 +38,49 @@ export class UserMadeRideComponent implements OnInit {
     private localAuthService: LocalAuthService,
     private requestService: JoinRequestService,
     private userService: UserService,
-    private errorUiService: ErrorUiService
+    private errorUiService: ErrorUiService,
+    private router: Router
   ) {
-    this.messageForm = this.fb.group({
-      message: ['', Validators.maxLength(512)]
-    });
   }
 
-  get message() { return this.messageForm.get('message') };
   // Ladataan matkat asynkronisesti
   // Jos useampia metodeja ngOnInitissä, syntaksi seuraava:
   // await Promise.all([funktio1(), funktio2()...])
   async ngOnInit() {
     await this.getRide()
   }
-  test() {
-    var joiner = ["x", "y", "z", "a"]
-    this.userService.getMultipleUsers(...joiner)
+  log() {
+    console.log(this.joiners);
   }
   getRide() {
     const ride_id = this.route.snapshot.paramMap.get('ride_id')
-    console.log(ride_id)
-    console.log(this.localAuthService.decodeToken())
     this.rideService.getUserMadeRide(ride_id, this.localAuthService.decodeToken())
       .then(data => {
-        console.log(data);
         this.ride = data.ride
-        this.joiner = data.joiner
-        this.joiner.toString();
-        this.userService.getMultipleUsers(this.joiner)
+        this.joiners = data.joiners
+        console.log(this.ride);
+        console.log(this.joiners);
       })
       .catch((err) => {
         this.errorUiService.popErrorDialog(err);
         console.error('getRide epäonnistui: ' + err.message)
       });
+  }
+  deleteRide() {
+    this.confirmButtonsPressed = true;
+    this.rideService.deleteRide(this.route.snapshot.paramMap.get('ride_id'))
+    .then((res) => {
+      this.promiseResolved = true;
+      this.router.navigate(['/user']);
+    })
+    .catch((err) => {
+      this.errorUiService.popErrorDialog(err);
+      console.error('denyJoinRide epäonnistui: ' + err.message)
+    });
+  }
+
+  openDeleteDialog(deleteRideTemplate) {
+    this.dialogRef = this.dialog.open(deleteRideTemplate, {});
   }
 
   goBack(): void {

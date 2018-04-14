@@ -1,36 +1,75 @@
 <div class="wrapper">
-    <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
+  <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
       <mat-card-title>Tämä on sinun luoma kyyti.</mat-card-title>
-    </mat-card>
-    <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
-      <div fxLayout="column">
-        <mat-card-title fxFlex="50">
-          Lähtöpaikka: {{ride?.startingplace}}
-        </mat-card-title>
-        <mat-card-title fxFlex="50">
-          Määränpää: {{ride?.destination}}
-        </mat-card-title>
-      </div>
-      <mat-card-content>
-        Lähtöpäivä: {{ride?.time_of_departure | date:'mediumDate'}} aika: {{ride?.time_of_departure | date:'shortTime'}}
-      </mat-card-content>
-      <mat-card-content>
-        Vapaita paikkoja: {{ride?.free_seats}}
-      </mat-card-content>
-      <mat-card-content>
-        Saako kyydissä tupakoida: {{ride?.smoking ? 'Kyllä' : 'Ei'}}
-      </mat-card-content>
-      <mat-card-content>
-        Voiko kyytiin ottaa lemmikkejä: {{ride?.pets ? 'Kyllä' : 'Ei'}}
-      </mat-card-content>
-      <mat-card-content>
-        Kuski valmis poikkeamaan lähikuntiin: {{ride?.deviate ? 'Kyllä' : 'Ei'}}
-        </mat-card-content>  
-      <mat-card-content>
-        Lisätiedot: {{ride?.additional_information}}
-      </mat-card-content>
-      <button mat-raised-button (click)="goBack()">Takaisin</button>
-    </mat-card>
-  </div>
+      <button class="delete-ride-btn" mat-raised-button color="warn" (click)="openDeleteDialog(deleteRideTemplate)">Poista kyyti</button>
+    </div>
+  </mat-card>
 
-  <button (click)="test()"></button>
+  <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center ">
+    <div fxLayout="column">
+      <mat-card-title fxFlex="50">
+        Lähtöpaikka: {{ride?.startingplace}}
+      </mat-card-title>
+      <mat-card-title fxFlex="50">
+        Määränpää: {{ride?.destination}}
+      </mat-card-title>
+    </div>
+    <mat-card-content>
+      Lähtöpäivä: {{ride?.time_of_departure | date:'mediumDate'}} aika: {{ride?.time_of_departure | date:'shortTime'}}
+    </mat-card-content>
+    <mat-card-content>
+      Vapaita paikkoja: {{ride?.free_seats}}
+    </mat-card-content>
+    <mat-card-content>
+      Saako kyydissä tupakoida: {{ride?.smoking ? 'Kyllä' : 'Ei'}}
+    </mat-card-content>
+    <mat-card-content>
+      Voiko kyytiin ottaa lemmikkejä: {{ride?.pets ? 'Kyllä' : 'Ei'}}
+    </mat-card-content>
+    <mat-card-content>
+      Kuski valmis poikkeamaan lähikuntiin: {{ride?.deviate ? 'Kyllä' : 'Ei'}}
+    </mat-card-content>
+    <mat-card-content>
+      Lisätiedot: {{ride?.additional_information}}
+    </mat-card-content>
+    <mat-list>
+      <mat-divider></mat-divider>
+      <mat-nav-list>
+        <h3 mat-header>Liittyneet kyytiläiset</h3>
+
+        <mat-list-item *ngFor="let joiner of joiners">
+          <a matLine routerLink="/user/{{joiner.customer_id}}">
+            <p matLine>
+              <span>
+                <i class="far fa-user 2x"></i>
+              </span>
+              <span> {{joiner.firstName}} {{joiner.lastName}} </span>
+            </p>
+          </a>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-list>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="goBack()">Takaisin</button>
+    </mat-card-actions>
+  </mat-card>
+  <ng-template #deleteRideTemplate>
+    <div *ngIf="confirmButtonsPressed && promiseResolved">
+      <i class="fas fa-check"></i>&nbsp;&nbsp;Kyyti poistettu
+    </div>
+    <div *ngIf="!confirmButtonsPressed && !promiseResolved">
+      <h1 mat-dialog-title>Haluatko varmasti poistaa kyydin ja siihen liittyvät tiedot?</h1>
+      <mat-dialog-content>HUOM! Tätä toimintoa ei voi perua!</mat-dialog-content>
+      <br />
+    </div>
+    <div *ngIf="confirmButtonsPressed && !promiseResolved">
+      <i class="fas fa-spinner fa-pulse"></i>Käsitellään..</div>
+    <div *ngIf="!confirmButtonsPressed && !promiseResolved">
+      <mat-dialog-actions>
+        <button mat-raised-button color="primary" (click)="deleteRide()">Kyllä</button>
+        <button mat-raised-button color="warn" (click)="dialogRef.close()">Peruuta</button>
+      </mat-dialog-actions>
+    </div>
+  </ng-template>
+</div>

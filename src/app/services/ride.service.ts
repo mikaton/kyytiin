@@ -30,6 +30,17 @@ export class RideService {
     })
     return response;
   }
+  deleteRide(ride_id): Promise<any> {
+    let response = new Promise((resolve, reject) => {
+      this.http.delete(`${this.apiUrl}/${ride_id}`)
+      .toPromise()
+      .then(
+        data => resolve(data),
+        err => reject(err)
+      );
+    });
+    return response;
+  }
   getUserMadeRide(ride_id, customer_id): Promise<any> {
     let response = new Promise ((resolve, reject) => {
       this.http.get(`${this.apiUrl}/${ride_id}/${customer_id}`)

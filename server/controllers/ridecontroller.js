@@ -113,7 +113,7 @@ exports.getUserMadeRides = (req, res, next) => {
               joiners.push(rides[i].joiner_id);
             }
             User.findAll({
-              attributes: ['firstName', 'lastName', 'email', 'phoneNumber'],
+              attributes: ['firstName', 'lastName', 'email', 'phoneNumber', 'customer_id'],
               where: {
                 Customer_id: {
                   [Op.in]: [joiners]

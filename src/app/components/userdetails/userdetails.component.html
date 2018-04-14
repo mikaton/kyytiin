@@ -19,7 +19,7 @@
         <img *ngIf="localUser.user.social_photourl" fxHide.lt-sm class=userheaderimg src="{{localUser.user.social_photourl}}">
     </mat-card>
     <mat-card *ngIf="canReview">
-        Arvioi käyttäjä:
+        <mat-card-title>Arvioi käyttäjä:</mat-card-title>
         <form [formGroup]="reviewForm" (ngSubmit)="sendReview(reviewForm.value)">
             <div class="stars">
                 <star-rating-comp fxLayoutAlign="start center" [hoverEnabled]="true" [speed]="'immediately'" [size]="'large'" [starType]="'svg'"
@@ -47,7 +47,7 @@
         </div>
 
     </mat-card>
-
+      
     <!-- TODO 
     <mat-card fxLayout.lt-md="column" fxFlexAlign.lt-md="center" fxLayoutAlign.lt-md="space-around center">
       <mat-card-title>

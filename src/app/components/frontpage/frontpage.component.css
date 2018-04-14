@@ -12,4 +12,15 @@
 .fp-button {
   background-color: #689F38;
   color: white;
+  margin-top: 8px;
+}
+.fb-button {
+  margin-bottom: 10px;
+  background-color: #3b5998;
+  color: #fff;
+}
+.tw-button {
+  margin-bottom: 10px;
+  background-color: #00aced;
+  color: #fff;
 }
