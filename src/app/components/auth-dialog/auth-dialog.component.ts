@@ -144,7 +144,6 @@ export class AuthDialogComponent implements OnInit {
   }
 
   registerLocal(registerForm) {
-    console.log('wat')
     this.localAuthService.registerLocal(registerForm)
       .then((user) => {
         this.router.navigate(['/register-success']);

@@ -49,19 +49,16 @@ export class UserMadeRideComponent implements OnInit {
   async ngOnInit() {
     await this.getRide()
   }
-  log() {
-    console.log(this.joiners);
-  }
+
   getRide() {
     const ride_id = this.route.snapshot.paramMap.get('ride_id')
     this.rideService.getUserMadeRide(ride_id, this.localAuthService.decodeToken())
       .then(data => {
         this.ride = data.ride
         this.joiners = data.joiners
-        console.log(this.ride);
-        console.log(this.joiners);
       })
       .catch((err) => {
+        console.log(err)
         this.errorUiService.popErrorDialog(err);
         console.error('getRide epäonnistui: ' + err.message)
       });

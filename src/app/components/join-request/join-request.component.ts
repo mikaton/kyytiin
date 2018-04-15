@@ -37,7 +37,7 @@ export class JoinRequestComponent implements OnInit {
       this.request = request.data;
     })
     .catch((err) => {
-      this.errorUiService.popErrorDialog(err);
+      this.errorUiService.popErrorDialog(err); 
       console.error('getRequest epäonnistui: ' + err.message)
     });
   }

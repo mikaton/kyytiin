@@ -7,7 +7,7 @@ const model = require('../models/index'),
   User = model.Customer,
   Request = model.Request,
   Notification = model.Notification;
-  Op = model.Sequelize.Op
+Op = model.Sequelize.Op
 
 // --- <Sähköpostin asetukset> ---
 hbs = require('nodemailer-express-handlebars'),
@@ -100,18 +100,18 @@ exports.getUserMadeRides = (req, res, next) => {
     })
     .then(rides => {
       //jos kutsu palauttaa tyhjän taulukon (ei dataa customersride_ridessä) haetaan japalautetaan pelkästään kyydin tiedot
-      if (rides) {
-        console.log(rides);
-        Ride.find({
-          where: { ride_id: req.params.ride_id }
-        })
-          //haetaan käyttäjät
-          .then(ride => {
-            var i;
-            var joiners = [];
-            for (i = 0; i < rides.length; i++) {
-              joiners.push(rides[i].joiner_id);
-            }
+      console.log(rides);
+      Ride.find({
+        where: { ride_id: req.params.ride_id }
+      })
+        //haetaan käyttäjät
+        .then(ride => {
+          var i;
+          var joiners = [];
+          for (i = 0; i < rides.length; i++) {
+            joiners.push(rides[i].joiner_id);
+          }
+          if (joiners.length < 0) {
             User.findAll({
               attributes: ['firstName', 'lastName', 'email', 'phoneNumber', 'customer_id'],
               where: {
@@ -127,8 +127,13 @@ exports.getUserMadeRides = (req, res, next) => {
                   joiners: joiners
                 })
               })
-          })
-      }
+          } else {
+            res.status(200).json({
+              message: 'Ride found',
+              ride: ride,
+            })
+          }
+        })
     }
     )
     .catch((err) => console.log('getUserJoinedRides failed: ' + err.message));

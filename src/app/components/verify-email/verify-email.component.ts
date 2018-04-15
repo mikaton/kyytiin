@@ -24,7 +24,6 @@ export class VerifyEmailComponent implements OnInit {
   }
   verifyEmail() {
     const token = this.route.snapshot.paramMap.get('token');
-    console.log(token)
     this.localAuthService.verifyEmail(token)
       .catch((err) => {
         this.errorUiService.popErrorDialog(err)
