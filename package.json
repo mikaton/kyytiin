@@ -27,6 +27,7 @@
     "@angular/router": "^5.2.8",
     "@angular/service-worker": "^5.2.8",
     "@auth0/angular-jwt": "^1.0.0-beta.10",
+    "@google/maps": "^0.4.6",
     "angular-bootstrap-datetimepicker": "^2.1.1",
     "angular-star-rating": "^3.0.8",
     "angularx-social-login": "^1.1.7",
