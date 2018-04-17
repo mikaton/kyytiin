@@ -15,6 +15,20 @@ export class RideService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  getDirections(startingplace, destination): Promise<any> {
+    // Hakee matkan ajo-ohjeet Googlen APIsta
+    let response = new Promise((resolve, reject) => {
+      this.http.get(`${this.apiUrl}/directions/${startingplace}/${destination}`)
+      .toPromise()
+      .then(
+        data => resolve(data),
+        err => reject(err)
+      );
+    });
+
+    return response;
+  }
+
   getRide(ride_id): Promise<any> {
     let response = new Promise((resolve, reject) => {
       this.http.get(`${this.apiUrl}/${ride_id}`)

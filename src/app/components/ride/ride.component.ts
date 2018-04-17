@@ -28,6 +28,7 @@ export class RideComponent implements OnInit {
   destination: string;
   requestSent: boolean;
   deviate: boolean;
+  mapUrl: string;
   constructor(
     private route: ActivatedRoute,
     private rideService: RideService,
@@ -57,6 +58,12 @@ export class RideComponent implements OnInit {
     this.rideService.getRide(ride_id)
     .then(ride => this.ride = ride.data[0])
     .then(ride => {
+      // Haetaan kartalle ohjeet
+      this.rideService.getDirections(this.ride.startingplace, this.ride.destination)
+      .then((res) => {
+        let polyline = res.data.replace("////", "//");
+        this.mapUrl = `http://maps.googleapis.com/maps/api/staticmap?size=200x200&scale=2&path=enc:${polyline}&key=AIzaSyDqangYtXtjWcjB_CcZ4iICC8g2w3j4lEs`;
+      });
       if (this.ride.customer_id == this.localAuthService.decodeToken()) {
         this.isCreator = true;
       } else {

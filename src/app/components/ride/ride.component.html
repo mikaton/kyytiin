@@ -3,36 +3,42 @@
     <mat-card-title>Tämä on sinun luoma kyyti.</mat-card-title>
   </mat-card>
   <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
-    <div fxLayout="column">
-      <mat-card-title fxFlex="50">
-        Lähtöpaikka: {{ride?.startingplace}}
-      </mat-card-title>
-      <mat-card-title fxFlex="50">
-        Määränpää: {{ride?.destination}}
-      </mat-card-title>
+    <div fxLayout="row">
+        <div fxLayout="column" fxFlex="50">
+            <mat-card-title>
+              Lähtöpaikka: {{ride?.startingplace}}
+            </mat-card-title>
+            <mat-card-title>
+              Määränpää: {{ride?.destination}}
+            </mat-card-title>
+            <mat-card-content>
+              Kyydin tarjoaja:
+              <a routerLink="/user/{{ride?.customer_id}}">{{ride?.firstName}} {{ride?.lastName}}</a>
+            </mat-card-content>
+            <mat-card-content>
+              Lähtöpäivä: {{ride?.time_of_departure | date:'mediumDate'}} aika: {{ride?.time_of_departure | date:'shortTime'}}
+            </mat-card-content>
+            <mat-card-content>
+              Vapaita paikkoja: {{ride?.free_seats}}
+            </mat-card-content>
+            <mat-card-content>
+              Saako kyydissä tupakoida: {{ride?.smoking ? 'Kyllä' : 'Ei'}}
+            </mat-card-content>
+            <mat-card-content>
+              Voiko kyytiin ottaa lemmikkejä: {{ride?.pets ? 'Kyllä' : 'Ei'}}
+            </mat-card-content>
+            <mat-card-content>
+              Kuski valmis poikkeamaan lähikuntiin: {{ride?.deviate ? 'Kyllä' : 'Ei'}}
+              </mat-card-content>  
+            <mat-card-content>
+              Lisätiedot: {{ride?.additional_information}}
+            </mat-card-content>
+          </div>
+          <div fxLayout="column" fxFlex="40">
+            <img class="staticDirections" src="{{mapUrl}}" alt="directions map">
+          </div>
     </div>
-    <mat-card-content>
-      Kyydin tarjoaja:
-      <a routerLink="/user/{{ride?.customer_id}}">{{ride?.firstName}} {{ride?.lastName}}</a>
-    </mat-card-content>
-    <mat-card-content>
-      Lähtöpäivä: {{ride?.time_of_departure | date:'mediumDate'}} aika: {{ride?.time_of_departure | date:'shortTime'}}
-    </mat-card-content>
-    <mat-card-content>
-      Vapaita paikkoja: {{ride?.free_seats}}
-    </mat-card-content>
-    <mat-card-content>
-      Saako kyydissä tupakoida: {{ride?.smoking ? 'Kyllä' : 'Ei'}}
-    </mat-card-content>
-    <mat-card-content>
-      Voiko kyytiin ottaa lemmikkejä: {{ride?.pets ? 'Kyllä' : 'Ei'}}
-    </mat-card-content>
-    <mat-card-content>
-      Kuski valmis poikkeamaan lähikuntiin: {{ride?.deviate ? 'Kyllä' : 'Ei'}}
-      </mat-card-content>  
-    <mat-card-content>
-      Lisätiedot: {{ride?.additional_information}}
-    </mat-card-content>
+
     <button *ngIf="!isCreator" mat-raised-button color="primary" (click)="openAlertDialog(alertTemplate)">Liity kyytiin</button>
     <button mat-raised-button (click)="goBack()">Takaisin</button>
   </mat-card>

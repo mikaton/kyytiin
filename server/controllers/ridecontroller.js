@@ -268,10 +268,11 @@ exports.getDirections = (req, res, next) => {
   })
   .asPromise()
   .then((response) => {
-    // Poistetaan vastauksesta escape-merkit
-    let polyline = response.json.routes[0].overview_polyline.points.replace("\\\\", "\\");
-    // Palautetaan pelkkä polyline
-    res.status(200).send(polyline);
+    res.status(200).json({
+      success: true,
+      message: 'Matkaohjeet haettiin onnistuneesti',
+      data: response.json.routes[0].overview_polyline.points
+    });
   })
   .catch((err) => console.log('google.maps.directions epäonnistui: ' + err.stack));
 }
