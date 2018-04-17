@@ -1,13 +1,17 @@
 const model = require('../models/index'),
   config = require('../config/main'),
   path = require('path'),
+  googleMapsClient = require('@google/maps').createClient({
+    key: 'AIzaSyDqangYtXtjWcjB_CcZ4iICC8g2w3j4lEs',
+    Promise: Promise
+  },
   Ride = model.Ride,
   async = require('async'),
   CustomersRides = model.CustomersRides_ride,
   User = model.Customer,
   Request = model.Request,
-  Notification = model.Notification;
-Op = model.Sequelize.Op
+  Notification = model.Notification,
+Op = model.Sequelize.Op,
 
 // --- <Sähköpostin asetukset> ---
 hbs = require('nodemailer-express-handlebars'),
@@ -27,9 +31,9 @@ hbs = require('nodemailer-express-handlebars'),
     viewEngine: 'handlebars',
     viewPath: path.resolve('./server/templates/'),
     extName: '.html'
-  };
+  },
 
-smtpTransport.use('compile', hbs(handlebarsOptions));
+smtpTransport.use('compile', hbs(handlebarsOptions)));
 // --- </Sähköpostin asetukset> //
 
 exports.getSingleRide = (req, res, next) => {
@@ -250,4 +254,25 @@ exports.joinRide = (req, res, next) => {
         }).catch((err) => console.error('Customers_Rides_ride luonti epäonnistui: ' + err.stack));
       }).catch((err) => console.error('Matkan tietojen päivitys epäonnistui ' + err.stack));
     }).catch((err) => console.error('Matkan hakeminen epäonnistui: ' + err.stack));
+}
+
+exports.getDirections = (req, res, next) => {
+  // Hakee Googlen Directions APIsta matkaohjeet aloitus- ja päätepisteen perusteella
+  const startingplace = req.params.startingplace;
+  const destination = req.params.destination;
+
+  googleMapsClient.directions({
+    origin: startingplace,
+    destination: destination,
+    mode: 'driving'
+  })
+  .asPromise()
+  .then((response) => {
+    res.status(200).json({
+      success: true,
+      message: 'Matkaohjeet haettiin onnistuneesti',
+      data: response.json.routes[0].overview_polyline.points
+    });
+  })
+  .catch((err) => console.log('google.maps.directions epäonnistui: ' + err.stack));
 }
