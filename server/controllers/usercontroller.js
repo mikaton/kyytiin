@@ -15,7 +15,8 @@ exports.getUser = (req, res, next) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        customer_id: user.customer_id
+        customer_id: user.customer_id,
+        phoneNumber: user.phoneNumber
       }
     });
   })
@@ -24,6 +25,7 @@ exports.getUser = (req, res, next) => {
 
 exports.updateUser = (req, res, next) => {
   const updateData = req.body;
+  console.log(updateData);
   User.find({
     where: {customer_id: req.params.id}
   }).then(user => {
@@ -35,7 +37,8 @@ exports.updateUser = (req, res, next) => {
       user: {
         firstName: updatedUser.firstName,
         lastName: updatedUser.lastName,
-        email: updatedUser.email
+        email: updatedUser.email,
+        phoneNumber: updatedUser.phoneNumber
       }
     });
   })

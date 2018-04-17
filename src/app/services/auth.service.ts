@@ -6,15 +6,15 @@ import 'rxjs/add/operator/toPromise';
 import { RidelistComponent } from '../components/ridelist/ridelist.component';
 import { AuthDialogComponent } from '../components/auth-dialog/auth-dialog.component';
 import { Subject } from 'rxjs/Subject';
-import { API_URL } from '../app.config';
+import { environment } from '../../environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class LocalAuthService {
-    apiUrl = `${API_URL}`;
-    apiUrlSocial = `${API_URL}/auth/social`;
-    apiUrlLocalLogin = `${API_URL}/auth/local/login`;
-    apiUrlLocalRegister = `${API_URL}/auth/local/register`;
+    apiUrl = `${environment.apiUrl}`;
+    apiUrlSocial = `${environment.apiUrl}/auth/social`;
+    apiUrlLocalLogin = `${environment.apiUrl}/auth/local/login`;
+    apiUrlLocalRegister = `${environment.apiUrl}/auth/local/register`;
     constructor(private http: HttpClient, private router: Router, private jwt: JwtHelperService) { }
 
     authenticate(user) {

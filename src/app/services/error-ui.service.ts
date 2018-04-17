@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { API_URL } from '../app.config';
 import { ErrorDialog } from './../dialogs/error-dialog';
 import { VERSION, MatDialog, MatDialogRef } from '@angular/material';
 

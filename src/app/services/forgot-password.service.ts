@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { API_URL } from '../app.config';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class ForgotPasswordService {
-  apiUrlPwReset = `${API_URL}/auth/forgot-password`;
-  apiUrlPwChange = `${API_URL}/auth/change-password`;
+  apiUrlPwReset = `${environment.apiUrl}/auth/forgot-password`;
+  apiUrlPwChange = `${environment.apiUrl}/auth/change-password`;
 
   constructor(private http: HttpClient) { }
 

@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
-import { API_URL } from '../app.config';
+import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class RideService {
-  apiUrl: string = `${API_URL}/ride`;
-  apiUrlJoinRequest: string = `${API_URL}/ride/join/sendrequest`;
-  apiUrlJoinDeny: string = `${API_URL}/ride/join/deny`;
-  apiUrlJoinConfirm: string = `${API_URL}/ride/join/confirm`;
-  apiUrlUser: string = `${API_URL}/ride/user`;
+  apiUrl: string = `${environment.apiUrl}/ride`;
+  apiUrlJoinRequest: string = `${environment.apiUrl}/ride/join/sendrequest`;
+  apiUrlJoinDeny: string = `${environment.apiUrl}/ride/join/deny`;
+  apiUrlJoinConfirm: string = `${environment.apiUrl}/ride/join/confirm`;
+  apiUrlUser: string = `${environment.apiUrl}/ride/user`;
 
   constructor(private http: HttpClient, private router: Router) { }
 

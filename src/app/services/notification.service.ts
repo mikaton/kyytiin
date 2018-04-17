@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { API_URL } from '../app.config';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class NotificationService {
-    apiUrl: string = `${API_URL}`
+    apiUrl: string = `${environment.apiUrl}`
     constructor(private http: HttpClient) {}
 
     // Haetaan käyttäjän ilmoitukset palvelimelta
