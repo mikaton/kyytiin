@@ -24,9 +24,7 @@ app.use(cors());
 
 //analytiikkatyökalu
 var visitor = ua('UA-117188333-1', { https: true });
-visitor.pageview("/", function (err) {
-	console.log(err);
-});
+visitor.pageview({dp: "/", dh: "https://kyyti.in"}).send();
 
 models.sequelize.sync().then(() => console.log('Models synced.')).catch((err) => console.log('Error syncing models: ' + err.stack));
 
