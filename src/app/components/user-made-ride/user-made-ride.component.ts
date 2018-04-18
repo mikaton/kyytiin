@@ -18,15 +18,12 @@ import { ErrorUiService } from '../../services/error-ui.service';
 export class UserMadeRideComponent implements OnInit {
 
   ride: any;
-  dialogRef: any;
-  errorDialogRef: any;
-  messageForm: FormGroup;
   joiner_name: string;
   startingplace: string;
   destination: string;
   requestSent: boolean;
   deviate: boolean;
-  joiner: any[];
+  joiners: any[];
   constructor(
     private route: ActivatedRoute,
     private rideService: RideService,
@@ -38,41 +35,35 @@ export class UserMadeRideComponent implements OnInit {
     private userService: UserService,
     private errorUiService: ErrorUiService
   ) {
-    this.messageForm = this.fb.group({
-      message: ['', Validators.maxLength(512)]
+}
+
+// Ladataan matkat asynkronisesti
+// Jos useampia metodeja ngOnInitissä, syntaksi seuraava:
+// await Promise.all([funktio1(), funktio2()...])
+async ngOnInit() {
+  await this.getRide()
+}
+test() {
+  var joiner = ["x", "y", "z", "a"]
+}
+getRide() {
+  const ride_id = this.route.snapshot.paramMap.get('ride_id')
+  console.log(ride_id)
+  console.log(this.localAuthService.decodeToken())
+  this.rideService.getUserMadeRide(ride_id, this.localAuthService.decodeToken())
+    .then(data => {
+      this.ride = data.ride
+      this.joiners = data.joiners
+      console.log(this.ride);
+      console.log(this.joiners);
+    })
+    .catch((err) => {
+      this.errorUiService.popErrorDialog(err);
+      console.error('getRide epäonnistui: ' + err.message)
     });
-  }
+}
 
-  get message() { return this.messageForm.get('message') };
-  // Ladataan matkat asynkronisesti
-  // Jos useampia metodeja ngOnInitissä, syntaksi seuraava:
-  // await Promise.all([funktio1(), funktio2()...])
-  async ngOnInit() {
-    await this.getRide()
-  }
-  test() {
-    var joiner = ["x", "y", "z", "a"]
-    this.userService.getMultipleUsers(...joiner)
-  }
-  getRide() {
-    const ride_id = this.route.snapshot.paramMap.get('ride_id')
-    console.log(ride_id)
-    console.log(this.localAuthService.decodeToken())
-    this.rideService.getUserMadeRide(ride_id, this.localAuthService.decodeToken())
-      .then(data => {
-        console.log(data);
-        this.ride = data.ride
-        this.joiner = data.joiner
-        this.joiner.toString();
-        this.userService.getMultipleUsers(this.joiner)
-      })
-      .catch((err) => {
-        this.errorUiService.popErrorDialog(err);
-        console.error('getRide epäonnistui: ' + err.message)
-      });
-  }
-
-  goBack(): void {
-    this.location.back();
-  }
+goBack(): void {
+  this.location.back();
+}
 }

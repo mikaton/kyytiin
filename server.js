@@ -14,8 +14,16 @@ const express = require('express'),
 	compression = require('compression'),
 	helmet = require('helmet'),
 	path = require('path');
-	
+	ua = require('universal-analytics');
+
 process.env.NODE_ENV = "developement"
+
+//analytiikkatyökalu
+var visitor = ua('UA-117188333-1', { https: true });
+visitor.pageview("/", function (err) {
+	console.log(err);
+});
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
