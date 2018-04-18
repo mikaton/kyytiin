@@ -2,6 +2,7 @@ export class Town {
 	constructor(public name: string) { }
 }
 export const towns: Town[] = [
+	{ name: 'Nummirock 2018'},
 	{ name: 'Akaa' },
 	{ name: 'Alajärvi' },
 	{ name: 'Alavieska' },
@@ -300,6 +301,7 @@ export const towns: Town[] = [
 ];
 
 export const townsArray = [
+	'Nummirock 2018',
 	'Akaa',
 	'Alajärvi',
 	'Alavieska',

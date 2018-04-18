@@ -1,47 +1,100 @@
 <div class="wrapper">
   <mat-card class="faq_card mat-elevation-z8">
-    <h1>Usein kysytyt kysymykset</h1>
+    <mat-card-title>Kyyti.in tiimi</mat-card-title>
   </mat-card>
-  <mat-card class="faq_card mat-elevation-z4" fxLayout="column" fxLayoutAlign="space around center">
-    <mat-card-title>
-      Ketkä tätä projektia tekevät?
-    </mat-card-title>
-    <mat-card-content>
-      Tällä hetkellä projektiryhmä koostuu kahdesta tietojenkäsittelyn koulutusohjelmaa opiskelevasta varsinaisesta jäsenestä.
-      Teemme projektia Tikon Ticorporate tuotepolulla, ja työskentelemme sen parissa koko kevään sekä toivottavasti myös
-      tulevaisuudessa. Markkinointia ja liiketoimintapuolta hoitaa kolmesta liiketalouden opiskelijasta koostuva ryhmä.
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="faq_card mat-elevation-z4" fxLayout="column" fxLayoutAlign="space around center">
-    <mat-card-title>
-      Eikös tämä ole vähän niinkuin Uber?
-    </mat-card-title>
-    <mat-card-content>
-      No ei oikeastaan. Kyseessä on alusta, jossa yksityiset ihmiset voivat jakaa kyytejä, ja kyytikustannuksia keskenään. Me tarjoamme
-      alustan, ja ihmiset hoitavat sisällön. 
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="faq_card mat-elevation-z4" fxLayout="column" fxLayoutAlign="space around center">
-    <mat-card-title>
-      Käyttöprosessi
-    </mat-card-title>
-    <mat-card-content>
-      Kyydin hakeminen ja siihen liittyminen on helppoa. Etsit vain kyydin johon haluat liittyä, ja painat "Liity kyytiin". Tämä
-      lähettää kyydin luojalle ilmoituksen, jonka kautta hän voi joko hyväksyä tai hyljätä pyytösi. Kumpi tahansa tapahtuu,
-      saat vastauksen ilmoitukset valikkoon. Jos vastaus on positiivinen, sisältää se kyydin luojan sähköpostin kommunikaatiota varten.
-      <br> Kyydin lisääminen on myös helppoa. Lisäät vain lomakkeeseen tietosi, ja odotat potentiaalisten liittyjien liittymispyyntösähköposteja.
-      Saat liittymispyynnön ohessa pyytäjän tiedot ja lyhennelmän hänen saamistaan arvosteluista.
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="faq_card mat-elevation-z4" fxLayout="column" fxLayoutAlign="space around center">
-    <mat-card-title>
-      Miten tämä eroaa niistä kaikista Facebook ryhmistä tai muista palveluista?
-    </mat-card-title>
-    <mat-card-content>
-      Kyyti.in on helppo käyttää, hakutoiminto on ylivertainen verrattuna Facebookkiin, ja kaikki ilmoitukset tulevat automaattisesti
-      kaikilla relevanteilla tiedoilla. Ei enää turhaa viestittelyä ja yksityiskohtien kaivamista! Kyytin.in tekee tiedonhausta
-      helppoa, ja kaiken muun lisäksi Kyyti.in toimii nopeasti ja parhaimmassa tapauksessa löydät itsellesi kimppakyydin
-      kolmella klikkauksella.
-    </mat-card-content>
-  </mat-card>
+  <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between center">
+    <div fxLayout="column" fxFlex="49">
+      <div fxLayout="row" fxLayout.gt-sm="column" fxLayoutAlign="space-between">
+        <mat-card class="ride_card" fxLayout="column">
+          <mat-card-header>
+            <mat-card-title-group>
+              <mat-card-title>
+                Mika Tonteri
+              </mat-card-title>
+              <mat-card-subtitle>
+                Ohjelmistokehittäjä, product owner
+              </mat-card-subtitle>
+            </mat-card-title-group>
+          </mat-card-header>
+          <img class="profile_image" mat-card-image src="./../../../assets/images/mika.png">
+          <mat-card-actions>
+            <a target="_blank" href=" https://www.linkedin.com/in/mikaton/  ">
+              <button mat-button class="linkedIn-btn">LinkedIn</button>
+            </a>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+    <div fxLayout="column" fxFlex="49">
+      <div fxLayout="row" fxLayout.gt-sm="column" fxLayoutAlign="space-between">
+        <mat-card class="ride_card" fxLayout="column">
+          <mat-card-header>
+            <mat-card-title-group>
+              <mat-card-title>
+                Teemu Pölkki
+              </mat-card-title>
+              <mat-card-subtitle>
+                Ohjelmistokehittäjä, testaaja, yhteyistyökoordinaattori
+              </mat-card-subtitle>
+            </mat-card-title-group>
+          </mat-card-header>
+          <img class="profile_image" mat-card-image src="./../../../assets/images/teemu.png">
+          <mat-card-actions>
+            <a target="_blank" href="https://www.linkedin.com/in/teemu-pölkki">
+              <button mat-button class="linkedIn-btn">LinkedIn</button>
+            </a>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div class="spacer"></div>
+  <div fxLayout="column">
+    <mat-card class="faq_card mat-elevation-z8">
+      <mat-card-title>Usein kysytyt kysymykset</mat-card-title>
+    </mat-card>
+    <mat-card class="faq_card mat-elevation-z4" fxLayout="column" fxLayoutAlign="space around center">
+      <mat-card-title>
+        Ketkä tätä projektia tekevät?
+      </mat-card-title>
+      <mat-card-content>
+        Tällä hetkellä projektiryhmä koostuu kahdesta tietojenkäsittelyn koulutusohjelmaa opiskelevasta varsinaisesta jäsenestä.
+        Teemme projektia Tikon Ticorporate tuotepolulla, ja työskentelemme sen parissa koko kevään sekä toivottavasti myös
+        tulevaisuudessa. Markkinointia ja liiketoimintapuolta hoitaa kolmesta liiketalouden opiskelijasta koostuva ryhmä.
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="faq_card mat-elevation-z4" fxLayout="column" fxLayoutAlign="space around center">
+      <mat-card-title>
+        Eikös tämä ole vähän niinkuin Uber?
+      </mat-card-title>
+      <mat-card-content>
+        No ei oikeastaan. Kyseessä on alusta, jossa yksityiset ihmiset voivat jakaa kyytejä, ja kyytikustannuksia keskenään. Me tarjoamme
+        alustan, ja ihmiset hoitavat sisällön.
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="faq_card mat-elevation-z4" fxLayout="column" fxLayoutAlign="space around center">
+      <mat-card-title>
+        Käyttöprosessi
+      </mat-card-title>
+      <mat-card-content>
+        Kyydin hakeminen ja siihen liittyminen on helppoa. Etsit vain kyydin johon haluat liittyä, ja painat "Liity kyytiin". Tämä
+        lähettää kyydin luojalle ilmoituksen, jonka kautta hän voi joko hyväksyä tai hyljätä pyytösi. Kumpi tahansa tapahtuu,
+        saat vastauksen ilmoitukset valikkoon. Jos vastaus on positiivinen, sisältää se kyydin luojan sähköpostin kommunikaatiota
+        varten.
+        <br> Kyydin lisääminen on myös helppoa. Lisäät vain lomakkeeseen tietosi, ja odotat potentiaalisten liittyjien liittymispyyntösähköposteja.
+        Saat liittymispyynnön ohessa pyytäjän tiedot ja lyhennelmän hänen saamistaan arvosteluista.
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="faq_card mat-elevation-z4" fxLayout="column" fxLayoutAlign="space around center">
+      <mat-card-title>
+        Miten tämä eroaa niistä kaikista Facebook ryhmistä tai muista palveluista?
+      </mat-card-title>
+      <mat-card-content>
+        Kyyti.in on helppo käyttää, hakutoiminto on ylivertainen verrattuna Facebookkiin, ja kaikki ilmoitukset tulevat automaattisesti
+        kaikilla relevanteilla tiedoilla. Ei enää turhaa viestittelyä ja yksityiskohtien kaivamista! Kyytin.in tekee tiedonhausta
+        helppoa, ja kaiken muun lisäksi Kyyti.in toimii nopeasti ja parhaimmassa tapauksessa löydät itsellesi kimppakyydin
+        kolmella klikkauksella.
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
