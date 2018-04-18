@@ -34,7 +34,7 @@
               Lisätiedot: {{ride?.additional_information}}
             </mat-card-content>
           </div>
-          <div fxLayout="column" fxFlex="40" fxHide fxShow.gt-sm="true">
+          <div fxLayout="column" fxFlex="50" fxHide fxShow.gt-sm="true">
             <agm-map *ngIf="mapInitialized">
               <agm-direction [origin]="ride?.startingplace" [destination]="ride?.destination"></agm-direction>
             </agm-map>
