@@ -94,8 +94,6 @@ exports.getUserJoinedRides = (req, res, next) => {
     .catch((err) => console.log('getUserJoinedRides failed: ' + err.message));
 };
 exports.getUserMadeRides = (req, res, next) => {
-  console.log(req.params)
-  console.log('TÄÄLLÄ OLLAAAAAAAAAAAAAAN')
   //etsitään Rides taulusta ridejoinereita, innerjoinin avulla. 
   Ride.sequelize.query('SELECT CRr.customer_id AS joiner_id FROM Rides r INNER JOIN CustomersRides_ride CRr on r.ride_id = CRr.ride_id WHERE r.ride_id = :ride_id AND r.customer_id = :customer_id;',
     {
