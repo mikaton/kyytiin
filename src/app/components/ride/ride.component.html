@@ -35,7 +35,9 @@
             </mat-card-content>
           </div>
           <div fxLayout="column" fxFlex="40">
-            <img class="staticDirections" src="{{mapUrl}}" alt="directions map">
+            <agm-map *ngIf="mapInitialized">
+              <agm-direction [origin]="ride?.startingplace" [destination]="ride?.destination"></agm-direction>
+            </agm-map>
           </div>
     </div>
 

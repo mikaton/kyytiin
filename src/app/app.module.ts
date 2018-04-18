@@ -67,6 +67,9 @@ import { TosComponent } from './components/tos/tos.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { ChangelogComponent } from './components/changelog/changelog.component';
 import { UserMadeRideComponent } from './components/user-made-ride/user-made-ride.component';
+import { AgmCoreModule } from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction';
+
 registerLocaleData(localeFi);
 
 const config = new AuthServiceConfig([
@@ -149,6 +152,10 @@ export function tokenGetter() {
       }
     }),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDqangYtXtjWcjB_CcZ4iICC8g2w3j4lEs'
+    }),
+    AgmDirectionModule
 
   ],
   providers: [
