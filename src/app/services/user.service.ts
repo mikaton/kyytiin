@@ -5,13 +5,13 @@ import 'rxjs/add/operator/toPromise';
 import { AuthService } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
-import { API_URL } from '../app.config'
+import { environment } from '../../environments/environment';
 import { LocalAuthService } from '../services/auth.service';
 
 @Injectable()
 export class UserService {
   user: SocialUser;
-  apiUrl = `${API_URL}`;
+  apiUrl = `${environment.apiUrl}`;
   constructor(
     private http: HttpClient,
     private authService: AuthService,
@@ -19,7 +19,7 @@ export class UserService {
 
   getUser(user): Promise<any> {
     let response = new Promise((resolve, reject) => {
-      this.http.get(`${API_URL}/user/${user}`)
+      this.http.get(`${environment.apiUrl}/user/${user}`)
         .toPromise()
         .then(
           data => {
@@ -34,7 +34,7 @@ export class UserService {
   }
   patchUserData(data) {
     let response = new Promise((resolve, reject) => {
-      this.http.patch(`${API_URL}/user/${this.localAuthService.decodeToken()}`, data)
+      this.http.patch(`${environment.apiUrl}/user/${this.localAuthService.decodeToken()}`, data)
         .toPromise()
         .then(
           data => {

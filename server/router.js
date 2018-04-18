@@ -36,7 +36,7 @@ module.exports = (app) => {
   router.get('/ride', RideController.getAllRides);
   router.get('/ride/user/:id', jwtAuth, RideController.getUserRides);
   router.get('/ride/user/joined/:id', jwtAuth, RideController.getUserJoinedRides);
-  router.get('/ride/:ride_id/:customer_id', RideController.getUserMadeRides); //palauttaa myös kyytiin liittyneet käyttäjät ja niiden tiedot
+  router.get('/ride/:ride_id/:customer_id', jwtAuth, RideController.getUserMadeRides); //palauttaa myös kyytiin liittyneet käyttäjät ja niiden tiedot
   router.patch('/ride/:id', jwtAuth, RideController.updateRide);
   router.delete('/ride/:id', jwtAuth, RideController.deleteRide);
 
@@ -45,7 +45,7 @@ module.exports = (app) => {
   router.post('/ride/deny/:ride_id', jwtAuth, RideController.denyJoinRide);
 
   // Matkan ohjeiden hakeminen Googlelta
-  router.get('/ride/directions/:startingplace/:destination', RideController.getDirections);
+  router.get('/ride/directions/:startingplace/:destination', jwtAuth, RideController.getDirections);
 
   // Liittymispyyntö CRUD
   router.post('/request', jwtAuth, RequestController.createJoinRequest);

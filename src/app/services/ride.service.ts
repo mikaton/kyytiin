@@ -56,8 +56,6 @@ export class RideService {
     return response;
   }
   getUserMadeRide(ride_id, customer_id): Promise<any> {
-    console.log(ride_id)
-    console.log(customer_id)
     let response = new Promise ((resolve, reject) => {
       this.http.get(`${this.apiUrl}/${ride_id}/${customer_id}`)
       .toPromise()

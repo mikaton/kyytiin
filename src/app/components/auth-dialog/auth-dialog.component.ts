@@ -95,8 +95,7 @@ export class AuthDialogComponent implements OnInit {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((user) => {
         this.updateUser();
-        this.localAuthService.authenticate(user).then(() => this.router.navigate(['/rides']));
-
+        this.localAuthService.authenticate(user).then(() => window.location.reload()).then(() => this.router.navigate(['/rides']));
       })
       .catch((err) => {
         this.errorUiService.popErrorDialog(err);
@@ -108,7 +107,7 @@ export class AuthDialogComponent implements OnInit {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID)
       .then((user) => {
         this.updateUser();
-        this.localAuthService.authenticate(user).then(() => this.router.navigate(['/rides']));
+        this.localAuthService.authenticate(user).then(() => window.location.reload()).then(() => this.router.navigate(['/rides']));
       })
       .catch((err) => {
         this.errorUiService.popErrorDialog(err);
@@ -118,27 +117,28 @@ export class AuthDialogComponent implements OnInit {
 
   signInLocalUser(loginForm) {
     this.localAuthService.signIn(loginForm)
+      .then(() => window.location.reload())
       .then(() => this.router.navigate(['/rides']))
       .catch((err) => {
         // Jos tunnusta ei ole vahvistettu
-        if(err.status === 403) {
+        if (err.status === 403) {
           this.errorUiService.popErrorDialog(err);
-            }
+        }
         // Jos salasana on väärin
-        if(err.status === 401) {
+        if (err.status === 401) {
           this.passwordFailed = true;
           this.loginForm.patchValue({
             password: null
           });
         }
         // Jos käyttäjätunnusta ei löytynyt
-        if(err.status === 404) {
+        if (err.status === 404) {
           this.emailFailed = true;
           this.loginForm.patchValue({
             email: null
           });
         }
-        
+
         console.error('signInLocalUser() failed: ' + err.message);
       });
   }
