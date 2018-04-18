@@ -10,4 +10,6 @@
 
 agm-map {
 	height: 400px;
+	padding: 0;
+	margin-bottom: 10px;
 }
