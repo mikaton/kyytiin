@@ -63,7 +63,8 @@ export class RideComponent implements OnInit {
       .then((res) => {
         let polyline = res.data.replace("////", "//");
         this.mapUrl = `http://maps.googleapis.com/maps/api/staticmap?size=200x200&scale=2&path=enc:${polyline}&key=AIzaSyDqangYtXtjWcjB_CcZ4iICC8g2w3j4lEs`;
-      });
+      })
+      .catch((err) => console.error('getDirections epäonnistui: ' + err.message));
       if (this.ride.customer_id == this.localAuthService.decodeToken()) {
         this.isCreator = true;
       } else {

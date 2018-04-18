@@ -260,14 +260,16 @@ exports.getDirections = (req, res, next) => {
   // Hakee Googlen Directions APIsta matkaohjeet aloitus- ja päätepisteen perusteella
   const startingplace = req.params.startingplace;
   const destination = req.params.destination;
-
+  console.log(startingplace);
+  console.log(destination);
   googleMapsClient.directions({
-    origin: startingplace,
-    destination: destination,
-    mode: 'driving'
+    origin: `${startingplace}, Finland`,
+    destination: `${destination}, Finland`,
+    mode: 'walking'
   })
   .asPromise()
   .then((response) => {
+    console.log(response.json);
     res.status(200).json({
       success: true,
       message: 'Matkaohjeet haettiin onnistuneesti',
