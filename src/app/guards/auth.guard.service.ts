@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
     if (localStorage.getItem('token')) {   // TODO: checkkaa onko tokeni validi
       return true;
     }
-    this.router.navigate(['/frontpage'], { queryParams: { returnUrl: state.url}}) // TODO: MessageService virheviesteille tai 401, 404 ja 500 virhesivut joihin redirect
+    this.router.navigate(['/register'], { queryParams: { returnUrl: state.url}}) // TODO: MessageService virheviesteille tai 401, 404 ja 500 virhesivut joihin redirect
     
     return false;
   }
