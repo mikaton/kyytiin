@@ -49,8 +49,6 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     if (isDevMode()) {
       console.log('👋 Development!');
-    } else {
-      console.log('💪 Production!');
     }
     await this.checkLoggedInStatus();
   }
