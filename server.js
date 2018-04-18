@@ -14,18 +14,13 @@ const express = require('express'),
 	compression = require('compression'),
 	helmet = require('helmet'),
 	path = require('path');
-ua = require('universal-analytics');
 
 process.env.NODE_ENV = "developement"
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-
-//analytiikkatyökalu
-var visitor = ua('UA-117188333-1', { https: true });
-visitor.pageview({dp: "/", dh: "https://kyyti.in"}).send();
-
+models.sequelize.authenticate().then(() => console.log('DB Connected')).catch((err) => console.log('Error connecting to DB: ' + err.stack));
 models.sequelize.sync().then(() => console.log('Models synced.')).catch((err) => console.log('Error syncing models: ' + err.stack));
 
 router(app);

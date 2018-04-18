@@ -1,19 +1,20 @@
 const express = require('express'),
-      app = express(),
-      passport = require('passport'),
-      passportService = require('./config/passport'),
-      AuthController = require('./controllers/authcontroller'),
-      UserController = require('./controllers/usercontroller'),
-      RideController = require('./controllers/ridecontroller'),
-      ReviewController = require('./controllers/reviewcontroller'),
-      RequestController = require('./controllers/requestcontroller'),
-      NotificationController = require('./controllers/notificationcontroller');
+  app = express(),
+  passport = require('passport'),
+  passportService = require('./config/passport'),
+  AuthController = require('./controllers/authcontroller'),
+  UserController = require('./controllers/usercontroller'),
+  RideController = require('./controllers/ridecontroller'),
+  ReviewController = require('./controllers/reviewcontroller'),
+  RequestController = require('./controllers/requestcontroller'),
+  NotificationController = require('./controllers/notificationcontroller');
+ua = require('universal-analytics');
 
 module.exports = (app) => {
   const router = express.Router();
   app.use('/api', router);
 
-  const jwtAuth     = passport.authenticate('jwt', {session: false});
+  const jwtAuth = passport.authenticate('jwt', { session: false });
 
   // Autentikaatioreitit
   router.post('/auth/local/register', AuthController.localRegister);
@@ -23,7 +24,7 @@ module.exports = (app) => {
   router.post('/auth/forgot-password', AuthController.forgotPassword);
   router.post('/auth/change-password', AuthController.changePassword);
   router.get('/auth/verify-account/:token', AuthController.verifyEmail);
-  
+
 
   // Käyttäjä CRUD reitit
   router.get('/user/:id', jwtAuth, UserController.getUser);
@@ -61,6 +62,6 @@ module.exports = (app) => {
   // Arvostelu CRUD reitit
   router.post('/review/:customer_id', jwtAuth, ReviewController.createReview);
   router.delete('/review/:id', jwtAuth, ReviewController.deleteReview);
-  router.get('/review/canReview/:creator_customer_id/:joiner_customer_id',jwtAuth, ReviewController.canReview);
+  router.get('/review/canReview/:creator_customer_id/:joiner_customer_id', jwtAuth, ReviewController.canReview);
   router.get('/review/getReview/:id', jwtAuth, ReviewController.getReview);
 }
