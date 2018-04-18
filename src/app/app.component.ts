@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, isDevMode } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { MatNavList, MatDrawer, MatSidenav } from '@angular/material';
 import { SocialUser } from 'angularx-social-login';
@@ -47,8 +47,14 @@ export class AppComponent implements OnInit {
     }
 
   async ngOnInit() {
+    if (isDevMode()) {
+      console.log('👋 Development!');
+    } else {
+      console.log('💪 Production!');
+    }
     await this.checkLoggedInStatus();
   }
+
   checkLoggedInStatus() {
     if(this.localAuthService.decodeToken()) {
       this.localStorageToken = true;
@@ -74,7 +80,9 @@ export class AppComponent implements OnInit {
       console.error('getUser() failed, ' + err.message);
     })
   }
-
+  toFrontPage() {
+    this.router.navigate(['/frontpage'])
+  }
   signOut() {
     this.authService.signOut();
     this.localAuthService.signOut();

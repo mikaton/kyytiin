@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { API_URL } from '../app.config';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class JoinRequestService {
-    apiUrl = `${API_URL}`;
+    apiUrl = `${environment.apiUrl}`;
     constructor(private http: HttpClient) { }
 
     createRequest(data): Promise<any> {

@@ -2,18 +2,32 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
-import { API_URL } from '../app.config';
+import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class RideService {
-  apiUrl: string = `${API_URL}/ride`;
-  apiUrlJoinRequest: string = `${API_URL}/ride/join/sendrequest`;
-  apiUrlJoinDeny: string = `${API_URL}/ride/join/deny`;
-  apiUrlJoinConfirm: string = `${API_URL}/ride/join/confirm`;
-  apiUrlUser: string = `${API_URL}/ride/user`;
+  apiUrl: string = `${environment.apiUrl}/ride`;
+  apiUrlJoinRequest: string = `${environment.apiUrl}/ride/join/sendrequest`;
+  apiUrlJoinDeny: string = `${environment.apiUrl}/ride/join/deny`;
+  apiUrlJoinConfirm: string = `${environment.apiUrl}/ride/join/confirm`;
+  apiUrlUser: string = `${environment.apiUrl}/ride/user`;
 
   constructor(private http: HttpClient, private router: Router) { }
+
+  getDirections(startingplace, destination): Promise<any> {
+    // Hakee matkan ajo-ohjeet Googlen APIsta
+    let response = new Promise((resolve, reject) => {
+      this.http.get(`${this.apiUrl}/directions/${startingplace}/${destination}`)
+      .toPromise()
+      .then(
+        data => resolve(data),
+        err => reject(err)
+      );
+    });
+
+    return response;
+  }
 
   getRide(ride_id): Promise<any> {
     let response = new Promise((resolve, reject) => {
@@ -30,7 +44,20 @@ export class RideService {
     })
     return response;
   }
+  deleteRide(ride_id): Promise<any> {
+    let response = new Promise((resolve, reject) => {
+      this.http.delete(`${this.apiUrl}/${ride_id}`)
+      .toPromise()
+      .then(
+        data => resolve(data),
+        err => reject(err)
+      );
+    });
+    return response;
+  }
   getUserMadeRide(ride_id, customer_id): Promise<any> {
+    console.log(ride_id)
+    console.log(customer_id)
     let response = new Promise ((resolve, reject) => {
       this.http.get(`${this.apiUrl}/${ride_id}/${customer_id}`)
       .toPromise()

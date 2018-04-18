@@ -44,6 +44,9 @@ module.exports = (app) => {
   router.post('/ride/join/:ride_id', jwtAuth, RideController.joinRide);
   router.post('/ride/deny/:ride_id', jwtAuth, RideController.denyJoinRide);
 
+  // Matkan ohjeiden hakeminen Googlelta
+  router.get('/ride/directions/:startingplace/:destination', RideController.getDirections);
+
   // Liittymispyyntö CRUD
   router.post('/request', jwtAuth, RequestController.createJoinRequest);
   router.get('/request/all/:customer_id', jwtAuth, RequestController.getAllRequests);

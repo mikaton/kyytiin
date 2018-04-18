@@ -8,12 +8,23 @@
     <mat-card-content>
       Kyyti.in on uuden ajan kimppakyytipalvelu, jossa tarve kohtaa tarpeen. Täällä autoilija voi jakaa autostaan paikkoja kanssaihmisille
       jotka ovat kulkemassa samaa matkaa. Matkustaminen on joustavampaa kuin julkisilla kulkuneuvoilla. Pääset helpommin
-      pienille paikkakunnille sekä tutustut matkalla uusiin ihmisiin?
+      pienille paikkakunnille sekä tutustut matkalla uusiin ihmisiin!
     </mat-card-content>
     <mat-card-actions>
+      <a target="_blank" href="https://www.facebook.com/KyytiinAPP">
+        <button class="fp-button fb-button" mat-button>
+          <i class="fab fa-facebook fa-2x">&nbsp;&nbsp;</i>Kyyti.in Facebookissa
+        </button>
+      </a>
+      <a target="_blank" href="https://twitter.com/Kyytiin">
+        <button class="fp-button tw-button" mat-button>
+          <i class="fab fa-twitter fa-2x">&nbsp;&nbsp;</i>Kyyti.in Twitterissä
+        </button>
+      </a><br>
+      <mat-divider></mat-divider>
       <a routerLink="/register" routerLinkActive="router-link-active">
         <button class="fp-button" mat-button>
-          Rekisteröidy palveluun tästä
+          Rekisteröidy/kirjaudu palveluun tästä
         </button>
       </a>
       <a routerLink="/faq" routerLinkActive="router-link-active">
@@ -24,5 +35,4 @@
     </mat-card-actions>
   </mat-card>
   <app-changelog></app-changelog>
-  <app-auth-dialog></app-auth-dialog>
 </div>

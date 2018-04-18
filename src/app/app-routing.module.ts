@@ -38,7 +38,9 @@ const routes: Routes = [
   { path: 'register-success', component: RegistersuccessComponent},
   { path: 'tos', component: TosComponent},
   { path: 'verify-account/:token', component: VerifyEmailComponent},
-  { path: 'user-rides/:ride_id', component: UserMadeRideComponent}
+  { path: 'user-rides/:ride_id', component: UserMadeRideComponent},
+  { path: 'register', component: AuthDialogComponent}
+
 ];
 
 @NgModule({

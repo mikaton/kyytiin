@@ -44,6 +44,7 @@ export class UserpageComponent implements OnInit {
 
   
   patchUser(customerEditForm) {
+    console.log(customerEditForm);
     this.localAuthService.decodeToken();
     this.userService.patchUserData(customerEditForm)
       .then((result) =>  this.updateUserdata()) 

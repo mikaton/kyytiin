@@ -95,7 +95,7 @@ export class AuthDialogComponent implements OnInit {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((user) => {
         this.updateUser();
-        this.localAuthService.authenticate(user).then(() => window.location.reload());
+        this.localAuthService.authenticate(user).then(() => this.router.navigate(['/rides']));
 
       })
       .catch((err) => {
@@ -108,7 +108,7 @@ export class AuthDialogComponent implements OnInit {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID)
       .then((user) => {
         this.updateUser();
-        this.localAuthService.authenticate(user).then(() => window.location.reload());
+        this.localAuthService.authenticate(user).then(() => this.router.navigate(['/rides']));
       })
       .catch((err) => {
         this.errorUiService.popErrorDialog(err);
@@ -118,7 +118,7 @@ export class AuthDialogComponent implements OnInit {
 
   signInLocalUser(loginForm) {
     this.localAuthService.signIn(loginForm)
-      .then(() => window.location.reload())
+      .then(() => this.router.navigate(['/rides']))
       .catch((err) => {
         // Jos tunnusta ei ole vahvistettu
         if(err.status === 403) {

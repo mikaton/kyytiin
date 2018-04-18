@@ -1,7 +1,13 @@
 .header-image {
-	background-image: url('../../../assets/images/android-chrome-192x192.png');
-	background-size: cover;
-  }
-  .mat-card-fp {
-	margin-bottom: 8px;
-  }
+    background-image: url('../../../assets/images/android-chrome-192x192.png');
+    background-size: cover;
+}
+
+.mat-card-fp {
+    margin-bottom: 8px;
+}
+
+::ng-deep .mat-list .mat-list-item .mat-line {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}

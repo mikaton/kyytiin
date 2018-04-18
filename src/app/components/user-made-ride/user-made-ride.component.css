@@ -7,3 +7,7 @@
 	font-size: 90%;
 	font-family: 'Roboto', sans-serif;
 }
+
+.delete-ride-btn {
+	align-content: flex-end;
+}
