@@ -66,11 +66,11 @@ export class RideComponent implements OnInit {
       // Haetaan kartalle ohjeet
       this.rideService.getDirections(this.ride.startingplace, this.ride.destination)
       .then((res) => {
-        this.mapInitialized = true;
         this.latStart = res.data.routes[0].legs[0].start_location.lat;
         this.latEnd = res.data.routes[0].legs[0].end_location.lat;
         this.lngStart = res.data.routes[0].legs[0].start_location.lng;
         this.lngEnd = res.data.routes[0].legs[0].end_location.lng;
+        this.mapInitialized = true;
       })
       .catch((err) => console.error('getDirections epäonnistui: ' + err.message));
       if (this.ride.customer_id == this.localAuthService.decodeToken()) {
