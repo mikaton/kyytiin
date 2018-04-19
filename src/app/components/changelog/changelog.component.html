@@ -2,7 +2,7 @@
   <mat-card-header>
     <div mat-card-avatar class="header-image"></div>
     <mat-card-title>Kyyti.in changelog!</mat-card-title>
-    <mat-card-subtitle>Versio 0.42</mat-card-subtitle>
+    <mat-card-subtitle>Versio 0.44</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <mat-list>
@@ -16,18 +16,23 @@
         <i class="fas fa-code" mat-list-icon></i>
         <h4 mat-line>Etusivun päivitys</h4>
         <p mat-line class="changelogdetails"> Etusivulle lisätty tietoja, muutosloki sekä sosiaalisen median linkit</p>
-      </mat-list-item>
+      </mat-list-item> 
       <mat-list-item>
         <i class="fas fa-code" mat-list-icon></i>
         <h4 mat-line>"Käyttäjän kyyti" -komponentti</h4>
         <p mat-line class="changelogdetails">Lisätty komponentti jossa käyttäjä näkee hänen kyytiinsä liittyvät tiedot ja kyytiin liitetyt kyytiläiset</p>
       </mat-list-item>
       <mat-list-item>
-          <i class="fas fa-code" mat-list-icon></i>
-          <h4 mat-line>Kartta</h4>
-          <p mat-line class="changelogdetails">Lisätty karttanäkymä kyytien oheen</p>
-        </mat-list-item>
-  
+        <i class="fas fa-code" mat-list-icon></i>
+        <h4 mat-line>Kartta</h4>
+        <p mat-line class="changelogdetails">Lisätty karttanäkymä kyytien oheen</p>
+      </mat-list-item>
+      <mat-list-item>
+        <i class="fas fa-code" mat-list-icon></i>
+        <h4 mat-line>Analytiikka</h4>
+        <p mat-line class="changelogdetails">Lisätty scripti, jota käytämme sivuston liikenteen seuraamiseen.</p>
+      </mat-list-item>
+
       <mat-divider></mat-divider>
       <h3 mat-subheader>Bugikorjaukset</h3>
       <mat-list-item>
@@ -38,13 +43,15 @@
       <mat-list-item>
         <i class="fas fa-wrench" mat-list-icon></i>
         <h4 mat-line>Puhelinnumero</h4>
-        <p mat-line class="changelogdetails"> Puhelinnumeron vaihtaminen tai näyttäminen ei toimi tällä hetkellä tuntemattomasta syystä </p>
+        <p mat-line class="changelogdetails"> Korjattu puhelinnumeron näyttäminen, lisääminen ja vaihtaminen </p>
       </mat-list-item>
       <mat-divider></mat-divider>
       <h3 mat-subheader>Tiedetyt ongelmat</h3>
       <mat-list-item>
         <i class="fas fa-bug" mat-list-icon></i>
-        <h4 mat-line>Jos tiedät ongelmasta, <a routerLink="/feedback">ilmoita siitä meille</a></h4>
+        <h4 mat-line>Jos tiedät ongelmasta,
+          <a routerLink="/feedback">ilmoita siitä meille</a>
+        </h4>
       </mat-list-item>
 
     </mat-list>

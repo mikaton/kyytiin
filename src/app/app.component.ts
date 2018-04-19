@@ -7,7 +7,7 @@ import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-logi
 import { MediaMatcher } from '@angular/cdk/layout';
 import { LocalAuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
 import { JoinRequestService } from './services/joinrequest.service';
 
@@ -34,27 +34,31 @@ export class AppComponent implements OnInit {
     private userService: UserService,
     private requestService: JoinRequestService,
     private router: Router) {
+      
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        (<any>window).ga('set', 'page', event.urlAfterRedirects);
+        (<any>window).ga('send', 'pageview');
+      }
+    });
 
     this.mobileQuery = media.matchMedia('(max-width: 1279px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-        //Tarpeellinen, kaikki rikki jos poissa. 
-        this.localAuthService.checkLocalStorage$.subscribe(
-          () => {
-            this.checkLoggedInStatus();
-          }
-        );
-    }
+    //Tarpeellinen, kaikki rikki jos poissa. 
+    this.localAuthService.checkLocalStorage$.subscribe(
+      () => {
+        this.checkLoggedInStatus();
+      }
+    );
+  }
 
   async ngOnInit() {
-    if (isDevMode()) {
-      console.log('👋 Development!');
-    }
     await this.checkLoggedInStatus();
   }
 
   checkLoggedInStatus() {
-    if(this.localAuthService.decodeToken()) {
+    if (this.localAuthService.decodeToken()) {
       this.localStorageToken = true;
     } else {
       this.localStorageToken = false;

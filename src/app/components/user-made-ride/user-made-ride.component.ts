@@ -58,7 +58,6 @@ export class UserMadeRideComponent implements OnInit {
         this.joiners = data.joiners
       })
       .catch((err) => {
-        console.log(err)
         this.errorUiService.popErrorDialog(err);
         console.error('getRide epäonnistui: ' + err.message)
       });
