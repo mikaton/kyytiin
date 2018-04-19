@@ -17,8 +17,7 @@ import { JoinRequestService } from './services/joinrequest.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  sidenav: any;
-  isOpen: any;
+  isOpen: boolean = true;
   localUser: any;
   user: SocialUser;
   loggedIn: boolean;
@@ -34,13 +33,6 @@ export class AppComponent implements OnInit {
     private userService: UserService,
     private requestService: JoinRequestService,
     private router: Router) {
-      
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        (<any>window).ga('set', 'page', event.urlAfterRedirects);
-        (<any>window).ga('send', 'pageview');
-      }
-    });
 
     this.mobileQuery = media.matchMedia('(max-width: 1279px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -64,6 +56,20 @@ export class AppComponent implements OnInit {
       this.localStorageToken = false;
     }
   }
+  sidenav() {
+    const hideNav = document.getElementById('mob_bar');
+    const rotateArrow = document.getElementById('arrow');
+    if(this.isOpen) {
+      hideNav.style.display = 'none';
+      rotateArrow.style.transform ="rotate(180deg)"
+      this.isOpen = false;
+    } else {
+      hideNav.style.display = 'flex';
+      rotateArrow.style.transform ="rotate(0deg)"
+      this.isOpen = true;
+    }
+  }
+  
   sidenavOpen(sidenav) {
     sidenav.toggle();
     this.isOpen = sidenav.opened;
