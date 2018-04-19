@@ -15,7 +15,7 @@ const express = require('express'),
 
 // Multerin asetukset
 const storage = multer.diskStorage({
-  destination: 'assets/images',
+  destination: 'public/images',
   filename: (req, file, callback) => {
     // Tehdään tiedostolle sekalainen nimi ja lisätään tiedostopääte koska multer poistaa sen
     crypto.pseudoRandomBytes(16, (err, raw) => {

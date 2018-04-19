@@ -44,3 +44,6 @@ Thumbs.db
 
 # Environmental variables files
 .env
+
+/public/images
+/assets/images

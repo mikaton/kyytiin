@@ -62,7 +62,6 @@ exports.deleteUser = (req, res, next) => {
 };
 
 exports.updateUserPhoto = (req, res, next) => {
-    console.log('uploadissa');
     // Tarkistetaan että filu tuli läpi
     if(!req.file) return res.status(500).send({success: false, message: 'Tiedostoa ei löytynyt'});
     // Otetaan tallennussijainti talteen
@@ -73,16 +72,13 @@ exports.updateUserPhoto = (req, res, next) => {
       where: { customer_id: req.params.id }
     })
     .then(user => {
-      console.log('käyttäjä löytyi');
       // Tallennetaan kuvan URL
       const data = {
         profile_picture: filePath
       };
-      user.updateAttributes(data)
-      .then(() => (console.log('käyttäjän kuva päivitetty')))
-      .catch((err) => console.error('Tietojen päivitys epäonnistui: ' + err.stack));
+      user.updateAttributes(data).catch((err) => console.error('Tietojen päivitys epäonnistui: ' + err.stack));
     })
     .catch((err) => console.error('updateUserPhoto epäonnistui: ' + err.stack));
 
-    res.status(200).send({success: true, message: 'Tiedosto ladattu onnistuneesti'});
+    return res.status(200).send({success: true, message: 'Tiedosto ladattu onnistuneesti'});
 }

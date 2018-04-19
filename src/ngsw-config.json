@@ -26,6 +26,15 @@
 		  "/assets/**"
 		]
 	  }
+	}, {
+		"name": "public images",
+		"installMode": "lazy",
+		"updateMode": "lazy",
+		"resources": {
+			"files": [
+				"/public/images"
+			]
+		}
 	}],
 	"dataGroups": [
     {
