@@ -34,7 +34,11 @@
             </div>
         </form>
     </mat-card>
-    <mat-card>
+    <mat-card *ngIf="reviews.length === 0">
+        <mat-card-content>Tätä käyttäjää ei ole vielä arvosteltu    
+        </mat-card-content>
+    </mat-card>
+    <mat-card *ngIf="reviews.length > 0">
         <mat-card-title>Tähdet:</mat-card-title>
         <div>
             <div class="stars">

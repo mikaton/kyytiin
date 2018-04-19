@@ -8,7 +8,6 @@ const express = require('express'),
   ReviewController = require('./controllers/reviewcontroller'),
   RequestController = require('./controllers/requestcontroller'),
   NotificationController = require('./controllers/notificationcontroller');
-ua = require('universal-analytics');
 
 module.exports = (app) => {
   const router = express.Router();
