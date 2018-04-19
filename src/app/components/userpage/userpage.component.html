@@ -34,7 +34,12 @@
         </div>
       </div>
     </div>
-    <img *ngIf="localUser.user.social_photourl" fxHide.lt-sm class=userheaderimg src="{{localUser.user.social_photourl}}">
+    <div fxLayout="column">
+        <img *ngIf="hasImageSet" fxHide.lt-sm class="userheaderimg" src="{{localUser.user.profile_image">
+        <img *ngIf="!hasImageSet" fxHide.lt-sm class="userheaderimg" src="assets/images/profile_placeholder.png">
+        <button id="changePicture" mat-raised-button color="primary" (click)="changeProfilePicture()">Vaihda profiilikuva</button>
+    </div>
+
   </mat-card>
 
   <!-- KYYDIT -->

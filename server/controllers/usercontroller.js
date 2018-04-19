@@ -16,7 +16,8 @@ exports.getUser = (req, res, next) => {
         lastName: user.lastName,
         email: user.email,
         customer_id: user.customer_id,
-        phoneNumber: user.phoneNumber
+        phoneNumber: user.phoneNumber,
+        profile_image: user.profile_image
       }
     });
   })
@@ -38,7 +39,8 @@ exports.updateUser = (req, res, next) => {
         firstName: updatedUser.firstName,
         lastName: updatedUser.lastName,
         email: updatedUser.email,
-        phoneNumber: updatedUser.phoneNumber
+        phoneNumber: updatedUser.phoneNumber,
+        profile_image: updatedUser.profile_image
       }
     });
   })

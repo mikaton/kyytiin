@@ -17,7 +17,7 @@ import {
   styleUrls: ['./userpage.component.css']
 })
 export class UserpageComponent implements OnInit {
-
+  hasImageSet: boolean = false;
   constructor(
     private userService: UserService,
     private localAuthService: LocalAuthService,
@@ -58,6 +58,7 @@ export class UserpageComponent implements OnInit {
     this.userService.getUser(this.localAuthService.decodeToken())
       .then((result) => {
         this.localUser = result;
+        if(this.localUser.user.profile_image !== undefined) this.hasImageSet = true;
       })
       .catch((err) => {
         this.errorUiService.popErrorDialog(err);
@@ -80,6 +81,10 @@ export class UserpageComponent implements OnInit {
         console.error('getRides epäonnistui: ' + err.message)
       });
     }
+
+  changeProfilePicture() {
+    // TODO profiilikuvan vaihto
+  }
 
   // Poistaa selaimen konsolin virheilmoitukset alustamalla datan 
   // huono fixi, pitää ottaa selvää serviceworkkereista ja välimuistista. 

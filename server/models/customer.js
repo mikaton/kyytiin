@@ -15,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     social_provider: {
       type: DataTypes.STRING
     },
-    social_photourl: {
-      type: DataTypes.STRING
+    profile_picture: {
+      type: DataTypes.BLOB
     },
     firstName: {
       type: DataTypes.STRING,

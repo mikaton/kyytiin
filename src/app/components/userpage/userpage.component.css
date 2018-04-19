@@ -4,7 +4,7 @@
 }
 
 .userheaderimg {
-	width: 128px;
+	width: 144px;
 	height: 128px;
 }
 
@@ -29,4 +29,8 @@
 
   .ride_card {
 	margin-bottom: 8px;  
-  }
+	}
+	
+	#changePicture {
+		margin-top: 10px;
+	}
