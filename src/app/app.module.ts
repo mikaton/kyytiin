@@ -69,6 +69,8 @@ import { ChangelogComponent } from './components/changelog/changelog.component';
 import { UserMadeRideComponent } from './components/user-made-ride/user-made-ride.component';
 import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 registerLocaleData(localeFi);
 
@@ -155,7 +157,8 @@ export function tokenGetter() {
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDqangYtXtjWcjB_CcZ4iICC8g2w3j4lEs'
     }),
-    AgmDirectionModule
+    AgmDirectionModule,
+    MatProgressSpinnerModule
 
   ],
   providers: [
