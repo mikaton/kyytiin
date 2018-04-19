@@ -9,6 +9,10 @@
 	margin-bottom: 10px;
 }
 
+.profileInfo {
+	margin-bottom: 10px;
+}
+
 #phoneNumber {
 	max-width: 400px;
 }
@@ -30,4 +34,9 @@
 	
 .btn-profile_image_picker {
 	max-width: 128px;
+}
+
+::ng-deep .mat-raised-button {
+	padding-left: 8px;
+	padding-right: 8px;
 }
