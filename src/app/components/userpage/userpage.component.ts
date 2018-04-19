@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { LocalAuthService } from '../../services/auth.service';
 import { DatePipe } from '@angular/common';
@@ -18,6 +18,7 @@ import {
 })
 export class UserpageComponent implements OnInit {
   hasImageSet: boolean = false;
+  @ViewChild('imageInput') imageInput;
   constructor(
     private userService: UserService,
     private localAuthService: LocalAuthService,
@@ -81,10 +82,21 @@ export class UserpageComponent implements OnInit {
       });
     }
 
-  changeProfilePicture() {
-    // TODO profiilikuvan vaihto
-  }
+  uploadImage(event: any) {
+    let files = event.target.files;
+    console.log(files);
+    let formData: FormData = new FormData();
 
+    if(files && files[0]) {
+      formData.append('image', files[0]);
+      console.log(formData);
+      this.userService.patchUserData(formData)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => console.log(err));
+    }
+  }
   // Poistaa selaimen konsolin virheilmoitukset alustamalla datan 
   // huono fixi, pitää ottaa selvää serviceworkkereista ja välimuistista. 
   defaultUserValues() {

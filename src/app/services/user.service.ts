@@ -32,6 +32,7 @@ export class UserService {
     })
     return response;
   }
+  
   patchUserData(data) {
     let response = new Promise((resolve, reject) => {
       this.http.patch(`${environment.apiUrl}/user/${this.localAuthService.decodeToken()}`, data)
@@ -46,7 +47,6 @@ export class UserService {
     });
     return response;
   }
-
 
   getSocialUser() {
     this.authService.authState.subscribe((user) => {
