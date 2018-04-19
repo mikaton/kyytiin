@@ -69,18 +69,6 @@ export class AppComponent implements OnInit {
       this.isOpen = true;
     }
   }
-  
-  sidenavOpen(sidenav) {
-    sidenav.toggle();
-    this.isOpen = sidenav.opened;
-    const hideNav = document.getElementById('sidenav_container');
-    if (!this.isOpen) {
-      hideNav.style.width = '0px';
-    }
-    if (this.isOpen) {
-      hideNav.style.width = '250px';
-    }
-  }
   getUser() {
     this.userService.getUser(this.localAuthService.decodeToken()).then((result) => {
       this.localUser = result;
