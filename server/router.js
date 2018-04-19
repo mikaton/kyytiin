@@ -15,7 +15,7 @@ const express = require('express'),
 
 // Multerin asetukset
 const storage = multer.diskStorage({
-  destination: 'public/images',
+  destination: 'dist/public/images',
   filename: (req, file, callback) => {
     // Tehdään tiedostolle sekalainen nimi ja lisätään tiedostopääte koska multer poistaa sen
     crypto.pseudoRandomBytes(16, (err, raw) => {
@@ -27,6 +27,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage});
 
 module.exports = (app) => {
+  
   const router = express.Router();
   app.use('/api', router);
 
@@ -45,7 +46,7 @@ module.exports = (app) => {
   router.get('/user/:id', jwtAuth, UserController.getUser);
   router.patch('/user/:id', jwtAuth, UserController.updateUser);
   router.delete('/user/:id', jwtAuth, UserController.deleteUser);
-  router.put('/user/:id', jwtAuth, upload.single('profile_image_picker'), UserController.updateUserPhoto);
+  router.put('/user/:id', jwtAuth, upload.single('image'), UserController.updateUserPhoto);
 
   // Matka CRUD reitit
   router.post('/ride', jwtAuth, RideController.createRide);

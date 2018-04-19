@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { LocalAuthService } from '../../services/auth.service';
 import { DatePipe } from '@angular/common';
@@ -11,6 +11,7 @@ import {
   FormControl,
   Validators
 } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-userpage',
   templateUrl: './userpage.component.html',
@@ -18,7 +19,7 @@ import {
 })
 export class UserpageComponent implements OnInit {
   hasImageSet: boolean = false;
-  @ViewChild('imageInput') imageInput;
+  imagePath: string;
   constructor(
     private userService: UserService,
     private localAuthService: LocalAuthService,
@@ -58,7 +59,11 @@ export class UserpageComponent implements OnInit {
     this.userService.getUser(this.localAuthService.decodeToken())
       .then((result) => {
         this.localUser = result;
-        if(this.localUser.user.profile_image !== undefined) this.hasImageSet = true;
+        console.log(this.localUser.user);
+        if(this.localUser.user.profile_picture !== null) {
+          this.hasImageSet = true;
+          this.imagePath = `${this.localUser.user.profile_picture}`;
+        }
       })
       .catch((err) => {
         this.errorUiService.popErrorDialog(err);
@@ -84,17 +89,16 @@ export class UserpageComponent implements OnInit {
 
   uploadImage(event: any) {
     let files = event.target.files;
-    console.log(files);
     let formData: FormData = new FormData();
 
     if(files && files[0]) {
       formData.append('image', files[0]);
-      console.log(formData);
-      this.userService.patchUserData(formData)
+      this.userService.updateUserProfileImage(formData)
       .then(res => {
-        console.log(res);
+        this.updateUserdata();
+        window.location.reload();
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.error(err.message));
     }
   }
   // Poistaa selaimen konsolin virheilmoitukset alustamalla datan 
@@ -107,6 +111,7 @@ export class UserpageComponent implements OnInit {
         'email': '',
         'phoneNumber': '',
         'customer_id':'',
+        'profile_picture': ''
       }
     }
   }

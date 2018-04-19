@@ -48,6 +48,18 @@ export class UserService {
     return response;
   }
 
+  updateUserProfileImage(img): Promise<any> {
+    let response = new Promise((resolve, reject) => {
+      this.http.put(`${environment.apiUrl}/user/${this.localAuthService.decodeToken()}`, img)
+      .toPromise()
+      .then(
+        data => resolve(data),
+        err => reject(err)
+      );
+    });
+    return response;
+  }
+
   getSocialUser() {
     this.authService.authState.subscribe((user) => {
       this.user = user;

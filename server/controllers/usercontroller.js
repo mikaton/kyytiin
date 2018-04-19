@@ -17,7 +17,7 @@ exports.getUser = (req, res, next) => {
         email: user.email,
         customer_id: user.customer_id,
         phoneNumber: user.phoneNumber,
-        profile_image: user.profile_image
+        profile_picture: user.profile_picture
       }
     });
   })
@@ -39,7 +39,7 @@ exports.updateUser = (req, res, next) => {
         lastName: updatedUser.lastName,
         email: updatedUser.email,
         phoneNumber: updatedUser.phoneNumber,
-        profile_image: updatedUser.profile_image
+        profile_picture: updatedUser.profile_picture
       }
     });
   })
@@ -65,8 +65,8 @@ exports.updateUserPhoto = (req, res, next) => {
     // Tarkistetaan että filu tuli läpi
     if(!req.file) return res.status(500).send({success: false, message: 'Tiedostoa ei löytynyt'});
     // Otetaan tallennussijainti talteen
-    const host = req.hostname;
-    const filePath = req.protocol + '://' + host + '/' + req.file.path;
+    console.log(req.file);
+    const filePath = 'public/images/' + req.file.filename;
     // Etsitään käyttäjä
     User.findOne({
       where: { customer_id: req.params.id }
