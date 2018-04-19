@@ -1,6 +1,15 @@
 <div class="wrapper" fxLayout="column">
   <mat-card class="mat-elevation-z8 profileInfo" fxLayout="row" fxLayoutAlign="space-between">
     <div fxLayout="column" fxLayoutGap="10px" fxLayout.lt-md="column" fxFlexAlign.lt-md="center">
+      <!-- KAPEA LEISKA PROFIILIKUVA -->
+      <div fxLayout="column" fxShow.xs fxHide.gt-xs>
+        <img *ngIf="hasImageSet" class="userheaderimg" src="{{localUser.user.profile_image">
+        <img *ngIf="!hasImageSet" class="userheaderimg" src="assets/images/profile_placeholder.png">
+        <div class="btn-profile_image_picker">
+          <input type="file" fxHide class="form-control" id="profile_image_picker">
+          <label for="profile_image_picker" class="mat-raised-button mat-primary">Vaihda profiilikuva</label>
+        </div>
+      </div>
       <mat-card-title>
         Omat tiedot:
       </mat-card-title>
@@ -34,12 +43,15 @@
         </div>
       </div>
     </div>
-    <div fxLayout="column">
-        <img *ngIf="hasImageSet" fxHide.lt-sm class="userheaderimg" src="{{localUser.user.profile_image">
-        <img *ngIf="!hasImageSet" fxHide.lt-sm class="userheaderimg" src="assets/images/profile_placeholder.png">
-        <button id="changePicture" mat-raised-button color="primary" (click)="changeProfilePicture()">Vaihda profiilikuva</button>
+    <!-- LEVEÄ LEISKA PROFIILIKUVA -->
+    <div fxLayout="column" fxHide fxShow.gt-xs>
+      <img *ngIf="hasImageSet" class="userheaderimg" src="{{localUser.user.profile_image">
+      <img *ngIf="!hasImageSet" class="userheaderimg" src="assets/images/profile_placeholder.png">
+      <div class="btn-profile_image_picker">
+          <input type="file" fxHide class="form-control" id="profile_image_picker">
+          <label for="profile_image_picker" class="mat-raised-button mat-primary">Vaihda profiilikuva</label>
+      </div>
     </div>
-
   </mat-card>
 
   <!-- KYYDIT -->
@@ -49,54 +61,54 @@
         <mat-card-title class="mat-card-title-marginfix">
           Luomasi kyydit:
         </mat-card-title>
-        </mat-card>
-        <div *ngFor="let ride of rides" fxLayout="column">
-          <a routerLink="/user-rides/{{ride.ride_id}}">
-            <mat-card class="ride_card" fxLayout="column" fxLayoutAlign="space around center">
-              <div fxLayout="column">
-                <mat-card-title fxFlex="50">
-                  Lähtöpaikka: {{ride.startingplace}}
-                </mat-card-title>
-                <mat-card-title fxFlex="50">
-                  Määränpää: {{ride.destination}}
-                </mat-card-title>
-              </div>
-              <mat-card-content>
-                Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
-              </mat-card-content>
-              <mat-card-content>
-                Vapaita paikkoja: {{ride.free_seats}}
-              </mat-card-content>
-            </mat-card>
-          </a>
-        </div>
+      </mat-card>
+      <div *ngFor="let ride of rides" fxLayout="column">
+        <a routerLink="/user-rides/{{ride.ride_id}}">
+          <mat-card class="ride_card" fxLayout="column" fxLayoutAlign="space around center">
+            <div fxLayout="column">
+              <mat-card-title fxFlex="50">
+                Lähtöpaikka: {{ride.startingplace}}
+              </mat-card-title>
+              <mat-card-title fxFlex="50">
+                Määränpää: {{ride.destination}}
+              </mat-card-title>
+            </div>
+            <mat-card-content>
+              Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
+            </mat-card-content>
+            <mat-card-content>
+              Vapaita paikkoja: {{ride.free_seats}}
+            </mat-card-content>
+          </mat-card>
+        </a>
+      </div>
     </div>
     <div fxLayout="column" fxFlex="49">
       <mat-card class="mat-elevation-z8" fxLayout="column">
         <mat-card-title class="mat-card-title-marginfix">
           Liitytyt kyydit:
         </mat-card-title>
-        </mat-card>
-        <div *ngFor="let ride of joinedRides" fxLayout="column">
-          <a routerLink="/rides/{{ride.ride_id}}">
-            <mat-card class="ride_card" fxLayout="column" fxLayoutAlign="space around center">
-              <div fxLayout="column">
-                <mat-card-title fxFlex="50">
-                  Lähtöpaikka: {{ride.startingplace}}
-                </mat-card-title>
-                <mat-card-title fxFlex="50">
-                  Määränpää: {{ride.destination}}
-                </mat-card-title>
-              </div>
-              <mat-card-content>
-                Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
-              </mat-card-content>
-              <mat-card-content>
-                Vapaita paikkoja: {{ride.free_seats}}
-              </mat-card-content>
-            </mat-card>
-          </a>
-        </div>
+      </mat-card>
+      <div *ngFor="let ride of joinedRides" fxLayout="column">
+        <a routerLink="/rides/{{ride.ride_id}}">
+          <mat-card class="ride_card" fxLayout="column" fxLayoutAlign="space around center">
+            <div fxLayout="column">
+              <mat-card-title fxFlex="50">
+                Lähtöpaikka: {{ride.startingplace}}
+              </mat-card-title>
+              <mat-card-title fxFlex="50">
+                Määränpää: {{ride.destination}}
+              </mat-card-title>
+            </div>
+            <mat-card-content>
+              Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
+            </mat-card-content>
+            <mat-card-content>
+              Vapaita paikkoja: {{ride.free_seats}}
+            </mat-card-content>
+          </mat-card>
+        </a>
+      </div>
     </div>
   </div>
 </div>

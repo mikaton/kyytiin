@@ -4,11 +4,8 @@
 }
 
 .userheaderimg {
-	width: 144px;
+	width: 128px;
 	height: 128px;
-}
-
-.profileInfo {
 	margin-bottom: 10px;
 }
 
@@ -25,12 +22,12 @@
 	vertical-align: middle;
 	position: relative;
 	top: 15px;
-  }
+}
 
-  .ride_card {
+.ride_card {
 	margin-bottom: 8px;  
-	}
+}
 	
-	#changePicture {
-		margin-top: 10px;
-	}
+.btn-profile_image_picker {
+	max-width: 128px;
+}
