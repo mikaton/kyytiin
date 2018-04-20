@@ -16,7 +16,8 @@ exports.getUser = (req, res, next) => {
         lastName: user.lastName,
         email: user.email,
         customer_id: user.customer_id,
-        phoneNumber: user.phoneNumber
+        phoneNumber: user.phoneNumber,
+        profile_picture: user.profile_picture
       }
     });
   })
@@ -25,7 +26,6 @@ exports.getUser = (req, res, next) => {
 
 exports.updateUser = (req, res, next) => {
   const updateData = req.body;
-  console.log(updateData);
   User.find({
     where: {customer_id: req.params.id}
   }).then(user => {
@@ -38,7 +38,8 @@ exports.updateUser = (req, res, next) => {
         firstName: updatedUser.firstName,
         lastName: updatedUser.lastName,
         email: updatedUser.email,
-        phoneNumber: updatedUser.phoneNumber
+        phoneNumber: updatedUser.phoneNumber,
+        profile_picture: updatedUser.profile_picture
       }
     });
   })
@@ -59,3 +60,25 @@ exports.deleteUser = (req, res, next) => {
   })
   .catch((err) => console.log('deleteUser failed: ' + err.message));
 };
+
+exports.updateUserPhoto = (req, res, next) => {
+    // Tarkistetaan että filu tuli läpi
+    if(!req.file) return res.status(500).send({success: false, message: 'Tiedostoa ei löytynyt'});
+    // Otetaan tallennussijainti talteen
+    console.log(req.file);
+    const filePath = 'public/images/' + req.file.filename;
+    // Etsitään käyttäjä
+    User.findOne({
+      where: { customer_id: req.params.id }
+    })
+    .then(user => {
+      // Tallennetaan kuvan URL
+      const data = {
+        profile_picture: filePath
+      };
+      user.updateAttributes(data).catch((err) => console.error('Tietojen päivitys epäonnistui: ' + err.stack));
+    })
+    .catch((err) => console.error('updateUserPhoto epäonnistui: ' + err.stack));
+
+    return res.status(200).send({success: true, message: 'Tiedosto ladattu onnistuneesti'});
+}

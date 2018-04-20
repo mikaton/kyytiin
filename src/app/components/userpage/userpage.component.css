@@ -6,6 +6,7 @@
 .userheaderimg {
 	width: 128px;
 	height: 128px;
+	margin-bottom: 10px;
 }
 
 .profileInfo {
@@ -25,8 +26,17 @@
 	vertical-align: middle;
 	position: relative;
 	top: 15px;
-  }
+}
 
-  .ride_card {
+.ride_card {
 	margin-bottom: 8px;  
-  }
+}
+	
+.btn-profile_image_picker {
+	max-width: 128px;
+}
+
+::ng-deep .mat-raised-button {
+	padding-left: 8px;
+	padding-right: 8px;
+}
