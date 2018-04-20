@@ -21,14 +21,14 @@
                 <a routerLink="/feedback" routerLinkActive="router-link-active">
                     <mat-list-item>PALAUTE</mat-list-item>
                 </a>
-                <a routerLink="/faq" routerLinkActive="router-link-active">
-                    <mat-list-item>INFO</mat-list-item>
-                </a>
                 <a routerLink="/requests" *ngIf="localStorageToken === true" routerLinkActive="router-link-active">
                     <mat-list-item>PYYNNÖT</mat-list-item>
                 </a>
                 <a routerLink="/user" *ngIf="localStorageToken === true" routerLinkActive="router-link-active">
                     <mat-list-item>PROFIILI</mat-list-item>
+                </a>
+                <a routerLink="/faq" routerLinkActive="router-link-active">
+                    <mat-list-item>INFO</mat-list-item>
                 </a>
                 <mat-list-item *ngIf="localStorageToken === false">
                     <a routerLink="/register">
@@ -58,15 +58,16 @@
             <a routerLink="/feedback" routerLinkActive="router-link-active">
                 <mat-list-item>PALAUTE</mat-list-item>
             </a>
-            <a routerLink="/faq" routerLinkActive="router-link-active">
-                <mat-list-item>INFO</mat-list-item>
-            </a>
             <a routerLink="/requests" *ngIf="localStorageToken === true" routerLinkActive="router-link-active">
                 <mat-list-item>PYYNNÖT</mat-list-item>
             </a>
             <a routerLink="/user" *ngIf="localStorageToken === true" routerLinkActive="router-link-active">
                 <mat-list-item>PROFIILI</mat-list-item>
             </a>
+            <a routerLink="/faq" routerLinkActive="router-link-active">
+                <mat-list-item>INFO</mat-list-item>
+            </a>
+
             <mat-list-item *ngIf="localStorageToken === false">
                 <a routerLink="/register">
                     Kirjaudu Sisään
