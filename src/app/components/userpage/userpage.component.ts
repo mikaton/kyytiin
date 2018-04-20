@@ -59,7 +59,6 @@ export class UserpageComponent implements OnInit {
     this.userService.getUser(this.localAuthService.decodeToken())
       .then((result) => {
         this.localUser = result;
-        console.log(this.localUser.user);
         if(this.localUser.user.profile_picture !== null) {
           this.hasImageSet = true;
           this.imagePath = `${this.localUser.user.profile_picture}`;
