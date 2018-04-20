@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS Customers;
 CREATE TABLE IF NOT EXISTS Customers (
   social_id VARCHAR(500),
   social_provider VARCHAR(100),
-  profile_image MEDIUMBLOB NULL,
+  profile_picture VARCHAR(255),
   customer_id VARCHAR(100) NOT NULL PRIMARY KEY,
   firstname VARCHAR(30) NOT NULL,
   lastname VARCHAR(50) NOT NULL,
