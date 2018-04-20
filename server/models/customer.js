@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     profile_picture: {
-      type: DataTypes.BLOB
+      type: DataTypes.STRING
     },
     firstName: {
       type: DataTypes.STRING,

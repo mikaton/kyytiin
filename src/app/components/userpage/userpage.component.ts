@@ -63,6 +63,7 @@ export class UserpageComponent implements OnInit {
         if(this.localUser.user.profile_picture !== null) {
           this.hasImageSet = true;
           this.imagePath = `${this.localUser.user.profile_picture}`;
+          console.log(this.imagePath);
         }
       })
       .catch((err) => {
