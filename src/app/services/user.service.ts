@@ -50,7 +50,7 @@ export class UserService {
 
   updateUserProfileImage(img): Promise<any> {
     let response = new Promise((resolve, reject) => {
-      this.http.put(`${environment.apiUrl}/user/${this.localAuthService.decodeToken()}`, img)
+      this.http.put(`${environment.apiUrl}/user/${this.localAuthService.decodeToken()}/profile/image`, img)
       .toPromise()
       .then(
         data => resolve(data),

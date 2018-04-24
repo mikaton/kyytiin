@@ -24,6 +24,11 @@ const storage = multer.diskStorage({
     });
   }
 });
+
+const fileFilter = multer.fileFilter({
+  
+})
+
 const upload = multer({storage: storage});
 
 module.exports = (app) => {
@@ -46,7 +51,7 @@ module.exports = (app) => {
   router.get('/user/:id', jwtAuth, UserController.getUser);
   router.patch('/user/:id', jwtAuth, UserController.updateUser);
   router.delete('/user/:id', jwtAuth, UserController.deleteUser);
-  router.put('/user/:id', jwtAuth, upload.single('image'), UserController.updateUserPhoto);
+  router.put('/user/:id/profile/image', jwtAuth, upload.single('image'), UserController.updateUserPhoto);
 
   // Matka CRUD reitit
   router.post('/ride', jwtAuth, RideController.createRide);
