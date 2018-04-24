@@ -2,11 +2,15 @@
 @import "~angular-star-rating/assets/scss/star-rating";
 
 @include mat-core();
-
+@font-face {
+    font-family: rheiborn;
+    src: url('./assets/fonts/rheiborn_sans/Rheiborn_Sans_Clean.otf')
+}
 $kyytiin-primary: mat-palette($mat-light-green, 700);
 $kyytiin-accent: mat-palette($mat-light-green, 500);
 $kyytiin-warn: mat-palette($mat-red);
 
 $kyytiin-theme: mat-light-theme($kyytiin-primary, $kyytiin-accent, $kyytiin-warn);
+
 
 @include angular-material-theme($kyytiin-theme);

@@ -32,7 +32,7 @@
                 <input matInput id="free_seats" placeholder="Vapaiden paikkojen määrä" name="free_seats" type="number" formControlName="free_seats"
                     required>
                 <mat-error *ngIf="rideCreateForm.controls['free_seats'].hasError('min')">Lisää edes yksi tyhjä paikka</mat-error>
-                <mat-error *ngIf="rideCreateForm.controls['free_seats'].hasError('max')">Liian monta vapaata paikkaa, tai sitten ajat linja-autolla</mat-error>
+                <mat-error *ngIf="rideCreateForm.controls['free_seats'].hasError('max')">Liian monta vapaata paikkaa</mat-error>
             </mat-form-field>
             <mat-slide-toggle id="smoking" name="smoking" formControlName="smoking" color="primary"> Saako kyydissäsi tupakoida? </mat-slide-toggle>
             <mat-slide-toggle id="pets" name="pets" formControlName="pets" color="primary">Saako kyytiisi ottaa lemmikkejä?</mat-slide-toggle>
