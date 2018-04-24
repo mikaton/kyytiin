@@ -32,9 +32,10 @@
 	margin-bottom: 8px;  
 }
 	
-.btn-profile_image_picker {
+#btn-profile_image_picker_mobile, #btn-profile_image_picker_desktop {
 	max-width: 128px;
 }
+
 
 ::ng-deep .mat-raised-button {
 	padding-left: 8px;

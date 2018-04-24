@@ -2,12 +2,12 @@
   <mat-card class="mat-elevation-z8 profileInfo" fxLayout="row" fxLayoutAlign="space-between">
     <div fxLayout="column" fxLayoutGap="10px" fxLayout.lt-md="column" fxFlexAlign.lt-md="center">
       <!-- KAPEA LEISKA PROFIILIKUVA -->
-      <div fxLayout="column" fxLayoutAlign="start end" fxShow.xs fxHide.gt-xs>
+      <div fxLayout="column" fxLayoutAlign="start" fxShow.xs fxHide.gt-xs>
         <img *ngIf="hasImageSet === true" class="userheaderimg" src="{{imagePath}}">
         <img *ngIf="hasImageSet === false" class="userheaderimg" src="assets/images/profile_placeholder.png">
-        <div class="btn-profile_image_picker">
-          <input type="file" name="profile_image_picker" (change)="fileChangedMobile($event)" fxHide class="form-control" accept=".jpg, .jpeg, .png" id="profile_image_picker">
-          <label for="profile_image_picker" class="mat-raised-button mat-primary">Vaihda profiilikuva</label>
+        <div id="btn-profile_image_picker_mobile">
+          <input type="file" name="profile_image_picker" (change)="fileChangedMobile($event)" fxHide class="form-control" accept=".jpg, .jpeg, .png" id="profile_image_picker_mobile">
+          <label for="profile_image_picker_mobile" class="mat-raised-button mat-primary">Vaihda profiilikuva</label>
         </div>
       </div>
       <mat-card-title>
@@ -47,9 +47,9 @@
     <div fxLayout="column" fxLayoutAlign="start end" fxHide fxShow.gt-xs>
       <img *ngIf="hasImageSet === true" class="userheaderimg" src="{{imagePath}}">
       <img *ngIf="hasImageSet === false" class="userheaderimg" src="assets/images/profile_placeholder.png">
-      <div class="btn-profile_image_picker">
-          <input type="file" name="profile_image_picker" (change)="fileChanged($event)" fxHide class="form-control" accept=".jpg, .jpeg, .png" id="profile_image_picker">
-          <label for="profile_image_picker" class="mat-raised-button mat-primary">Vaihda profiilikuva</label>
+      <div id="btn-profile_image_picker_desktop">
+          <input type="file" name="profile_image_picker" (change)="fileChanged($event)" fxHide class="form-control" accept=".jpg, .jpeg, .png" id="profile_image_picker_desktop">
+          <label for="profile_image_picker_desktop" class="mat-raised-button mat-primary">Vaihda profiilikuva</label>
       </div>
       <div class="btn-start_upload" *ngIf="fileHasChanged">
         <label for="start_upload">Valittu tiedosto: {{fileName}}</label>
