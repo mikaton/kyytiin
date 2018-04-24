@@ -4,19 +4,16 @@
             <mat-card-title>
                 Käyttäjän tiedot:
             </mat-card-title>
-            <div fxLayout="column">
-                <div>
+            <div fxLayout="row">
+                <div fxLayout="column">
+                    <img fxShow.xs fxHide.gt-xs class=userheaderimg src="{{localUser.user.profile_picture}}">
                     <mat-card-content>Nimi: {{localUser.user.firstName}} {{localUser.user.lastName}}</mat-card-content>
                     <mat-card-content>Sähköposti: {{localUser.user.email}}</mat-card-content>
                     <mat-card-content>Puhelinnumero: {{localUser.user.phoneNumber}}</mat-card-content>
                 </div>
-                <div>
-                    <mat-card-content class="profilepicture" fxLayoutAlign="end" fxHide.lt-sm>
-                    </mat-card-content>
-                </div>
             </div>
         </div>
-        <img *ngIf="localUser.user.social_photourl" fxHide.lt-sm class=userheaderimg src="{{localUser.user.social_photourl}}">
+        <img fxHide fxShow.gt-xs class=userheaderimg src="{{localUser.user.profile_picture}}">
     </mat-card>
     <mat-card *ngIf="canReview">
         <mat-card-title>Arvioi käyttäjä:</mat-card-title>
