@@ -94,7 +94,7 @@ exports.updateUserPhoto = (req, res, next) => {
 
   upload(req, res, function(err) {
     // Tarkistetaan että filu tuli läpi
-    if(!req.file) return res.status(500).send({success: false, message: 'Tiedostoa ei löytynyt tai virheellinen tiedostotyyppi'});
+    if(!req.file) return res.status(500).send({success: false, message: 'Voit ladata vain .jpg tai .png kuvia!'});
     // Otetaan tallennussijainti talteen
     const filePath = 'public/images/' + req.file.filename;
     // Etsitään käyttäjä
