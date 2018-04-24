@@ -2,12 +2,15 @@
 .sidenav_toolbar .mat-nav-list .mat-list-item,
 .sidenav_toolbar .mat-selection-list .mat-list-item .mat-list-item-content{
     color: #fff;
+    font-family: 'rheiborn';
+    font-size: 110%;
 }
 .mobile_toolbar .mat-list .mat-list-item,
 .mobile_toolbar .mat-nav-list .mat-list-item,
 .mobile_toolbar .mat-selection-list .mat-list-item .mat-list-item-content{
     color: #fff;
     flex-wrap: wrap;
+    font-family: 'rheiborn';
 }
 
 .sidenav .mat-list .mat-list-item,
@@ -78,4 +81,9 @@
     height: 50px;
     position: relative;
     top: 57px;
+}
+::ng-deep .router-link-active {
+    border-bottom: #fff;
+    border-width: 0px 0px 8px 0px;
+    border-style: solid;
 }

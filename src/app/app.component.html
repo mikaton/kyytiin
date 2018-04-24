@@ -32,12 +32,12 @@
                 </a>
                 <mat-list-item *ngIf="localStorageToken === false">
                     <a routerLink="/register">
-                        Kirjaudu Sisään
+                        KIRJAUDU SISÄÄN
                     </a>
                 </mat-list-item>
                 <mat-list-item *ngIf="localStorageToken === true">
                     <div (click)="signOut()">
-                        Kirjaudu Ulos
+                        KIRJAUDU ULOS
                         <i class="fa fa-sign-out-alt"></i>
                     </div>
                 </mat-list-item>
@@ -70,26 +70,16 @@
 
             <mat-list-item *ngIf="localStorageToken === false">
                 <a routerLink="/register">
-                    Kirjaudu Sisään
+                    KIRJAUDU SISÄÄN
                 </a>
             </mat-list-item>
             <mat-list-item *ngIf="localStorageToken === true">
                 <div (click)="signOut()">
-                    Kirjaudu Ulos
+                    KIRJAUDU ULOS
                     <i class="fa fa-sign-out-alt"></i>
                 </div>
             </mat-list-item>
         </mat-nav-list>
     </div>
-    <div class="wrapper">
-        <mat-card>
-            <mat-card-content>
-                Hei! Tervetuloa Kyyti.in pre-alphaan. Sovellus ei välttämättä toimi vielä oikein, eivätkä kaikki toiminnot ole käytössä.
-                Jos huomaat virheitä, laitathan niistä palautetta palautelinkin kautta. Laitathan palautetta myöskin jos
-                kaikki toimii, mutta sinulla on parannusehdotuksia.
-            </mat-card-content>
-        </mat-card>
-    </div>
-
 </div>
 <router-outlet></router-outlet>
