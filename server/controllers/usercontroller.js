@@ -2,6 +2,7 @@ const model = require('../models/index'),
       multer = require('multer'),
       crypto = require('crypto'),
       path = require('path'),
+      fs = require('fs'),
       User = model.Customer;
 
 exports.getUser = (req, res, next) => {
@@ -83,7 +84,6 @@ exports.updateUserPhoto = (req, res, next) => {
       const filetypes = /jpeg|jpg|png/;
       const mimetype = filetypes.test(file.mimetype);
       const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-
       // Jos mimetyyppi ja tiedostopääte mätsää otetaan tiedosto vastaan
       if(mimetype && extname) return callback(null, true);
       // Muuten ei
@@ -94,7 +94,7 @@ exports.updateUserPhoto = (req, res, next) => {
 
   upload(req, res, function(err) {
     // Tarkistetaan että filu tuli läpi
-    if(!req.file) return res.status(500).send({success: false, message: 'Tiedostoa ei löytynyt'});
+    if(!req.file) return res.status(500).send({success: false, message: 'Tiedostoa ei löytynyt tai virheellinen tiedostotyyppi'});
     // Otetaan tallennussijainti talteen
     const filePath = 'public/images/' + req.file.filename;
     // Etsitään käyttäjä

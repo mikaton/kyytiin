@@ -19,7 +19,9 @@ import { environment } from '../../../environments/environment';
 })
 export class UserpageComponent implements OnInit {
   hasImageSet: boolean = false;
+  fileHasChanged: boolean = false;
   imagePath: string;
+  fileName: string;
   constructor(
     private userService: UserService,
     private localAuthService: LocalAuthService,
@@ -32,6 +34,7 @@ export class UserpageComponent implements OnInit {
   rides = [];
   joinedRides = [];
   customerEditForm: FormGroup;
+  formData: FormData = new FormData();
 
   async ngOnInit() {
     await Promise.all([this.defaultUserValues(), this.updateUserdata(), this.getRides(), this.createForm()
@@ -62,7 +65,6 @@ export class UserpageComponent implements OnInit {
         if(this.localUser.user.profile_picture !== null) {
           this.hasImageSet = true;
           this.imagePath = `${this.localUser.user.profile_picture}`;
-          console.log(this.imagePath);
         }
       })
       .catch((err) => {
@@ -87,20 +89,29 @@ export class UserpageComponent implements OnInit {
       });
     }
 
-  uploadImage(event: any) {
+  fileChanged(event: any) {
     let files = event.target.files;
-    let formData: FormData = new FormData();
-
     if(files && files[0]) {
-      formData.append('image', files[0]);
-      this.userService.updateUserProfileImage(formData)
-      .then(res => {
+      this.fileHasChanged = true;
+      this.fileName = files[0].name;
+      this.formData.append('image', files[0]);
+    }
+  }
+
+  uploadImage() {
+    if(this.formData) {
+      this.userService.updateUserProfileImage(this.formData)
+      .then((res) => {
         this.updateUserdata();
         window.location.reload();
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        this.errorUiService.popErrorDialog(err);
+        console.error('uploadImage epäonnistui: ' + err.message);
+      })
     }
   }
+
   // Poistaa selaimen konsolin virheilmoitukset alustamalla datan 
   // huono fixi, pitää ottaa selvää serviceworkkereista ja välimuistista. 
   defaultUserValues() {
