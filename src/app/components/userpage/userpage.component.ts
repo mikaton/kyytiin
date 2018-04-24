@@ -97,6 +97,17 @@ export class UserpageComponent implements OnInit {
       this.formData.append('image', files[0]);
     }
   }
+  
+  // Mobiililla upataan kuva heti kun se on valittu
+  fileChangedMobile(event: any) {
+    let files = event.target.files;
+    if(files && files[0]) {
+      this.fileHasChanged = true;
+      this.fileName = files[0].name;
+      this.formData.append('image', files[0]);
+      this.uploadImage();
+    }
+  }
 
   uploadImage() {
     if(this.formData) {

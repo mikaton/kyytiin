@@ -102,11 +102,11 @@ exports.updateUserPhoto = (req, res, next) => {
       where: { customer_id: req.params.id }
     })
     .then(user => {
-    // Tallennetaan kuvan URL
-    const data = {
-      profile_picture: filePath
-    };
-    user.updateAttributes(data).catch((err) => console.error('Tietojen päivitys epäonnistui: ' + err.stack));
+      // Tallennetaan kuvan URL
+      const data = {
+        profile_picture: filePath
+      };
+      user.updateAttributes(data).catch((err) => console.error('Tietojen päivitys epäonnistui: ' + err.stack));
     })
     .catch((err) => console.error('updateUserPhoto epäonnistui: ' + err.stack));
 

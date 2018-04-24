@@ -6,13 +6,9 @@
         <img *ngIf="hasImageSet === true" class="userheaderimg" src="{{imagePath}}">
         <img *ngIf="hasImageSet === false" class="userheaderimg" src="assets/images/profile_placeholder.png">
         <div class="btn-profile_image_picker">
-          <input type="file" name="profile_image_picker" (change)="fileChanged($event)" fxHide class="form-control" accept=".jpg, .jpeg, .png" id="profile_image_picker">
+          <input type="file" name="profile_image_picker" (change)="fileChangedMobile($event)" fxHide class="form-control" accept=".jpg, .jpeg, .png" id="profile_image_picker">
           <label for="profile_image_picker" class="mat-raised-button mat-primary">Vaihda profiilikuva</label>
         </div>
-        <div class="btn-start_upload" *ngIf="fileHasChanged">
-            <label for="start_upload">Valittu tiedosto: {{fileName}}</label>
-            <button id="start_upload" mat-raised-button color="primary">Lataa</button>
-          </div>
       </div>
       <mat-card-title>
         Omat tiedot:
