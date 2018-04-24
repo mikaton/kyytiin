@@ -1,4 +1,7 @@
 const model = require('../models/index'),
+      multer = require('multer'),
+      crypto = require('crypto'),
+      path = require('path'),
       User = model.Customer;
 
 exports.getUser = (req, res, next) => {
@@ -62,23 +65,51 @@ exports.deleteUser = (req, res, next) => {
 };
 
 exports.updateUserPhoto = (req, res, next) => {
+  // Storage-objekti määrittää kuinka/minne multer tallentaa tiedoston
+  const storage =  multer.diskStorage({
+    destination: 'dist/public/images',
+    filename: (req, file, callback) => {
+      // Luodaan tiedostolle sekalainen nimi ja lisätään timestamp sekä tiedostopääte
+      crypto.pseudoRandomBytes(16, (err, raw) => {
+        callback(null, raw.toString('hex') + Date.now() + path.extname(file.originalname));
+      });
+    }
+  });
+
+  let upload = multer({
+    storage: storage,
+    fileFilter: function(req, file, callback) {
+      // Sallitaan vain jpeg/png
+      const filetypes = /jpeg|jpg|png/;
+      const mimetype = filetypes.test(file.mimetype);
+      const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+      // Jos mimetyyppi ja tiedostopääte mätsää otetaan tiedosto vastaan
+      if(mimetype && extname) return callback(null, true);
+      // Muuten ei
+      callback(null, false);
+    }
+  }).single('image');
+
+
+  upload(req, res, function(err) {
     // Tarkistetaan että filu tuli läpi
     if(!req.file) return res.status(500).send({success: false, message: 'Tiedostoa ei löytynyt'});
     // Otetaan tallennussijainti talteen
-    console.log(req.file);
     const filePath = 'public/images/' + req.file.filename;
     // Etsitään käyttäjä
     User.findOne({
       where: { customer_id: req.params.id }
     })
     .then(user => {
-      // Tallennetaan kuvan URL
-      const data = {
-        profile_picture: filePath
-      };
-      user.updateAttributes(data).catch((err) => console.error('Tietojen päivitys epäonnistui: ' + err.stack));
+    // Tallennetaan kuvan URL
+    const data = {
+      profile_picture: filePath
+    };
+    user.updateAttributes(data).catch((err) => console.error('Tietojen päivitys epäonnistui: ' + err.stack));
     })
     .catch((err) => console.error('updateUserPhoto epäonnistui: ' + err.stack));
 
     return res.status(200).send({success: true, message: 'Tiedosto ladattu onnistuneesti'});
-}
+  });
+};

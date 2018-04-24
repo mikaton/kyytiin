@@ -1,7 +1,5 @@
 const express = require('express'),
   app = express(),
-  path = require('path'),
-  crypto = require('crypto'),
   passport = require('passport'),
   passportService = require('./config/passport'),
   AuthController = require('./controllers/authcontroller'),
@@ -10,26 +8,7 @@ const express = require('express'),
   ReviewController = require('./controllers/reviewcontroller'),
   RequestController = require('./controllers/requestcontroller'),
   NotificationController = require('./controllers/notificationcontroller'),
-  multer = require('multer'),
   ua = require('universal-analytics');
-
-// Multerin asetukset
-const storage = multer.diskStorage({
-  destination: 'dist/public/images',
-  filename: (req, file, callback) => {
-    // Tehdään tiedostolle sekalainen nimi ja lisätään tiedostopääte koska multer poistaa sen
-    crypto.pseudoRandomBytes(16, (err, raw) => {
-      if(err) return callback(err);
-      callback(null, raw.toString('hex') + path.extname(file.originalname));
-    });
-  }
-});
-
-const fileFilter = multer.fileFilter({
-  
-})
-
-const upload = multer({storage: storage});
 
 module.exports = (app) => {
   
@@ -51,7 +30,7 @@ module.exports = (app) => {
   router.get('/user/:id', jwtAuth, UserController.getUser);
   router.patch('/user/:id', jwtAuth, UserController.updateUser);
   router.delete('/user/:id', jwtAuth, UserController.deleteUser);
-  router.put('/user/:id/profile/image', jwtAuth, upload.single('image'), UserController.updateUserPhoto);
+  router.put('/user/:id/profile/image', jwtAuth, UserController.updateUserPhoto);
 
   // Matka CRUD reitit
   router.post('/ride', jwtAuth, RideController.createRide);

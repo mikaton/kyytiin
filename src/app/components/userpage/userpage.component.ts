@@ -98,7 +98,7 @@ export class UserpageComponent implements OnInit {
         this.updateUserdata();
         window.location.reload();
       })
-      .catch((err) => console.error(err.message));
+      .catch((err) => console.error(err));
     }
   }
   // Poistaa selaimen konsolin virheilmoitukset alustamalla datan 
