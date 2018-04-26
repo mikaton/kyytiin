@@ -56,6 +56,7 @@ export class UserMadeRideComponent implements OnInit {
       .then(data => {
         this.ride = data.ride
         this.joiners = data.joiners
+        console.log(data);
       })
       .catch((err) => {
         this.errorUiService.popErrorDialog(err);

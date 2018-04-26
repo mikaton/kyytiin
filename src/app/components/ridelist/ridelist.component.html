@@ -27,29 +27,37 @@
     <div fxFlex="65" fxLayout="column" *ngIf="!noRides">
       <div *ngIf="(rides | rideSearch: startingplace:destination).length === 0">
         <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
-            <mat-card-content>Kyytejä ei löytynyt hakuehtojesi perusteella</mat-card-content>
+          <mat-card-content>Kyytejä ei löytynyt hakuehtojesi perusteella</mat-card-content>
         </mat-card>
       </div>
       <div *ngFor="let ride of rides | rideSearch: startingplace:destination">
         <div *ngIf="ride.free_seats > 0">
-          <a routerLink="/rides/{{ride.ride_id}}">
-            <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space  around center">
-              <div fxLayout="column">
+          <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space  around center">
+            <div fxLayout="row">
+              <img src="../../../assets/images/car.png" class="car">
+              <div fxLayout="column" class="details_holder">
                 <mat-card-title fxFlex="50">
                   Lähtöpaikka: {{ride.startingplace}}
                 </mat-card-title>
-                <mat-card-title fxFlex="50">
+                <mat-card-title fxFlex="50" class="destination">
                   Määränpää: {{ride.destination}}
                 </mat-card-title>
+                <mat-card-content class="departure">
+                  <span>Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} </span>
+                  <span class="time">Aika: {{ride.time_of_departure | date:'shortTime'}}</span>
+                </mat-card-content>
+                <mat-card-content>
+                  Vapaita paikkoja: {{ride.free_seats}}
+                </mat-card-content>
               </div>
-              <mat-card-content>
-                Lähtöpäivä: {{ride.time_of_departure | date:'mediumDate'}} aika: {{ride.time_of_departure | date:'shortTime'}}
-              </mat-card-content>
-              <mat-card-content>
-                Vapaita paikkoja: {{ride.free_seats}}
-              </mat-card-content>
-            </mat-card>
-          </a>
+              <div fxLayoutAlign="end end">
+                <a routerLink="/rides/{{ride.ride_id}}">
+                  <button fxHide fxShow.gt-sm mat-button class="info_button">Liity kyytiin</button>
+                  <i fxShow fxHide.gt-sm class="far info_icon fa-plus-square fa-2x"></i>
+                </a>
+              </div>
+            </div>
+          </mat-card>
         </div>
       </div>
     </div>

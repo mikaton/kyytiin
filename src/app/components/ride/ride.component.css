@@ -13,3 +13,9 @@ agm-map {
 	padding: 0;
 	margin-bottom: 10px;
 }
+
+.ride_card {
+	border-width: 0px 0px 2px 0px;
+    border-style: solid; 
+    border-color: #689F38;
+}

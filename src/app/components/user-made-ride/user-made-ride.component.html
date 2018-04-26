@@ -35,9 +35,9 @@
     </mat-card-content>
     <mat-list>
       <mat-divider></mat-divider>
-      <mat-nav-list>
+      <h3 mat-header *ngIf="joiners === undefined">Ei liittyneitä kyytiläisiä</h3>
+      <mat-nav-list *ngIf="joiners != undefined">
         <h3 mat-header>Liittyneet kyytiläiset</h3>
-
         <mat-list-item *ngFor="let joiner of joiners">
           <a matLine routerLink="/user/{{joiner.customer_id}}">
             <p matLine>
