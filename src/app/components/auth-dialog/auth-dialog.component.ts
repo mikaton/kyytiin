@@ -116,7 +116,6 @@ export class AuthDialogComponent implements OnInit {
   }
 
   signInLocalUser(loginForm) {
-    console.log(loginForm);
     this.localAuthService.signIn(loginForm)
       .then(() => window.location.reload())
       .then(() => this.router.navigate(['/rides']))

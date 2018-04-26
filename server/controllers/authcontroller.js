@@ -115,8 +115,6 @@ exports.localRegister = (req, res, next) => {
 
 exports.verifyEmail = (req, res, next) => {
 	// Etsitään käyttäjä jonka confirm_token on voimassa
-	console.log('täällä!')
-	console.log(req.params);
 	User.findOne({
 		where: { confirm_token: req.params.token, confirm_token_expiry: { $gt: Date.now() } }
 	})
@@ -128,12 +126,10 @@ exports.verifyEmail = (req, res, next) => {
 };
 
 exports.localLogin = (req, res, next) => {
-	console.log(req.body)
 	User.findOne({
 		where: { email: req.body.email }
 	})
 	.then((user) => {
-		console.log(user);
 		if (!user) return res.status(404).json({ success: false, message: 'Käyttäjää ei löytynyt' });
 		if (!checkPassword(req.body.password, user.dataValues.password)) return res.status(401).json({ success: false, message: 'Salasanat eivät täsmää' });
 		if(!user.dataValues.confirmed) return res.status(403).json({ success: false, message: 'Vahvista sähköpostiosoitteesi kirjautuaksesi sisään' });
