@@ -71,6 +71,7 @@ export class AuthDialogComponent implements OnInit {
   }
   ngOnInit() {
     this.checkLoggedInStatus();
+    this.moveToRides();
     this.passwordFailed = false;
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
@@ -80,6 +81,11 @@ export class AuthDialogComponent implements OnInit {
       this.loggedInLocal = true;
     } else {
       this.loggedInLocal = false;
+    }
+  }
+  moveToRides() {
+    if(this.loggedInLocal || this.loggedIn) {
+      this.router.navigate(['/rides']); 
     }
   }
   get firstName() { return this.registerForm.get('firstName') };
@@ -163,7 +169,7 @@ export class AuthDialogComponent implements OnInit {
 
   signOut(): void {
     this.localAuthService.signOut();
-    this.router.navigate(['/frontpage']);
+    this.router.navigate(['/register']);
     this.authService.signOut();
     this.checkLoggedInStatus()
   }

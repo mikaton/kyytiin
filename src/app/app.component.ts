@@ -83,6 +83,6 @@ export class AppComponent implements OnInit {
     this.authService.signOut();
     this.localAuthService.signOut();
     this.localUser = undefined;
-    this.router.navigate(['frontpage']);
+    this.router.navigate(['auth']);
   }
 }

@@ -14,6 +14,6 @@ export class RegistersuccessComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/frontpage']);
+    this.router.navigate(['/register']);
   }
 }

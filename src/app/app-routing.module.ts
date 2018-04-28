@@ -21,7 +21,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import { UserMadeRideComponent } from './components/user-made-ride/user-made-ride.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/frontpage', pathMatch: 'full' },
+  { path: '', redirectTo: '/register', pathMatch: 'full' },
   { path: 'rides', component: RidelistComponent },
   { path: 'rides/:ride_id', canActivate: [AuthGuard], component: RideComponent},
   { path: 'frontpage', component: FrontpageComponent },
