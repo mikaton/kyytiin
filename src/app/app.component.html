@@ -6,7 +6,7 @@
         siirtää sivubaarileiskalla logon oikealle-->
         <img id="logo_toolbar" class="mat-ripple" (click)="toFrontPage()" src="../assets/images/kyytiin-logo-web.png" alt="kyyti.in logo">
         <div class="slogan_containter" fxLayoutAlign="center center">
-            <span class="slogan_text">Uuden ajan kimppakyytipalvelu</span> 
+            <span fxHide fxShow.gt-md class="slogan_text">Uuden ajan kimppakyytipalvelu</span> 
         </div>
         <span class="toolbar_fillempty"></span>
         <!-- Työpöydän, >1280px leveille näytöille tarkoitettu navigoitipalkki -->
@@ -27,9 +27,6 @@
                 </a>
                 <a routerLink="/feedback" routerLinkActive="router-link-active">
                     <mat-list-item>PALAUTE</mat-list-item>
-                </a>
-                <a routerLink="/faq" routerLinkActive="router-link-active">
-                    <mat-list-item>INFO</mat-list-item>
                 </a>
                 <mat-list-item *ngIf="localStorageToken === false" routerLinkActive="router-link-active">
                     <a routerLink="/register">
@@ -65,10 +62,6 @@
             <a routerLink="/feedback" routerLinkActive="router-link-active">
                 <mat-list-item>PALAUTE</mat-list-item>
             </a>
-            <a routerLink="/faq" routerLinkActive="router-link-active">
-                <mat-list-item>INFO</mat-list-item>
-            </a>
-
             <mat-list-item *ngIf="localStorageToken === false" routerLinkActive="router-link-active">
                 <a routerLink="/register">
                     KIRJAUDU SISÄÄN

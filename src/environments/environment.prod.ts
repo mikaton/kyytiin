@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://kyyti.in/api',
-  serverUrl: 'https://kyyti.in'
+  apiUrl: 'https://app.kyyti.in/',
+  serverUrl: 'https://app.kyyti.in'
 
 };
