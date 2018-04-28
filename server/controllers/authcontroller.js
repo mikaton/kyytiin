@@ -87,7 +87,7 @@ exports.localRegister = (req, res, next) => {
 							template: 'verify-account',
 							subject: 'Vahvista Kyyti.in -tunnuksesi',
 							context: {
-								url: 'https://kyyti.in/app/verify-account/' + newUser.confirm_token,
+								url: 'https://app.kyyti.in/verify-account/' + newUser.confirm_token,
 								name: newUser.firstName
 							}
 						};
@@ -287,7 +287,7 @@ exports.forgotPassword = (req, res, next) => {
 				template: 'forgot-password',
 				subject: 'Kyyti.in salasanan nollaus',
 				context: {
-					url: 'https://kyyti.in/app/change-password/' + token,
+					url: 'https://app.kyyti.in/change-password/' + token,
 					name: user.firstName
 				}
 			};
