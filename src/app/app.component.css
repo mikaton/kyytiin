@@ -25,11 +25,6 @@
     color: white;
 }
 
-#logo_toolbar {
-    max-height: 95%;
-    margin-bottom: 2px;
-}
-
 .sidenav_toolbar {
     background-image: url(../assets/images/kyytiin-bg.jpg);
     height: 128px;
@@ -55,11 +50,21 @@
     transition: all 0.2s ease-out
 }
 
-#logo_toolbar:hover {
+::ng-deep .mat-list .mat-list-item, .mat-list .mat-list-option, .mat-nav-list .mat-list-item, .mat-nav-list .mat-list-option, .mat-selection-list .mat-list-item, .mat-selection-list .mat-list-option {
+    padding: 4px 8px;
+    height: 24px; 
+    font-size: 12px;
+}
+.logo_toolbar {
+    max-height: 95%;
+    margin-bottom: 2px;
+}
+
+.logo_toolbar:hover {
     filter: drop-shadow(0px 0px 7px #222);
 }
 
-#logo_toolbar:active {
+.logo_toolbar:active {
     filter: drop-shadow(0px 0px 15px #111) opacity(0.9);
 }
 
