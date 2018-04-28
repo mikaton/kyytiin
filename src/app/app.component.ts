@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.checkLoggedInStatus();
+    await Promise.all([this.checkLoggedInStatus(), this.sidenav()])
   }
 
   checkLoggedInStatus() {

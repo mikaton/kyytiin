@@ -22,7 +22,6 @@ app.use(bodyParser.json());
 app.use(cors());
 models.sequelize.authenticate().then(() => console.log('DB Connected')).catch((err) => console.log('Error connecting to DB: ' + err.stack));
 models.sequelize.sync().then(() => console.log('Models synced.')).catch((err) => console.log('Error syncing models: ' + err.stack));
-
 router(app);
 
 //lähettää index.html:n 'dist/index.html' kansiosta, tarvitaan angularin näyttämiseksi selaimessa 

@@ -101,7 +101,6 @@ exports.getUserMadeRides = (req, res, next) => {
       type: Ride.sequelize.QueryTypes.SELECT
     })
     .then(rides => {
-      //jos kutsu palauttaa tyhjän taulukon (ei dataa customersride_ridessä) haetaan japalautetaan pelkästään kyydin tiedot
       console.log(rides);
       Ride.find({
         where: { ride_id: req.params.ride_id }
@@ -110,10 +109,11 @@ exports.getUserMadeRides = (req, res, next) => {
         .then(ride => {
           var i;
           var joiners = [];
+          console.log(rides.length);
           for (i = 0; i < rides.length; i++) {
             joiners.push(rides[i].joiner_id);
           }
-          if (joiners.length < 0) {
+          if (joiners.length > 0) {
             User.findAll({
               attributes: ['firstName', 'lastName', 'email', 'phoneNumber', 'customer_id'],
               where: {

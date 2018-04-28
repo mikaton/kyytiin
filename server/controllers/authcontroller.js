@@ -115,8 +115,6 @@ exports.localRegister = (req, res, next) => {
 
 exports.verifyEmail = (req, res, next) => {
 	// Etsitään käyttäjä jonka confirm_token on voimassa
-	console.log('täällä!')
-	console.log(req.params);
 	User.findOne({
 		where: { confirm_token: req.params.token, confirm_token_expiry: { $gt: Date.now() } }
 	})

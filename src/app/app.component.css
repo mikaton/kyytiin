@@ -1,13 +1,14 @@
 .sidenav_toolbar .mat-list .mat-list-item,
 .sidenav_toolbar .mat-nav-list .mat-list-item,
-.sidenav_toolbar .mat-selection-list .mat-list-item .mat-list-item-content{
+.sidenav_toolbar .mat-selection-list .mat-list-item .mat-list-item-content {
     color: #fff;
     font-family: 'rheiborn';
     font-size: 110%;
 }
+
 .mobile_toolbar .mat-list .mat-list-item,
 .mobile_toolbar .mat-nav-list .mat-list-item,
-.mobile_toolbar .mat-selection-list .mat-list-item .mat-list-item-content{
+.mobile_toolbar .mat-selection-list .mat-list-item .mat-list-item-content {
     color: #fff;
     flex-wrap: wrap;
     font-family: 'rheiborn';
@@ -15,37 +16,72 @@
 
 .sidenav .mat-list .mat-list-item,
 .sidenav .mat-nav-list .mat-list-item,
-.sidenav .mat-selection-list .mat-list-item .mat-toolbar{
+.sidenav .mat-selection-list .mat-list-item .mat-toolbar {
     color: #689F38;
 }
-.mat-toolbar{
+
+.mat-toolbar {
     background-color: #689F38;
     color: white;
 }
 
-#logo_toolbar {
-    max-height: 95%;
+.sidenav_toolbar {
+    background-image: url(../assets/images/kyytiin-bg.jpg);
+    height: 128px;
 }
+
+.slogan_containter {
+    margin-left: 30px;
+    padding-left: 30px;
+    border-width: 0px 0px 0px 4px;
+    border-style: solid;
+    border-color: white;
+    height: 80%;
+    vertical-align: middle;
+}
+
+.slogan_text {
+    font-family: rheiborn;
+    font-size: 150%;
+    line-height: 100%; 
+}
+
 #arrow {
     transition: all 0.2s ease-out
 }
-#logo_toolbar:hover {
+
+::ng-deep .mat-list .mat-list-item, .mat-list .mat-list-option, .mat-nav-list .mat-list-item, .mat-nav-list .mat-list-option, .mat-selection-list .mat-list-item, .mat-selection-list .mat-list-option {
+    padding: 4px 8px;
+    height: 24px; 
+    font-size: 12px;
+}
+.logo_toolbar {
+    max-height: 95%;
+    margin-bottom: 2px;
+}
+
+.logo_toolbar:hover {
     filter: drop-shadow(0px 0px 7px #222);
 }
-#logo_toolbar:active {
+
+.logo_toolbar:active {
     filter: drop-shadow(0px 0px 15px #111) opacity(0.9);
 }
+
 .app_wrapper {
     display: flex;
     width: 100%;
     margin: auto;
 }
+
 .mobile_toolbar {
-    background-color: #689F38;
+    background-color: #87c349;
 }
+
 .toolbar {
     flex-wrap: wrap;
 }
+
 .wrapper {
     margin: 0px;
     padding: 0px;
@@ -82,6 +118,7 @@
     position: relative;
     top: 57px;
 }
+
 ::ng-deep .router-link-active {
     border-bottom: #fff;
     border-width: 0px 0px 8px 0px;

@@ -12,7 +12,6 @@ const jwtOpts = {
 }
 
 const jwtLogin = new JwtStrategy(jwtOpts, (payload, done) => {
-	console.log(payload);
 	User.findOne({
 		where: { customer_id: payload._id }
 	})

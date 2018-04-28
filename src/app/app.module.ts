@@ -44,7 +44,6 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } fro
 import { FilterPipe } from './pipes/filter.pipe';
 import { registerLocaleData } from '@angular/common';
 import localeFi from '@angular/common/locales/fi';
-import { FaqComponent } from './components/faq/faq.component';
 import { RideComponent } from './components/ride/ride.component';
 import { RideCreateConfirmDialog } from './dialogs/ridecreate-confirm-dialog';
 import { ErrorDialog } from './dialogs/error-dialog';
@@ -102,7 +101,6 @@ export function tokenGetter() {
     RidelistComponent,
     RidecreateComponent,    
     FilterPipe,
-    FaqComponent,
     RideCreateConfirmDialog,
     RideComponent,
     ForgotPasswordComponent,
@@ -150,7 +148,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['165.227.141.110', 'http://165.227.141.110', 'localhost:3000', 'localhost:4200', 'https://kyyti.in', 'https://www.kyyti.in', 'kyyti.in', 'www.kyyti.in']
+        whitelistedDomains: ['165.227.141.110', 'http://165.227.141.110', 'localhost:3000', 'localhost:4200', 'https://app.kyyti.in', 'https://www.app.kyyti.in', 'app.kyyti.in', 'www.app.kyyti.in']
       }
     }),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),

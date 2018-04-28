@@ -8,7 +8,6 @@ import { FrontpageComponent } from './components/frontpage/frontpage.component';
 import { AuthGuard } from './guards/auth.guard.service';
 import { IdGuard } from './guards/id.guard.service';
 import { RidecreateComponent } from './components/ridecreate/ridecreate.component';
-import { FaqComponent } from './components/faq/faq.component';
 import { RideComponent } from './components/ride/ride.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
@@ -26,7 +25,6 @@ const routes: Routes = [
   { path: 'rides', component: RidelistComponent },
   { path: 'rides/:ride_id', canActivate: [AuthGuard], component: RideComponent},
   { path: 'frontpage', component: FrontpageComponent },
-  { path: 'faq', component: FaqComponent},
   { path: 'user', canActivate: [AuthGuard], component: UserpageComponent},
   { path: 'user/:customer_id', canActivate: [AuthGuard], component: UserdetailsComponent},
   { path: 'requests', canActivate: [AuthGuard], component: JoinRequestListComponent},

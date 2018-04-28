@@ -2,11 +2,12 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 <div class="wrapper">
     <mat-toolbar color="primary" class="sidenav_toolbar">
-
         <!-- fxHide fxShow temppuilu piilottaa ja näyttää conditionaalisesti spanit, 
         siirtää sivubaarileiskalla logon oikealle-->
-
-        <img id="logo_toolbar" class="mat-ripple" (click)="toFrontPage()" src="../assets/images/android-chrome-192x192.png" alt="kyyti.in logo">
+        <img ngClass="logo_toolbar" class="logo_toolbar_small" (click)="toFrontPage()" src="../assets/images/kyytiin-logo-web.png" alt="kyyti.in logo">
+        <div class="slogan_containter" fxLayoutAlign="center center">
+            <span fxHide fxShow.gt-md class="slogan_text">Uuden ajan kimppakyytipalvelu</span> 
+        </div>
         <span class="toolbar_fillempty"></span>
         <!-- Työpöydän, >1280px leveille näytöille tarkoitettu navigoitipalkki -->
         <!-- piilottaa listan jos ruudun leveys alle 1279px -->
@@ -15,11 +16,8 @@
                 <a routerLink="/rides" routerLinkActive="router-link-active">
                     <mat-list-item>KYYDIT</mat-list-item>
                 </a>
-                <a routerLink="/ridecreate" routerLinkActive="router-link-active" *ngIf="localStorageToken === true">
+                <a routerLink="/ridecreate" routerLinkActive="router-link-acti" *ngIf="localStorageToken === true">
                     <mat-list-item>LUO KYYTI</mat-list-item>
-                </a>
-                <a routerLink="/feedback" routerLinkActive="router-link-active">
-                    <mat-list-item>PALAUTE</mat-list-item>
                 </a>
                 <a routerLink="/requests" *ngIf="localStorageToken === true" routerLinkActive="router-link-active">
                     <mat-list-item>PYYNNÖT</mat-list-item>
@@ -27,10 +25,10 @@
                 <a routerLink="/user" *ngIf="localStorageToken === true" routerLinkActive="router-link-active">
                     <mat-list-item>PROFIILI</mat-list-item>
                 </a>
-                <a routerLink="/faq" routerLinkActive="router-link-active">
-                    <mat-list-item>INFO</mat-list-item>
+                <a routerLink="/feedback" routerLinkActive="router-link-active">
+                    <mat-list-item>PALAUTE</mat-list-item>
                 </a>
-                <mat-list-item *ngIf="localStorageToken === false">
+                <mat-list-item *ngIf="localStorageToken === false" routerLinkActive="router-link-active">
                     <a routerLink="/register">
                         KIRJAUDU SISÄÄN
                     </a>
@@ -47,39 +45,35 @@
             <mat-icon id="arrow">arrow_upward</mat-icon>
         </button>
     </mat-toolbar>
-    <div class="mobile_toolbar" id="mob_bar" fxHide fxShow.lt-lg>
+    <mat-toolbar color="primary" class="mobile_toolbar" id="mob_bar" fxHide fxShow.lt-lg>
         <mat-nav-list class="toolbar" fxLayout="row">
             <a routerLink="/rides" routerLinkActive="router-link-active">
-                <mat-list-item>KYYDIT</mat-list-item>
+                <mat-list-item class="nav_text_mobile">KYYDIT</mat-list-item>
             </a>
             <a routerLink="/ridecreate" routerLinkActive="router-link-active" *ngIf="localStorageToken === true">
-                <mat-list-item>LUO KYYTI</mat-list-item>
-            </a>
-            <a routerLink="/feedback" routerLinkActive="router-link-active">
-                <mat-list-item>PALAUTE</mat-list-item>
+                <mat-list-item class="nav_text_mobile">LUO KYYTI</mat-list-item>
             </a>
             <a routerLink="/requests" *ngIf="localStorageToken === true" routerLinkActive="router-link-active">
-                <mat-list-item>PYYNNÖT</mat-list-item>
+                <mat-list-item class="nav_text_mobile">PYYNNÖT</mat-list-item>
             </a>
             <a routerLink="/user" *ngIf="localStorageToken === true" routerLinkActive="router-link-active">
-                <mat-list-item>PROFIILI</mat-list-item>
+                <mat-list-item class="nav_text_mobile">PROFIILI</mat-list-item>
             </a>
-            <a routerLink="/faq" routerLinkActive="router-link-active">
-                <mat-list-item>INFO</mat-list-item>
+            <a routerLink="/feedback" routerLinkActive="router-link-active">
+                <mat-list-item class="nav_text_mobile">PALAUTE</mat-list-item>
             </a>
-
-            <mat-list-item *ngIf="localStorageToken === false">
+            <mat-list-item class="nav_text_mobile" *ngIf="localStorageToken === false" routerLinkActive="router-link-active">
                 <a routerLink="/register">
                     KIRJAUDU SISÄÄN
                 </a>
             </mat-list-item>
-            <mat-list-item *ngIf="localStorageToken === true">
+            <mat-list-item class="nav_text_mobile" *ngIf="localStorageToken === true">
                 <div (click)="signOut()">
                     KIRJAUDU ULOS
                     <i class="fa fa-sign-out-alt"></i>
                 </div>
             </mat-list-item>
         </mat-nav-list>
-    </div>
+    </mat-toolbar>
 </div>
 <router-outlet></router-outlet>
