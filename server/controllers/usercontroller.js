@@ -93,6 +93,7 @@ exports.updateUserPhoto = (req, res, next) => {
 
 
   upload(req, res, function(err) {
+    if(err) return res.status(400).json({success: false, message: err.message});
     // Tarkistetaan että filu tuli läpi
     if(!req.file) return res.status(500).send({success: false, message: 'Voit ladata vain .jpg tai .png kuvia!'});
     // Otetaan tallennussijainti talteen
