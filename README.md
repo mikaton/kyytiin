@@ -16,6 +16,19 @@ Asenna GIT jos ei jo asennettu
 
 Tämän jälkeen kloonaa projekti GITistä ja aja `npm install`.  
 
+### .env
+
+Luo tiedosto nimeltä .env joka sisältää seuraavat rivit. Täytä vastaamaan omaa lokaalia ympäristöäsi. Mailerin passun saa Mikalta ':D'
++ DB_USER=
++ DB_PASSWORD=
++ DB_DATABASE=
++ DB_HOST=
++ DB_DIALECT=
++ PORT=3000
++ JWT_SECRET=
++ MAILER_USER=kyytiinapp.noreply@gmail.com
++ MAILER_PASSWORD=
++ MAILER_SERVICE_PROVIDER=Gmail
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
