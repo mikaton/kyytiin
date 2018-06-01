@@ -1,5 +1,19 @@
 # Kyytiin
 
+##Nopea setup
+
+###Tietokanta
+
+Asenna MariaDB:n uusin versio ympäristöösi, configuroi mieleiseksisi. 
+
+####Node
+
+Asenna [NodeJS LTS](https://nodejs.org/en/). 
+
+###Muut
+
+Tämän jälkeen kloonaa projekti GITistä ja aja `npm install`.  
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.7.
 
 ## Development server
@@ -12,8 +26,9 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Run `npm run-script build` to build the project for production. The build artifacts will be stored in the `dist/` directory. 
 
+Use `npm run-script shitbuild` to build the project for testing use. This version uses the local enviroment. The build artifacts will be stored in the `dist/` directory. 
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
@@ -25,21 +40,4 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
-## TODO
-Perustuu dataan jota saatiin 8.3. CreateITsepässä. 
-
-### Parempi timepicker
-Timepicker paremmaksi ja selkeämmäksi ymmärtää
-Komponentti ei saa sallia aikoja, jotka ovat vanhempia kuin nykyinen aika
-
-### Piilota kyydit joiden "free_seats" arvo on o
-Itsestään selvyys, mutta tehtävä
-
-### Käyttäjälle ilmoitus kun kyytiin liittyminen onnistuu
-
-### Linkki käyttäjäprofiiliin ride komponentissa
-
-### Listaa käyttäjän profiilissa myös kyydit, joihin hän on ilmoittautunut 
-
 
