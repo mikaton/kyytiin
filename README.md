@@ -1,16 +1,18 @@
 # Kyytiin
 
-##Nopea setup
+## Nopea setup
 
-###Tietokanta
+### Tietokanta
 
 Asenna MariaDB:n uusin versio ympäristöösi, configuroi mieleiseksisi. 
 
-####Node
+#### Node
 
 Asenna [NodeJS LTS](https://nodejs.org/en/). 
 
-###Muut
+### Muut
+
+Asenna GIT jos ei jo asennettu
 
 Tämän jälkeen kloonaa projekti GITistä ja aja `npm install`.  
 
