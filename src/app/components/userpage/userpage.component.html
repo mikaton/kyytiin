@@ -48,7 +48,7 @@
       <img *ngIf="hasImageSet === true" class="userheaderimg" src="{{imagePath}}">
       <img *ngIf="hasImageSet === false" class="userheaderimg" src="assets/images/profile_placeholder.png">
       <div id="btn-profile_image_picker_desktop">
-          <input type="file" name="profile_image_picker" (change)="fileChanged($event)" fxHide class="form-control" accept=".jpg, .jpeg, .png" id="profile_image_picker_desktop">
+          <input type="file" name="image" (change)="fileChanged($event)" fxHide class="form-control" id="profile_image_picker_desktop">
           <label for="profile_image_picker_desktop" class="mat-raised-button mat-primary">Vaihda profiilikuva</label>
       </div>
       <div class="btn-start_upload" *ngIf="fileHasChanged">

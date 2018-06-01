@@ -110,7 +110,6 @@ export class UserpageComponent implements OnInit {
   }
 
   uploadImage() {
-    if(this.formData) {
       this.userService.updateUserProfileImage(this.formData)
       .then((res) => {
         this.updateUserdata();
@@ -118,9 +117,9 @@ export class UserpageComponent implements OnInit {
       })
       .catch((err) => {
         this.errorUiService.popErrorDialog(err);
+        this.formData.delete('image');
         console.error('uploadImage epäonnistui: ' + err.message);
-      })
-    }
+      });
   }
 
   // Poistaa selaimen konsolin virheilmoitukset alustamalla datan 
