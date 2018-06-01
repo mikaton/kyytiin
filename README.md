@@ -29,6 +29,7 @@ Luo tiedosto nimeltä .env joka sisältää seuraavat rivit. Täytä vastaamaan 
 + MAILER_USER=kyytiinapp.noreply@gmail.com
 + MAILER_PASSWORD=
 + MAILER_SERVICE_PROVIDER=Gmail
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
