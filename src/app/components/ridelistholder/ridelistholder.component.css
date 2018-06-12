@@ -1,0 +1,24 @@
+.wrapper {
+	max-width: 900px;
+	margin: 50px auto;
+}
+.check_icon {
+	font-size: 90%;
+	font-family: 'Roboto', sans-serif;
+}
+
+
+.ride_card {
+	border-width: 0px 0px 2px 0px;
+    border-style: solid; 
+    border-color: #689F38;
+}
+
+ .mat-tab-list {
+  flex-basis: 0;
+  flex-grow: 1;
+}
+::ng-deep .mat-tab-label {
+    width: 50%;
+    background-color: white;
+}

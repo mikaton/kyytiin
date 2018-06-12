@@ -5,36 +5,36 @@ const model = require('../models/index'),
     key: 'AIzaSyDqangYtXtjWcjB_CcZ4iICC8g2w3j4lEs',
     Promise: Promise
   },
-  Ride = model.Ride,
-  async = require('async'),
-  CustomersRides = model.CustomersRides_ride,
-  User = model.Customer,
-  Request = model.Request,
-  RideRequest = model.RideRequest,
-  Notification = model.Notification,
-Op = model.Sequelize.Op,
+    Ride = model.Ride,
+    async = require('async'),
+    CustomersRides = model.CustomersRides_ride,
+    User = model.Customer,
+    Request = model.Request,
+    Riderequest = model.Riderequest,
+    Notification = model.Notification,
+    Op = model.Sequelize.Op,
 
-// --- <Sähköpostin asetukset> ---
-hbs = require('nodemailer-express-handlebars'),
-  email = process.env.MAILER_EMAIL_ID || config.mailer.user,
-  password = process.env.MAILER_PASSWORD || config.mailer.password,
-  nodemailer = require('nodemailer'),
+    // --- <Sähköpostin asetukset> ---
+    hbs = require('nodemailer-express-handlebars'),
+    email = process.env.MAILER_EMAIL_ID || config.mailer.user,
+    password = process.env.MAILER_PASSWORD || config.mailer.password,
+    nodemailer = require('nodemailer'),
 
-  smtpTransport = nodemailer.createTransport({
-    service: process.env.MAILER_SERVICE_PROVIDER || 'Gmail',
-    auth: {
-      user: email,
-      pass: password
-    }
-  }),
+    smtpTransport = nodemailer.createTransport({
+      service: process.env.MAILER_SERVICE_PROVIDER || 'Gmail',
+      auth: {
+        user: email,
+        pass: password
+      }
+    }),
 
-  handlebarsOptions = {
-    viewEngine: 'handlebars',
-    viewPath: path.resolve('./server/templates/'),
-    extName: '.html'
-  },
+    handlebarsOptions = {
+      viewEngine: 'handlebars',
+      viewPath: path.resolve('./server/templates/'),
+      extName: '.html'
+    },
 
-smtpTransport.use('compile', hbs(handlebarsOptions)));
+    smtpTransport.use('compile', hbs(handlebarsOptions)));
 // --- </Sähköpostin asetukset> //
 
 exports.getSingleRide = (req, res, next) => {
@@ -53,9 +53,7 @@ exports.getSingleRide = (req, res, next) => {
 };
 
 exports.getAllRides = (req, res, next) => {
-  console.log(Date.now());
   Ride.findAll({
-
     where: { time_of_departure: { $gte: Date.now() } },
     order: [
       ['time_of_departure', 'ASC']
@@ -254,7 +252,7 @@ exports.joinRide = (req, res, next) => {
     }).catch((err) => console.error('Matkan hakeminen epäonnistui: ' + err.stack));
 }
 
-exports.createRequest = (req, res , next) => {
+exports.createRequest = (req, res, next) => {
   const data = {
     customer_id: req.body.customer_id,
     startingplace: req.body.startingplace,
@@ -268,28 +266,26 @@ exports.createRequest = (req, res , next) => {
     smoking: req.body.smoking,
     pets: req.body.pets,
     deviate: req.body.deviate,
-    hidden: req.body.hidden,
     additional_information: req.body.additional_information
   };
-  RideRequest.create(data)
+  Riderequest.create(data)
     .then((ride) => {
       console.log(ride);
       res.status(200).json({
-        message: 'RideRequest created',
+        message: 'Riderequest created',
         data: ride
       });
     })
-    .catch((err) => console.log('createRideRequest failed: ' + err.message));
+    .catch((err) => console.log('createRiderequest failed: ' + err.message));
 }
 
 exports.getRideRequest = (req, res, next) => {
-  RideRequest.sequelize.query('SELECT r.deviate AS deviate, r.request_id as request_id, r.customer_id AS customer_id, r.additional_information AS additional_information, r.startingplace AS startingplace, r.destination AS destination, r.time_of_departure AS time_of_departure, r.time_of_arrival AS time_of_arrival, r.free_seats AS free_seats, r.smoking AS smoking, r.pets AS pets, c.firstName AS firstName, c.lastName as lastName FROM RideRequests r INNER JOIN Customers c on r.customer_id = c.customer_id WHERE r.request_id = :request_id',
+  Riderequest.sequelize.query('SELECT r.deviate AS deviate, r.request_id as request_id, r.customer_id AS customer_id, r.additional_information AS additional_information, r.startingplace AS startingplace, r.destination AS destination, r.time_of_departure AS time_of_departure, r.time_of_arrival AS time_of_arrival, r.free_seats AS free_seats, r.smoking AS smoking, r.pets AS pets, c.firstName AS firstName, c.lastName as lastName FROM Riderequests r INNER JOIN Customers c on r.customer_id = c.customer_id WHERE r.request_id = :request_id',
     {
       replacements: { request_id: req.params.id },
-      type: RideRequest.sequelize.QueryTypes.SELECT
+      type: Riderequest.sequelize.QueryTypes.SELECT
     })
     .then((request) => {
-      console.log(request);
       res.status(200).json({
         message: 'Requests found',
         data: request
@@ -299,23 +295,62 @@ exports.getRideRequest = (req, res, next) => {
 }
 
 exports.rideRequestAccepted = (req, res, next) => {
-  RideRequest.find({
+  Riderequest.find({
     where: { request_id: req.body.request_id }
   })
     .then((request1) => {
       const request = request1.dataValues;
       const joiner_id = request.customer_id; //otetaan requestin customer_id talteen että voidaan luoda uusi CRr tietue 
-      request.customer_id = req.body.accepter_id; //vaihdetaan customer_id kyytipyynnön hyväksyjän id:ksi
-      Ride.create(request) 
-      .then((newRide) => {
-        console.log(req.body)
-        const newCRr = { 
-          customer_id: req.body.requestOwner_id,
-          ride_id: newRide.ride_id
-        }
-        CustomersRides.create(newCRr)
-      }).catch((err) => console.log(err));
-    }).catch((err) => console.log(err));
+      request.customer_id = req.body.accepter_id; //vaihdetaan customer_id kyytipyynnön hyväksyjän id:ksi että tiedot ovat oikein ride tietueessa
+      request.free_seats = 0; //Asetetaan vapaiden paikkojen määräksi nolla, ettei kyyti näy kyytilistauksessa 
+      Ride.create(request)
+        .then((newRide) => {
+          const newCRr = {
+            customer_id: joiner_id,
+            ride_id: newRide.ride_id
+          }
+          CustomersRides.create(newCRr)
+            .then(() => {
+              res.status(200).json({
+                message: 'New ride and customersrides created',
+              })
+              //päivitetään riderequest taulu ettei sitä näytetä kyytipyyntölistauksessa
+              Riderequest.update(
+                { is_fulfilled: true },
+                {
+                  where: {
+                    request_id: req.body.request_id
+                  }
+                })
+                .then(() => {
+                  const notificationData = {
+                    customer_id: joiner_id,
+                    ride_id: newRide.ride_id,
+                    canJoin: true,
+                    notification_message: "Joku on hyväksynyt kyyntipyyntösi!"
+                  };
+                  Notification.create(notificationData)
+                }).catch((err) => console.error('Notifikaation luonti epäonnistui: ' + err.stack));
+            }).catch((err) => console.log('sending response failed' + err));
+        }).catch((err) => console.log('crr create failed' + err));
+    }).catch((err) => console.log('ridecreate failed' + err));
+};
+
+
+exports.getAllRideRequests = (req, res, next) => {
+  Riderequest.findAll({
+    where: {
+      time_of_departure: { $gte: Date.now() },
+      is_fulfilled: false
+    },
+    order: [
+      ['time_of_departure', 'ASC']
+    ]
+  })
+    .then((rides) => {
+      res.send(rides);
+    })
+    .catch((err) => console.log('getAllRiderequests failed: ' + err.message));
 };
 
 exports.getDirections = (req, res, next) => {
@@ -328,13 +363,13 @@ exports.getDirections = (req, res, next) => {
     destination: `${destination}, Finland`,
     mode: 'driving'
   })
-  .asPromise()
-  .then((response) => {
-    res.status(200).json({
-      success: true,
-      message: 'Matkaohjeet haettiin onnistuneesti',
-      data: response.json
-    });
-  })
-  .catch((err) => console.log('google.maps.directions epäonnistui: ' + err.stack));
+    .asPromise()
+    .then((response) => {
+      res.status(200).json({
+        success: true,
+        message: 'Matkaohjeet haettiin onnistuneesti',
+        data: response.json
+      });
+    })
+    .catch((err) => console.log('google.maps.directions epäonnistui: ' + err.stack));
 }

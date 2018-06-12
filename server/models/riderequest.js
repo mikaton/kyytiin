@@ -1,14 +1,14 @@
 const models = require('./index');
 
 module.exports = (sequelize, DataTypes) => {
-  let Ride = sequelize.define('Ride', {
-    ride_id: {
+  let Riderequest = sequelize.define('Riderequest', {
+    request_id: {
      type: DataTypes.UUID,
      defaultValue: DataTypes.UUIDV4,
      allowNull: false,
      primaryKey: true 
     },
-    customer_id: {
+    customer_id: { //<- tuleva joiner_id
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
@@ -53,20 +53,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false
     },
-    hidden: {
+    is_fulfilled: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
       defaultValue: false,
+      allowNull: false
     },
     additional_information: {
       type: DataTypes.STRING
     },
-
   }, {
     timestamps: false,
-    tableName: 'Rides',
+    tableName: 'Riderequests',
     freezeTableName: true,
   });
 
-  return Ride;
+  return Riderequest;
 };

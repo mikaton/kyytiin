@@ -3,6 +3,7 @@ USE kyyti;
 
 DROP TABLE IF EXISTS CustomersRides_ride;
 DROP TABLE IF EXISTS CustomersCars;
+DROP TABLE IF EXISTS Riderequests;
 DROP TABLE IF EXISTS Cars;
 DROP TABLE IF EXISTS Reviews;
 DROP TABLE IF EXISTS Notifications;
@@ -80,6 +81,27 @@ CREATE TABLE IF NOT EXISTS Notifications (
   CONSTRAINT notification_user_fk
     FOREIGN KEY(customer_id) REFERENCES Customers(customer_id)
       ON UPDATE CASCADE ON DELETE RESTRICT
+);
+CREATE TABLE IF NOT EXISTS Riderequests (
+  request_id VARCHAR(100) NOT NULL PRIMARY KEY,
+  customer_id VARCHAR(100) NOT NULL,
+  startingplace VARCHAR(100) NOT NULL,
+  destination VARCHAR(100) NOT NULL,
+  journey VARCHAR(100),
+  time_of_departure DATETIME NOT NULL,
+  alternate_time_of_departure DATETIME NOT NULL,
+  time_of_arrival DATETIME,
+  alternate_time_of_arrival DATETIME,
+  free_seats TINYINT NOT NULL,
+  smoking BOOLEAN NOT NULL, 
+  pets BOOLEAN NOT NULL,
+  additional_information VARCHAR(512),
+  deviate BOOLEAN NOT NULL,
+  is_fulfilled BOOLEAN NOT NULL,
+  hidden BOOLEAN NOT NULL,
+  CONSTRAINT customer_riderequest_fk
+    FOREIGN KEY(customer_id) REFERENCES Customers(customer_id)
+      ON UPDATE RESTRICT ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS Reviews (

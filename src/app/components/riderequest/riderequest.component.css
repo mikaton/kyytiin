@@ -1,0 +1,21 @@
+.wrapper {
+	max-width: 900px;
+	margin: 50px auto;
+}
+
+.check_icon {
+	font-size: 90%;
+	font-family: 'Roboto', sans-serif;
+}
+
+agm-map {
+	height: 400px;
+	padding: 0;
+	margin-bottom: 10px;
+}
+
+.ride_card {
+	border-width: 0px 0px 2px 0px;
+    border-style: solid; 
+    border-color: #689F38;
+}

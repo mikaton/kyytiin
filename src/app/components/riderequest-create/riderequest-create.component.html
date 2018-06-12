@@ -1,0 +1,48 @@
+<div class="wrapper" fxLayout="column">
+  <mat-card class="form-container mat-elevation-z0">
+      <mat-card-title class="ridecreate_title">Luo uusi kyytipyyntö</mat-card-title>
+      <form [formGroup]="rideCreateForm" (ngSubmit)="rideRequestCreate(rideCreateForm.value, startingplace.value, destination.value)"
+          class="ridecreate" fxLayout="column">
+          <mat-form-field>
+              <input matInput id="startingplace" name="startingplace" placeholder="Lähtöpaikka" type="Address" [formControl]="startingplace"
+                  [matAutocomplete]="auto" required>
+              <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let town of filteredStartingplaces | async" [value]="town.name">
+                      {{town.name}}
+                  </mat-option>
+              </mat-autocomplete>
+              <mat-error>Valitse paikka listalta!</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+              <input matInput id="destination" name="destination" placeholder="Määränpää" type="Address" [formControl]="destination" [matAutocomplete]="auto2"
+                  required>
+              <mat-autocomplete #auto2="matAutocomplete">
+                  <mat-option *ngFor="let town of filteredDestinations | async" [value]="town.name">
+                      {{town.name}}
+                  </mat-option>
+              </mat-autocomplete>
+              <mat-error>Valitse paikka listalta!</mat-error>
+          </mat-form-field>
+          <mat-form-field ngClass.xs="ridecreate_time">
+              <input matInput id="time_of_departure" name="time_of_departure" formControlName="time_of_departure" placeholder="Lähtöaika"
+                  [min]="min_time" [max]="max_time" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1">
+              <owl-date-time [pickerMode]="'dialog'" [firstDayOfWeek]=1 #dtPicker1></owl-date-time>
+          </mat-form-field>
+          <mat-form-field>
+              <input matInput id="free_seats" placeholder="Tarvittavien paikkojen määrä" name="free_seats" type="number" formControlName="free_seats"
+                  required>
+              <mat-error *ngIf="rideCreateForm.controls['free_seats'].hasError('min')">Valitse edes yksi paikka</mat-error>
+              <mat-error *ngIf="rideCreateForm.controls['free_seats'].hasError('max')">Liian monta paikkaa valittuna</mat-error>
+          </mat-form-field>
+          <mat-slide-toggle id="smoking" name="smoking" formControlName="smoking" color="primary"> Haluatko tupakoida? </mat-slide-toggle>
+          <mat-slide-toggle id="pets" name="pets" formControlName="pets" color="primary"> Tuleeko kanssasi lemmikkejä?</mat-slide-toggle>
+          <mat-slide-toggle  name="deviate" class="deviate" formControlName="deviate" color="primary">Oletko valmis poikkeamaan reitiltä lähikuntiin?</mat-slide-toggle>
+          <mat-form-field> <!--DUNNO WHAT TO DO WITH ALL THESE FIELDS-->
+              <input matInput #additional_information id="additional_information" name="additional_information" formControlName="additional_information"
+                  placeholder="Lisätiedot; esim reitti, perilläoloaika jne.">
+              <mat-hint>{{additional_information.value.length}} / 512</mat-hint>
+          </mat-form-field>
+          <button [disabled]="rideCreateForm.invalid || destination.invalid || startingplace.invalid" mat-raised-button color="primary">Luo Kyytipyyntö!</button>
+      </form>
+  </mat-card>
+</div>

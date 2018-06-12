@@ -21,17 +21,18 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import { UserMadeRideComponent } from './components/user-made-ride/user-made-ride.component';
 import { RiderequestCreateComponent } from './components/riderequest-create/riderequest-create.component';
 import { RiderequestComponent } from './components/riderequest/riderequest.component';
+import { RideformholderComponent } from './components/rideformholder/rideformholder.component';
+import { RidelistholderComponent } from './components/ridelistholder/ridelistholder.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
-  { path: 'rides', component: RidelistComponent },
+  { path: 'rides', component: RidelistholderComponent },
   { path: 'rides/:ride_id', canActivate: [AuthGuard], component: RideComponent},
   { path: 'frontpage', component: FrontpageComponent },
   { path: 'user', canActivate: [AuthGuard], component: UserpageComponent},
   { path: 'user/:customer_id', canActivate: [AuthGuard], component: UserdetailsComponent},
   { path: 'requests', canActivate: [AuthGuard], component: JoinRequestListComponent},
   { path: 'request/:id', canActivate: [AuthGuard], component: JoinRequestComponent},
-  { path: 'ridecreate', canActivate: [AuthGuard], component: RidecreateComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'change-password/:token', component: ChangePasswordComponent},
   { path: 'feedback', component: FeedbackComponent},
@@ -41,7 +42,8 @@ const routes: Routes = [
   { path: 'user-rides/:ride_id', component: UserMadeRideComponent},
   { path: 'register', component: AuthDialogComponent},
   { path: 'riderequestcreate', component: RiderequestCreateComponent},
-  { path: 'riderequest/:request_id', component: RiderequestComponent}
+  { path: 'riderequest/:request_id', component: RiderequestComponent},
+  { path: 'ridecreate', component: RideformholderComponent}
 ];
 
 @NgModule({

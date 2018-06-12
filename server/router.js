@@ -44,8 +44,10 @@ module.exports = (app) => {
 
   // Matkapyynnöt 
   router.post('/riderequests/request', jwtAuth, RideController.createRequest);
+  router.post('/riderequests/takerequest', jwtAuth, RideController.rideRequestAccepted);
   router.get('/riderequests/request/:id', jwtAuth, RideController.getRideRequest);
-  router.post('/riderequests/takerequest', RideController.rideRequestAccepted);
+  router.get('/riderequests/request', jwtAuth, RideController.getAllRideRequests);
+
   // Matkalle liittyminen
   router.post('/ride/join/:ride_id', jwtAuth, RideController.joinRide);
   router.post('/ride/deny/:ride_id', jwtAuth, RideController.denyJoinRide);

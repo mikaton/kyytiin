@@ -1,0 +1,65 @@
+<div class="wrapper">
+    <div fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign.gt-sm="space-between">
+      <div class="searchbox" fxFlex="32">
+        <mat-card class="searchbox" class="ride_card mat-elevation-z8" fxLayout="column">
+          <mat-card-content>
+            <form fxLayout="column" #searchForm1="ngForm" [ngFormOptions]="{updateOn: 'blur'}">
+              <h2 class="mat-h2">Hae kyyntipyyntöä</h2>
+              <mat-form-field>
+                <input matInput [(ngModel)]="startingplace" placeholder="Lähtöpaikka" [ngModelOptions]="{standalone: true}">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput [(ngModel)]="destination" placeholder="Määränpää" [ngModelOptions]="{standalone: true}">
+              </mat-form-field>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div fxFlex="65" fxLayout="column" *ngIf="noRequests">
+        <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
+          <div fxLayout="column">
+            <mat-card-title fxFlex="50">
+            </mat-card-title>
+            <mat-card-content>Ajankohtaisia kyyntipyyntöjä ei löytynyt</mat-card-content>
+          </div>
+        </mat-card>
+      </div>
+      <div fxFlex="65" fxLayout="column" *ngIf="!noRequests">
+        <div *ngIf="(requests | rideSearch: startingplace:destination).length === 0">
+          <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
+            <mat-card-content>Kyyntipyyntöjä ei löytynyt hakuehtojesi perusteella</mat-card-content>
+          </mat-card>
+        </div> 
+        <div *ngFor="let request of requests | rideSearch: startingplace:destination">
+          <div *ngIf="request.free_seats > 0">
+            <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space  around center">
+              <div fxLayout="row">
+                <img src="./../../../assets/images/car.png" class="car">
+                <div fxLayout="column" class="details_holder">
+                  <mat-card-title fxFlex="50">
+                    Lähtöpaikka: {{request?.startingplace}}
+                  </mat-card-title>
+                  <mat-card-title fxFlex="50" class="destination">
+                    Määränpää: {{request?.destination}}
+                  </mat-card-title>
+                  <mat-card-content class="departure">
+                    <span>Lähtöpäivä: {{request?.time_of_departure | date:'mediumDate'}} </span>
+                    <span class="time">Aika: {{request?.time_of_departure | date:'shortTime'}}</span>
+                  </mat-card-content>
+                  <mat-card-content>
+                    Tarvittavien paikkojen määrä: {{request?.free_seats}}
+                  </mat-card-content>
+                </div>
+                <div fxLayoutAlign="end end">
+                  <a routerLink="/riderequest/{{request?.request_id}}">
+                    <button fxHide fxShow.gt-sm mat-button class="info_button">Lisätietoja</button>
+                    <i fxShow fxHide.gt-sm class="far info_icon fa-plus-square fa-2x"></i>
+                  </a>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

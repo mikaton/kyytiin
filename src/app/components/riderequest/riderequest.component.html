@@ -1,0 +1,73 @@
+<div class="wrapper">
+  <mat-card *ngIf="isCreator" class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
+    <mat-card-title>Tämä on luomasi kyytipyyntö</mat-card-title>
+  </mat-card>
+  <mat-card class="ride_card mat-elevation-z8" fxLayout="column" fxLayoutAlign="space around center">
+    <div fxLayout="row">
+        <div fxLayout="column" fxFlex="50">
+            <mat-card-title>
+              Lähtöpaikka: {{request?.startingplace}}
+            </mat-card-title>
+            <mat-card-title>
+              Määränpää: {{request?.destination}}
+            </mat-card-title>
+            <mat-card-content>
+              Kyydin tarvitsija:
+              <a routerLink="/user/{{request?.customer_id}}">{{request?.firstName}} {{request?.lastName}}</a>
+            </mat-card-content>
+            <mat-card-content>
+              Lähtöpäivä: {{request?.time_of_departure | date:'mediumDate'}} aika: {{request?.time_of_departure | date:'shortTime'}}
+            </mat-card-content>
+            <mat-card-content>
+              Tarvittavia paikkoja: {{request?.free_seats}}
+            </mat-card-content>
+            <mat-card-content>
+              Tupakoitsija: {{request?.smoking ? 'Kyllä' : 'Ei'}}
+            </mat-card-content>
+            <mat-card-content>
+              Mukaan tulossa lemmikkejä: {{request?.pets ? 'Kyllä' : 'Ei'}}
+            </mat-card-content>
+            <mat-card-content>
+              En tiiä mitä laittaa deviateen: {{request?.deviate ? 'Kyllä' : 'Ei'}}
+              </mat-card-content>  
+            <mat-card-content>
+              Lisätiedot: {{request?.additional_information}}
+            </mat-card-content>
+          </div>
+          <div fxLayout="column" fxFlex="50" fxHide fxShow.gt-sm="true">
+            <agm-map *ngIf="mapInitialized">
+              <agm-direction [origin]="request?.startingplace" [destination]="request?.destination"></agm-direction>
+            </agm-map>
+          </div>
+    </div>
+
+    <button *ngIf="!isCreator" mat-raised-button color="primary" (click)="openAlertDialog(alertTemplate)">Lupaudu kyydittäjäksi</button>
+    <button mat-raised-button (click)="goBack()">Takaisin</button>
+  </mat-card>
+  <ng-template #alertTemplate>
+    <div *ngIf="!promiseRejected">
+        <h1 mat-dialog-title>Lähetä ilmoitus kyydittämisestä?</h1>
+        <!--<div [formGroup]="messageForm" *ngIf="!promiseResolved && !confirmButtonClicked">
+          <mat-form-field>
+            <input matInput #message id="message" name="message" formControlName="message" placeholder="Valinnainen viesti kyyditettävälle">
+            <mat-hint>{{message.value.length}} / 512</mat-hint>
+          </mat-form-field>
+        </div>-->
+        <div class="spinner_icon" *ngIf="!promiseResolved && confirmButtonClicked">
+          <i class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;Käsitellään..
+        </div>
+        <div class="check_icon" *ngIf="promiseResolved && confirmButtonClicked">
+          <i class="fas fa-check"></i>&nbsp;&nbsp;Liittymispyyntö lähetetty!</div>
+        <mat-dialog-actions>
+          <button *ngIf="!promiseResolved && !confirmButtonClicked" mat-raised-button color="primary" (click)="acceptRideRequest()">Kyllä</button>
+          <button *ngIf="!promiseResolved && !confirmButtonClicked" mat-button type="button" (click)="dialogRef.close()">Peruuta</button>
+          <button *ngIf="promiseResolved && confirmButtonClicked" mat-raised-button color="primary" (click)="dialogRef.close()">Sulje</button>
+        </mat-dialog-actions>
+    </div>
+    <div *ngIf="promiseRejected">
+      <h1 mat-dialog-title>
+          <i class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp; Jotain meni pieleen. Kokeile päivittää sivu ja yritä uudestaan.
+      </h1>
+    </div>
+  </ng-template>
+</div>

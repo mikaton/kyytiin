@@ -73,6 +73,9 @@ import { AgmDirectionModule } from 'agm-direction';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { RiderequestCreateComponent } from './components/riderequest-create/riderequest-create.component';
 import { RiderequestComponent } from './components/riderequest/riderequest.component';
+import { RideformholderComponent } from './components/rideformholder/rideformholder.component';
+import { RidelistholderComponent } from './components/ridelistholder/ridelistholder.component';
+import { RiderequestlistComponent } from './components/riderequestlist/riderequestlist.component';
 
 
 registerLocaleData(localeFi);
@@ -120,7 +123,10 @@ export function tokenGetter() {
     ChangelogComponent,
     UserMadeRideComponent,
     RiderequestCreateComponent,
-    RiderequestComponent
+    RiderequestComponent,
+    RideformholderComponent,
+    RidelistholderComponent,
+    RiderequestlistComponent
   ],
   imports: [
     BrowserModule,
