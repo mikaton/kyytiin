@@ -19,6 +19,8 @@ import { RegistersuccessComponent } from './components/registersuccess/registers
 import { TosComponent } from './components/tos/tos.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { UserMadeRideComponent } from './components/user-made-ride/user-made-ride.component';
+import { RiderequestCreateComponent } from './components/riderequest-create/riderequest-create.component';
+import { RiderequestComponent } from './components/riderequest/riderequest.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -37,8 +39,9 @@ const routes: Routes = [
   { path: 'tos', component: TosComponent},
   { path: 'verify-account/:token', component: VerifyEmailComponent},
   { path: 'user-rides/:ride_id', component: UserMadeRideComponent},
-  { path: 'register', component: AuthDialogComponent}
-
+  { path: 'register', component: AuthDialogComponent},
+  { path: 'riderequestcreate', component: RiderequestCreateComponent},
+  { path: 'riderequest/:request_id', component: RiderequestComponent}
 ];
 
 @NgModule({

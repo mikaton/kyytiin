@@ -42,6 +42,10 @@ module.exports = (app) => {
   router.patch('/ride/:id', jwtAuth, RideController.updateRide);
   router.delete('/ride/:id', jwtAuth, RideController.deleteRide);
 
+  // Matkapyynnöt 
+  router.post('/riderequests/request', jwtAuth, RideController.createRequest);
+  router.get('/riderequests/request/:id', jwtAuth, RideController.getRideRequest);
+  router.post('/riderequests/takerequest', RideController.rideRequestAccepted);
   // Matkalle liittyminen
   router.post('/ride/join/:ride_id', jwtAuth, RideController.joinRide);
   router.post('/ride/deny/:ride_id', jwtAuth, RideController.denyJoinRide);

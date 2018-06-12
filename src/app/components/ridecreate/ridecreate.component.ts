@@ -130,7 +130,7 @@ export class RidecreateComponent implements OnInit {
         if (rideCreateForm.alternate_time_of_departure === undefined) {
           rideCreateForm.alternate_time_of_departure = rideCreateForm.time_of_departure;
         }
-        this.rideService.postRides(rideCreateForm);
+        this.rideService.postRide(rideCreateForm);
       }
     })
     .catch((err) => {

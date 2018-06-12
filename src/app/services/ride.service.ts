@@ -118,7 +118,7 @@ export class RideService {
     return response;
   }
 
-  postRides(ride) {
+  postRide(ride) {
     let response = new Promise((resolve, reject) => {
       this.http.post(`${this.apiUrl}`, ride)
       .toPromise()
@@ -178,5 +178,20 @@ export class RideService {
       );
     });
     return response;
+  }
+  postRequest(request) {
+    let response = new Promise((resolve, reject) => {
+      this.http.post(`${this.apiUrl}/request`, request)
+      .toPromise()
+      .then(
+        data => {
+          this.router.navigate(['rides']);
+          resolve();
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
   }
 }

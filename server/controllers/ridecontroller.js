@@ -10,6 +10,7 @@ const model = require('../models/index'),
   CustomersRides = model.CustomersRides_ride,
   User = model.Customer,
   Request = model.Request,
+  RideRequest = model.RideRequest,
   Notification = model.Notification,
 Op = model.Sequelize.Op,
 
@@ -143,7 +144,6 @@ exports.getUserMadeRides = (req, res, next) => {
 
 
 exports.createRide = (req, res, next) => {
-  console.log('create ride')
   const data = {
     customer_id: req.body.customer_id,
     startingplace: req.body.startingplace,
@@ -253,6 +253,70 @@ exports.joinRide = (req, res, next) => {
       }).catch((err) => console.error('Matkan tietojen päivitys epäonnistui ' + err.stack));
     }).catch((err) => console.error('Matkan hakeminen epäonnistui: ' + err.stack));
 }
+
+exports.createRequest = (req, res , next) => {
+  const data = {
+    customer_id: req.body.customer_id,
+    startingplace: req.body.startingplace,
+    destination: req.body.destination,
+    journey: req.body.journey,
+    time_of_departure: req.body.time_of_departure,
+    alternate_time_of_departure: req.body.alternate_time_of_departure,
+    time_of_arrival: req.body.time_of_arrival,
+    alternate_time_of_arrival: req.body.alternate_time_of_arrival,
+    free_seats: req.body.free_seats,
+    smoking: req.body.smoking,
+    pets: req.body.pets,
+    deviate: req.body.deviate,
+    hidden: req.body.hidden,
+    additional_information: req.body.additional_information
+  };
+  RideRequest.create(data)
+    .then((ride) => {
+      console.log(ride);
+      res.status(200).json({
+        message: 'RideRequest created',
+        data: ride
+      });
+    })
+    .catch((err) => console.log('createRideRequest failed: ' + err.message));
+}
+
+exports.getRideRequest = (req, res, next) => {
+  RideRequest.sequelize.query('SELECT r.deviate AS deviate, r.request_id as request_id, r.customer_id AS customer_id, r.additional_information AS additional_information, r.startingplace AS startingplace, r.destination AS destination, r.time_of_departure AS time_of_departure, r.time_of_arrival AS time_of_arrival, r.free_seats AS free_seats, r.smoking AS smoking, r.pets AS pets, c.firstName AS firstName, c.lastName as lastName FROM RideRequests r INNER JOIN Customers c on r.customer_id = c.customer_id WHERE r.request_id = :request_id',
+    {
+      replacements: { request_id: req.params.id },
+      type: RideRequest.sequelize.QueryTypes.SELECT
+    })
+    .then((request) => {
+      console.log(request);
+      res.status(200).json({
+        message: 'Requests found',
+        data: request
+      });
+    })
+    .catch((err) => console.log('getUserRides failed: ' + err.message));
+}
+
+exports.rideRequestAccepted = (req, res, next) => {
+  RideRequest.find({
+    where: { request_id: req.body.request_id }
+  })
+    .then((request1) => {
+      const request = request1.dataValues;
+      const joiner_id = request.customer_id; //otetaan requestin customer_id talteen että voidaan luoda uusi CRr tietue 
+      request.customer_id = req.body.accepter_id; //vaihdetaan customer_id kyytipyynnön hyväksyjän id:ksi
+      Ride.create(request) 
+      .then((newRide) => {
+        console.log(req.body)
+        const newCRr = { 
+          customer_id: req.body.requestOwner_id,
+          ride_id: newRide.ride_id
+        }
+        CustomersRides.create(newCRr)
+      }).catch((err) => console.log(err));
+    }).catch((err) => console.log(err));
+};
 
 exports.getDirections = (req, res, next) => {
   // Hakee Googlen Directions APIsta matkaohjeet aloitus- ja päätepisteen perusteella

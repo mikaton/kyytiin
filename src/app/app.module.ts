@@ -39,6 +39,8 @@ import { AuthGuard } from './guards/auth.guard.service';
 import { IdGuard } from './guards/id.guard.service';
 import { UserService } from './services/user.service';
 import { RideService } from './services/ride.service';
+import { RideRequestService } from './services/riderequest.service';
+
 import { RidecreateComponent } from './components/ridecreate/ridecreate.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { FilterPipe } from './pipes/filter.pipe';
@@ -69,6 +71,8 @@ import { UserMadeRideComponent } from './components/user-made-ride/user-made-rid
 import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { RiderequestCreateComponent } from './components/riderequest-create/riderequest-create.component';
+import { RiderequestComponent } from './components/riderequest/riderequest.component';
 
 
 registerLocaleData(localeFi);
@@ -114,7 +118,9 @@ export function tokenGetter() {
     TosComponent,
     VerifyEmailComponent,
     ChangelogComponent,
-    UserMadeRideComponent
+    UserMadeRideComponent,
+    RiderequestCreateComponent,
+    RiderequestComponent
   ],
   imports: [
     BrowserModule,
@@ -177,6 +183,7 @@ export function tokenGetter() {
     JoinRequestService,
     NotificationService,
     ErrorUiService,
+    RideRequestService
   ],
   bootstrap: [AppComponent],
   entryComponents: [RideCreateConfirmDialog, ErrorDialog],
