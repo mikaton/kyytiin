@@ -2,3 +2,5 @@ Kyyti.in - Kimppakyytipalvelu, jonka piti korvata Facebookin ryhmät. 3 kuukautt
 
 - Palvelin ja sen mukana kaikki käyttäjädata on poistettu.
 - Olen täysin tietoinen siitä, että dependencyissä on aukkoja. Koodiin ei ole koskettu yli vuoteen, eikä tällä hetkellä ole juuri motivaatiota lähteä korjaamaan asiaa, siksi otin palvelun alas.
+
+Tämä on kehitetty osana JAMKin tietojenkäsittelyn koulutusohjelman projektiopintoja, Ticorporatea. Kanssani tätä oli kehittämässä Teemu Pölkki.
