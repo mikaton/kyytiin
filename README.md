@@ -1,3 +1,5 @@
+# HUOM! Koodissa on paljon ongelmia, eikä sitä missään nimessä kannata yrittää käyttää sellaisenaan!
+
 Kyyti.in - Kimppakyytipalvelu, jonka piti korvata Facebookin ryhmät. 3 kuukautta ei kuitenkaan ollut lähellekkään tarpeeksi pitkä aika tällaisen palvelun luomiseen. 
 
 - Palvelin ja sen mukana kaikki käyttäjädata on poistettu.
