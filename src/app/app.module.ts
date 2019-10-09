@@ -83,11 +83,11 @@ registerLocaleData(localeFi);
 const config = new AuthServiceConfig([
   {
     id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider('691489097907293')
+    provider: new FacebookLoginProvider('')
   },
   {
     id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider('17252589091-6oo0fkmqg0bq5js9b2fc8ued4pavfnfd.apps.googleusercontent.com')
+    provider: new GoogleLoginProvider('')
   }
 ]);
 export function provideConfig() {
